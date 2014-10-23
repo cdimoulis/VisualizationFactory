@@ -1,6 +1,6 @@
 development:
   adapter: postgresql
-  database: railsDevTest
+  database: visFactory
   host: localhost
   pool: 10
   timeout: 5000
