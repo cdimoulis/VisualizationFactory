@@ -13,10 +13,13 @@
 #= require jquery
 #= require jquery_ujs
 #= require handlebars
+#= require d3
 #= require bootstrap-sprockets
 #= require ../../../vendor/assets/javascripts/underscore
 #= require ../../../vendor/assets/javascripts/backbone
 #= require ../../../vendor/assets/javascripts/thorax
+#= require ../../../vendor/assets/javascripts/moment
+#= require ../../../vendor/assets/javascripts/moment-timezone
 #= require_tree ./libs/
 #= require ./application/app
 #= require_tree ./application/templates

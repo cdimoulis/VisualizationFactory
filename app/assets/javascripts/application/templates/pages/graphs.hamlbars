@@ -1,0 +1,1 @@
+{{view "components/graphs/bar/main" dataCollection=data1 dataConfig=dataConfig1}}

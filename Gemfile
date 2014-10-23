@@ -55,6 +55,8 @@ gem 'handlebars_assets',          '~> 0.17'
 gem 'bootstrap-sass',             '~> 3.2'
 gem 'font-awesome-rails',         '~> 4.1'
 
+gem 'd3-rails',                   '~> 3.4'
+
 gem 'better_errors',                          group: :development
 gem 'binding_of_caller',                      group: :development
 gem 'meta_request',                           group: :development
