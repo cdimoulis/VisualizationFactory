@@ -3,7 +3,7 @@ App.View.extend
   showing: true
   _percentWidth: 100
   _pixelWidth: 0
-  template: () -> "<svg class='grep-chart'></svg>"
+  template: () -> "<svg class='vis-chart'></svg>"
 
   acceptedTypes: [ "number", "string", "Date:Moment", "Date:Date" ]
   events:
@@ -12,7 +12,7 @@ App.View.extend
 
   initialize: () ->
 
-    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "setConfigOptions", "_isConfigValid", "fullScreenHandler", "setData", "_parseData", "_detectDataType", "_convertData", "isDataValid", "isDataEmpty", "setAxisRange", "setAxisDomain", "createChart", "drawXAxis", "drawYAxis", "drawLegend", "_legend"
+    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "setConfigOptions", "_isConfigValid", "fullScreenHandler", "setData", "_parseData", "_detectDataType", "_convertData", "isDataValid", "isDataEmpty", "setAxisRange", "setAxisDomain", "createChart", "drawXAxis", "drawYAxis", "drawLegend", "_legend", "clearChart"
 
     $(window).on "resize", @._onResize
 
@@ -215,6 +215,7 @@ App.View.extend
 
       @.doDataDisplay()
 
+      window.chart = @.chart
       @.drawLegend()
 
     else
@@ -265,7 +266,7 @@ App.View.extend
     @[axis].domain domain
 
   createChart: () ->
-    elem = @.$el.find(".grep-chart")
+    elem = @.$el.find(".vis-chart")
 
     chart = d3.select elem[0]
       .attr "width", "100%"
@@ -318,66 +319,108 @@ App.View.extend
   drawLegend: () ->
     @.chart.append "g"
       .attr "class", "legend"
-      .attr "transform", "translate(50,30)"
+      .attr "transform", "translate(50,0)"
       .style "font-size", "12px"
       .call @._legend
 
-  _legend: (elem) ->
-    console.log elem
-    elem.each () ->
-      g = d3.select @
-      svg = d3.select g.property("nearestViewportElement")
-      legendPadding = g.attr("data-style-padding") or 5
-      lb = g.selectAll(".legend-box").data([true])
-      li = g.selectAll(".legend-box").data([true])
+  _legend: (g) ->
 
-      lb.enter()
-        .append "rect"
-        .classed "legend_box", true
+    legend = g.selectAll ".legend-item"
+      .data @.xAxisData
 
-      li.enter()
-        .append "g"
-        .classed "legend-items", true
+    legend.enter().append "circle"
+      .attr "class", "legend-item"
+      .attr "cx", (d,i) ->
+        0
+      .attr "cy", (d,i) ->
+        i*20
+      .style "fill", (d, index) =>
+        model = @.dataCollection.at index
+        @.dataConfig.get("color") @.dataCollection, model, index
+      .attr "r", 5
 
-      svg.selectAll("[data-legend]").each () ->
-        self = d3.select @
-        items[self.attr("data-legend")] = 
-          pos: self.attr("data-legend-pos") or @.getBBox().yAxisType
-          color: if self.attr("data-legend-color") is not undefined then self.attr("data-legend-color") else if self.style("fill") is not 'none' then self.style("fill") else self.style("stroke")
+    legend.enter().append "text"
+      .attr "class", "legend-text"
+      .attr "x", (d,i) ->
+        10
+      .attr "y", (d,i) ->
+        i*20 + 3
+      .text (d,i) ->
+        console.log "text",d,i
+        d.capitalize()
 
-      items = d3.entries(items).sort (a,b) ->
-        a.value.pos - b.value.pos
+    # elem.each () ->
+    #   console.log "start"
+    #   items = {}
+    #   g = d3.select @
+    #   svg = d3.select g.property("nearestViewportElement")
+    #   legendPadding = g.attr("data-style-padding") or 5
+    #   lb = g.selectAll(".legend-box").data([true])
+    #   li = g.selectAll(".legend-box").data([true])
 
-      li.selectAll "text"
-        .data items, (d) ->
-          d.key
-        .call (d) ->
-          d.enter().append("text")
-        .call (d) ->
-          d.exit().remove()
-        .attr "y", (d,i) ->
-          i+"em"
-        .attr "x", "1em"
-        .text (d) ->
-          d.key
+    #   lb.enter()
+    #     .append "rect"
+    #     .classed "legend-box", true
 
-      li.selectAll "circle"
-        .data items, (d) ->
-          d.key
-        .call (d) ->
-          d.enter().append "circle"
-        .call (d) ->
-          d.exit().remove()
-        .attr "cy", (d,i) ->
-          i-0.25 + "em"
-        .attr "r", "0.4em"
-        .style "fill", (d) ->
-          d.value.color
+    #   li.enter()
+    #     .append "g"
+    #     .classed "legend-items", true
 
-      lbbox = li[0][0].getBBox()
-      lb.attr "x", lbbox.x - legendPadding
-        .attr "y", lbbox.y - legendPadding
-        .attr "height", lbbox.height+2*legendPadding
-        .attr "width", lbbox.width+2*legendPadding
+    #   svg.selectAll("[data-legend]").each () ->
+    #     console.log "data-legend"
+    #     self = d3.select @
+    #     items[self.attr("data-legend")] = 
+    #       pos: self.attr("data-legend-pos") or @.getBBox().yAxisType
+    #       color: if self.attr("data-legend-color") is not undefined then self.attr("data-legend-color") else if self.style("fill") is not 'none' then self.style("fill") else self.style("stroke")
 
-    elem
+    #   console.log "items",items
+    #   items = d3.entries(items).sort (a,b) ->
+    #     console.log "a,b", a,b
+    #     a.value.pos - b.value.pos
+
+    #   li.selectAll "text"
+    #     .data items, (d) ->
+    #       console.log ".data items",d
+    #       d.key
+    #     .call (d) ->
+    #       console.log "call1", d
+    #       d.enter().append("text")
+    #     .call (d) ->
+    #       console.log "call2", d
+    #       d.exit().remove()
+    #     .attr "y", (d,i) ->
+    #       i+"em"
+    #     .attr "x", "1em"
+    #     .text (d) ->
+    #       d.key
+
+    #   li.selectAll "circle"
+    #     .data items, (d) ->
+    #       console.log "circle .data items", d
+    #       d.key
+    #     .call (d) ->
+    #       console.log "call1",d
+    #       d.enter().append "circle"
+    #     .call (d) ->
+    #       console.log "call2",d
+    #       d.exit().remove()
+    #     .attr "cy", (d,i) ->
+    #       console.log "cy",d,i
+    #       i-0.25 + "em"
+    #     .attr "r", "0.4em"
+    #     .style "fill", (d) ->
+    #       console.log "fill", d
+    #       d.value.color
+
+    #   lbbox = li[0][0].getBBox()
+    #   lb.attr "x", lbbox.x - legendPadding
+    #     .attr "y", lbbox.y - legendPadding
+    #     .attr "height", lbbox.height+2*legendPadding
+    #     .attr "width", lbbox.width+2*legendPadding
+
+    # elem
+
+
+  clearChart: () ->
+    elem = @.$el.find(".vis-chart")[0]
+    $(elem).children().remove()

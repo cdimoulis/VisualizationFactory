@@ -84,11 +84,8 @@ App.Views["abstract/graph"].extend
         "-.#{l}em"
       .style "fill", "white"
       .text ( d ) => 
+        console.log arguments
         d
 
     bars
 
-
-  clearChart: () ->
-    elem = @.$el.find(".grep-chart")[0]
-    $(elem).children().remove()

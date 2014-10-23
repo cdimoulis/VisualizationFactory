@@ -1,0 +1,13 @@
+/*
+ * Style for d3 graphs
+ */
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  // display: none;
+}
