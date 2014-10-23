@@ -1,0 +1,26 @@
+/*
+ * This is the style for the general layout of the site. No specific view/page style should
+ * be placed in this file.
+ */
+
+html,body{
+  height: 100%;
+}
+
+div#main-wrapper{
+  padding-top: 51px;
+  height: 100%;
+  background: #fafafa;
+}
+
+#left-panel, .sidebar{
+  height: 100%;
+}
+
+.no-padding{
+  padding: 0 !important;
+}
+
+.nav-sidebar > .active > a{
+  background: #fafafa;
+}
