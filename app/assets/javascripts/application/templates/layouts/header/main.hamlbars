@@ -1,0 +1,8 @@
+.container-fluid
+  .navbar-header
+    .navbar-brand
+      Visualalization Factory
+  %ul.nav.navbar-nav
+    %li
+      %a{href: "#"}
+        Data Set 1

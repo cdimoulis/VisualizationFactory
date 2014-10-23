@@ -1,0 +1,4 @@
+%ul.nav.nav-sidebar
+  {{#each pagenames}}
+  {{view "layouts/sidebar/nav_item" pagename=this currentPage=../currentPage}}
+  {{/each}}
