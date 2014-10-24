@@ -1,7 +1,7 @@
 App.Model.extend
   name: 'GraphConfig'
 
-  _attributes: ['height', 'xAxisPos', 'yAxisPos', 'margin', 'xKey', 'yKey', 'color', 'size', 'xFormat', 'yFormat']
+  _attributes: ['height', 'xAxisPos', 'yAxisPos', 'margin', 'xKey', 'yKey', 'color', 'size', 'xFormat', 'yFormat', 'legend', 'grid_lines']
   _descriptions:
     'height': "Type: NUMBER. The height of the graph."
     'xAxisPos': "Type: STRING. The positiong of the x Axis. left, right, top, bottom."
@@ -13,6 +13,8 @@ App.Model.extend
     'size': "Type: FUNCTION. Used to determining data point size. Will be passed model from the graph's dataCollection."
     'xFormat': "Type: FUNCTION. Used to determine the display format of the x axis points. Will be passed the x value."
     'yFormat': "Type: FUNCTION. Used to determine the display format of the y axis points. Will be passed the y value."
+    'legend': "Type: BOOLEAN. True to show legend, false for no legend."
+    'grid_lines': "Type: BOOLEAN. True to show grid lines, false for no grid lines."
 
   _defaults:
     'height': 400
@@ -29,6 +31,8 @@ App.Model.extend
     'size': null
     'xFormat': (x) -> x
     'yFormat': (y) -> y
+    'legend': true
+    'grid_lines': true
 
   initialize: () ->
 

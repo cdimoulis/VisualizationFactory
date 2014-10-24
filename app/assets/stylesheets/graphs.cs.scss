@@ -2,12 +2,25 @@
  * Style for d3 graphs
  */
 
-.axis path, .axis line {
+.vis-chart .axis path, .vis-chart .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
 }
 
-.x.axis path {
+.vis-chart .x.axis path {
   // display: none;
+}
+
+.vis-chart .legend-text {
+  font-size: 12px;
+}
+
+.vis-chart .axis-label {
+  font-size: 14px;
+}
+
+.vis-chart .tick line{
+  stroke: lightgrey;
+  opacity: 0.7;
 }

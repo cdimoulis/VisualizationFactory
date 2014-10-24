@@ -1,6 +1,7 @@
 App.View.extend
   name: "abstract/graph"
   showing: true
+  _legendHeight: 0
   _percentWidth: 100
   _pixelWidth: 0
   template: () -> "<svg class='vis-chart'></svg>"
@@ -12,15 +13,13 @@ App.View.extend
 
   initialize: () ->
 
-    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "setConfigOptions", "_isConfigValid", "fullScreenHandler", "setData", "_parseData", "_detectDataType", "_convertData", "isDataValid", "isDataEmpty", "setAxisRange", "setAxisDomain", "createChart", "drawXAxis", "drawYAxis", "drawLegend", "_legend", "clearChart"
+    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "setConfigOptions", "_isConfigValid", "setData", "_parseData", "_detectDataType", "_convertData", "isDataValid", "isDataEmpty", "setAxisRange", "setAxisDomain", "createChart", "drawXAxis", "drawYAxis", "drawLegend", "_legend", "_positionLegend", "clearChart"
 
     $(window).on "resize", @._onResize
 
     @.setConfigOptions()
 
     @.setData()
-
-    # @.fullScreenHandler()
 
     @.postInitialize()
 
@@ -54,18 +53,6 @@ App.View.extend
   updateView: (e) ->
     @._parseData()
     @.doChart()
-
-
-  fullScreenHandler: () ->
-    # A Full Screen Model was placed the config collection by the jarvis widget
-    @.listenTo @.config.get("full_screen_model"), "change", (full_screen_model) =>
-      if full_screen_model.get("fullscreen")
-        @.height = @.$el.height() - 34
-        
-      else
-        @.height = @.dataConfig.get("height")
-
-      @.render()
 
   setConfigOptions: () ->
     # @.dataConfig = @.data.get("dataConfig")
@@ -202,21 +189,18 @@ App.View.extend
 
     if @.isDataValid()  and !@.isDataEmpty()
 
+      @.chart = @.createChart()
+
       @.setAxisRange "x"
       @.setAxisRange "y"
 
       @.setAxisDomain "x"
       @.setAxisDomain "y"
 
-      @.chart = @.createChart()
-
       @.drawXAxis()
       @.drawYAxis()
 
       @.doDataDisplay()
-
-      window.chart = @.chart
-      @.drawLegend()
 
     else
 
@@ -266,17 +250,25 @@ App.View.extend
     @[axis].domain domain
 
   createChart: () ->
+    # Only get the chart element for this view
     elem = @.$el.find(".vis-chart")
 
+    # Apply width. If legend is true, draw it
+    # Height includes chart height, top margin, and legend height
+    # Then apply a chart wrapper for transforming the chart (not including the legend)
     chart = d3.select elem[0]
       .attr "width", "100%"
-      .attr "height", @.dataConfig.get("height") + @.dataConfig.get("margin").top + @.dataConfig.get("margin").bottom
+      .call if @.dataConfig.get("legend") then @.drawLegend else () -> null
+      .attr "height", @.dataConfig.get("height") + @.dataConfig.get("margin").top + @.dataConfig.get("margin").bottom + @._legendHeight
     .append "g"
       .attr "class", "chart_wrapper"
-      .attr "transform", "translate(#{@.dataConfig.get('margin').left}, #{@.dataConfig.get('margin').top})"
+      .attr "transform", "translate(#{@.dataConfig.get('margin').left}, #{@.dataConfig.get('margin').top + @._legendHeight})"
     chart
 
   drawXAxis: () ->
+    grid = 0
+    if @.dataConfig.get("grid_lines")
+      grid = -@.dataConfig.get("height")
 
     x = @.x.copy()
     range = [0, @._pixelWidth]
@@ -285,6 +277,7 @@ App.View.extend
     @.xAxis = d3.svg.axis()
       .scale x
       .orient @.dataConfig.get("xAxisPos")
+      .innerTickSize grid
       .tickFormat @.dataConfig.get("xFormat")
       # .ticks 10
 
@@ -300,9 +293,14 @@ App.View.extend
 
 
   drawYAxis: () ->
+    grid = 0
+    if @.dataConfig.get("grid_lines")
+      grid = -@._pixelWidth
+
     @.yAxis = d3.svg.axis()
       .scale @.y
       .orient @.dataConfig.get("yAxisPos")
+      .innerTickSize grid
       .tickFormat @.dataConfig.get("yFormat")
       # .ticks 10
 
@@ -310,16 +308,17 @@ App.View.extend
         .attr "class", "y axis"
         .call @.yAxis
       .append "text"
+        .attr "class", "axis-label"
         .attr "transform", "rotate(-90)"
         .attr "y", 6
         .attr "dy", ".71em"
         .style "text-anchor", "end"
         .text "Something"
 
-  drawLegend: () ->
-    @.chart.append "g"
+  drawLegend: (chart) ->
+    chart.append "g"
       .attr "class", "legend"
-      .attr "transform", "translate(50,0)"
+      .attr "transform", "translate(#{@.dataConfig.get('margin').left}, #{@.dataConfig.get('margin').top - 10})"
       .style "font-size", "12px"
       .call @._legend
 
@@ -330,95 +329,59 @@ App.View.extend
 
     legend.enter().append "circle"
       .attr "class", "legend-item"
-      .attr "cx", (d,i) ->
-        0
-      .attr "cy", (d,i) ->
-        i*20
+      .attr "cx", 0
+      .attr "cy", 0
       .style "fill", (d, index) =>
         model = @.dataCollection.at index
         @.dataConfig.get("color") @.dataCollection, model, index
-      .attr "r", 5
+      .attr "r", 7
 
     legend.enter().append "text"
       .attr "class", "legend-text"
-      .attr "x", (d,i) ->
-        10
-      .attr "y", (d,i) ->
-        i*20 + 3
+      .attr "x", 0
+      .attr "y", 0
       .text (d,i) ->
-        console.log "text",d,i
         d.capitalize()
 
-    # elem.each () ->
-    #   console.log "start"
-    #   items = {}
-    #   g = d3.select @
-    #   svg = d3.select g.property("nearestViewportElement")
-    #   legendPadding = g.attr("data-style-padding") or 5
-    #   lb = g.selectAll(".legend-box").data([true])
-    #   li = g.selectAll(".legend-box").data([true])
+    @._positionLegend()
 
-    #   lb.enter()
-    #     .append "rect"
-    #     .classed "legend-box", true
+  _positionLegend: () ->
 
-    #   li.enter()
-    #     .append "g"
-    #     .classed "legend-items", true
+    xGap = 30
+    yGap = 10
+    currentWidth = 0
+    currentRow = 0
+    xPos = []
+    yPos = []
+    row = []
 
-    #   svg.selectAll("[data-legend]").each () ->
-    #     console.log "data-legend"
-    #     self = d3.select @
-    #     items[self.attr("data-legend")] = 
-    #       pos: self.attr("data-legend-pos") or @.getBBox().yAxisType
-    #       color: if self.attr("data-legend-color") is not undefined then self.attr("data-legend-color") else if self.style("fill") is not 'none' then self.style("fill") else self.style("stroke")
+    d3.selectAll @.$el.find(".legend-text")
+      .attr 'x', (d,i) ->
+        width = @.getBBox().width
+        this_row = currentRow
+        x = currentWidth + xGap
+        if (x+width) > @._pixelWidth
+          x = xGap
+          currentRow++
+          this_row = currentRow
+          currentWidth = 0
+        else
+          currentWidth = x+width
+        xPos[i] = x
+        row[i] = this_row
+        x
+      .attr 'y', (d,i) ->
+        height = @.getBBox().height
+        yPos[i] = height * row[i] + yGap
+        height * row[i] + yGap + 4
 
-    #   console.log "items",items
-    #   items = d3.entries(items).sort (a,b) ->
-    #     console.log "a,b", a,b
-    #     a.value.pos - b.value.pos
+    d3.selectAll @.$el.find(".legend-item")
+      .attr 'cx', (d,i) ->
+        xPos[i] - 10
+      .attr 'cy', (d,i) ->
+        yPos[i]
 
-    #   li.selectAll "text"
-    #     .data items, (d) ->
-    #       console.log ".data items",d
-    #       d.key
-    #     .call (d) ->
-    #       console.log "call1", d
-    #       d.enter().append("text")
-    #     .call (d) ->
-    #       console.log "call2", d
-    #       d.exit().remove()
-    #     .attr "y", (d,i) ->
-    #       i+"em"
-    #     .attr "x", "1em"
-    #     .text (d) ->
-    #       d.key
-
-    #   li.selectAll "circle"
-    #     .data items, (d) ->
-    #       console.log "circle .data items", d
-    #       d.key
-    #     .call (d) ->
-    #       console.log "call1",d
-    #       d.enter().append "circle"
-    #     .call (d) ->
-    #       console.log "call2",d
-    #       d.exit().remove()
-    #     .attr "cy", (d,i) ->
-    #       console.log "cy",d,i
-    #       i-0.25 + "em"
-    #     .attr "r", "0.4em"
-    #     .style "fill", (d) ->
-    #       console.log "fill", d
-    #       d.value.color
-
-    #   lbbox = li[0][0].getBBox()
-    #   lb.attr "x", lbbox.x - legendPadding
-    #     .attr "y", lbbox.y - legendPadding
-    #     .attr "height", lbbox.height+2*legendPadding
-    #     .attr "width", lbbox.width+2*legendPadding
-
-    # elem
+    @._legendHeight = 25 * (currentRow + 1)
 
 
   clearChart: () ->
