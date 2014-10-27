@@ -1,0 +1,1 @@
+{{view "components/graphs/treemap/main" dataCollection=data dataConfig=dataConfig}}
