@@ -187,6 +187,7 @@ App.View.extend
       .style "heigth", "#{@._height + @.dataConfig.get('margin').top + @.dataConfig.get('margin').bottom}px"
       .style "left", "#{@.dataConfig.get('margin').left}px"
       .style "top", "#{@.dataConfig.get('margin').top}px"
+      .datum 
 
     window.treemap = treemap
 

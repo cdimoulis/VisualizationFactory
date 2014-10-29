@@ -42,6 +42,7 @@ App.Page.extend
 
     @.dataConfig = new App.Model
       key: "name"
+      size: "val"
       'margin':
         "top": 10
         "right": 10

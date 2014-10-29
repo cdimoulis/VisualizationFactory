@@ -1,1 +1,5 @@
 {{view "components/graphs/bar/main" dataCollection=data1 dataConfig=dataConfig1}}
+
+{{view "components/graphs/scatterplot/main" dataCollection=data4 dataConfig=dataConfig4}}
+
+{{view "components/graphs/line/main" dataCollection=data2 dataConfig=dataConfig2}}

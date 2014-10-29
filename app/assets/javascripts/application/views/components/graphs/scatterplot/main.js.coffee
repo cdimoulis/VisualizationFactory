@@ -11,7 +11,7 @@ dataConfig: Model for configuration
   -> x: REQUIRED
   -> y: REQUIRED
   -> color: OPTIONAL
-  -> size: N/A
+  -> size: REQUIRED
   -> xFormat: OPTIONAL
   -> yFormat: OPTIONAL
 
@@ -25,10 +25,9 @@ options: Model with data for view
 ###
 
 App.Views["abstract/graph"].extend 
-  name: 'components/graphs/bar/main'
-  required_attrs: ['xKey','yKey']
-  _padding: .15
-  _chartXDataCategory: "discrete"
+  name: 'components/graphs/scatterplot/main'
+  required_attrs: ['xKey','yKey','size']
+  _chartXDataCategory: "continuous"
 
   postInitialize: () ->
 
@@ -40,33 +39,28 @@ App.Views["abstract/graph"].extend
 
   doDataDisplay: () ->
 
-    @.barWidth = @.x.rangeBand()
+    plots = @.createPlots()
 
-    bars = @.createBars()
+    plots = @.drawPlots plots
 
-    bars = @.drawBars bars
+  createPlots: () ->
 
-    if @.barText
-      bars = @.drawBarText bars
-
-  createBars: () ->
-
-    bars = @.chart.selectAll ".bars"
+    plots = @.chart.selectAll ".plot"
         .data @.yAxisData
 
-    bars
+    plots
 
-  drawBars: ( bars ) ->
+  drawPlots: ( plots ) ->
 
-    bars.enter().append "rect"
-      .attr "class", "bar"
-      .attr "y", ( d ) =>
+    plots.enter().append "circle"
+      .attr "class", "plot"
+      .attr "cy", ( d ) =>
         @.y d
-      .attr "x", ( d, index ) => 
+      .attr "cx", ( d, index ) => 
         "#{@.x( @.xAxisData[ index ] )}%"
-      .attr "height", ( d ) => 
-        @.dataConfig.get("height") - @.y d
-      .attr "width", @.barWidth + "%"
+      .attr "r", ( d, index ) => 
+        model = @._dataModels[ index ]
+        @.dataConfig.get("size") model
       .style "stroke", ( d, index ) =>
         model = @._dataModels[ index ]
         @.dataConfig.get('color') @.dataCollection, model
@@ -74,24 +68,6 @@ App.Views["abstract/graph"].extend
         model = @._dataModels[ index ]
         @.dataConfig.get("color") @.dataCollection, model
       .on "click", () ->
-        console.log "click bar", arguments
+        console.log "click plot", arguments
 
-    bars
-
-  drawBarText: ( bars ) ->
-
-    bars.append "text"
-      .attr "x", ( d, index ) => 
-        ( @.x( @.xAxisData[ index ] ) + @.barWidth/2 ) + "%"
-      .attr "y", ( d ) => 
-        @.y(d) + 3
-      .attr "dy", "1em"
-      .attr "dx", ( d ) => 
-        l = "#{d}".length
-        "-.#{l}em"
-      .style "fill", "white"
-      .text ( d ) => 
-        d
-
-    bars
-
+    plots

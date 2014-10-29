@@ -12,6 +12,24 @@
   // display: none;
 }
 
+.vis-chart rect.bar, .vis-chart circle.legend-item, .vis-chart circle.plot {
+  stroke-width: 2;
+  stroke-opacity: 1 !important;
+}
+
+.vis-chart circle.plot, .vis-chart rect.bar {
+  fill-opacity: .6;
+}
+
+.vis-chart path.line {
+  stroke-width: 4;
+  fill: none;
+}
+
+.vis-chart .legend {
+  z-index: 10;
+}
+
 .vis-chart .legend-text {
   font-size: 12px;
 }
