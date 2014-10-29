@@ -13,7 +13,14 @@ div#main-wrapper{
   background: #fafafa;
 }
 
-#left-panel, .sidebar{
+#left-panel{
+  // position: fixed;
+  // left: 0;
+  // top: 51px;
+  height: 100%;
+}
+
+.sidebar {
   height: 100%;
 }
 
@@ -23,4 +30,9 @@ div#main-wrapper{
 
 .nav-sidebar > .active > a{
   background: #fafafa;
+}
+
+.page {
+  height: 100%;
+  // overflow-y: scroll;
 }
