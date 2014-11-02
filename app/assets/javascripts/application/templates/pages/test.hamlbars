@@ -1,3 +1,6 @@
-%h3 TEST
-
-%canvas#webgl_canvas{height: "500px", width: "500px"}
+.row
+  %article.col-xs-12
+    %h3 TEST
+.row
+  %article.col-xs-12
+    {{view "components/test/opengl/main" height=400}}
