@@ -1,9 +1,38 @@
-App.Views.extend 
-  name: 'components/tables/main'
-  tagName: "table"
+App.View.extend 
+  name: 'components/table/main'
+  ignoreList: ["id", "created_at","updated_at"]
 
-  postInitialize: () ->
+  initialize: () ->
+
+    _.bindAll @, "onViewDidLoad", "updateView", "parseData"
+
+    @.listenTo @.tableCollection, "sync", @.updateView
+
+    @.parseData()
 
     @
 
   onViewDidLoad: () ->
+
+
+  updateView: () ->
+    @.parseData()
+    @.render()
+
+  parseData: () ->
+
+    @.tableData = []
+
+    unless _.isEqual @.tableCollection.length, 0
+      first = @.tableCollection.first()
+
+      keys = _.keys first.attributes
+
+      @.titles = _.difference keys, @.ignoreList
+
+      @.tableCollection.each (model) =>
+        data = []
+        _.each @.titles, (title) =>
+          data.push model.get title 
+
+        @.tableData.push data

@@ -1,0 +1,18 @@
+%h3 Raw Data
+.row
+  .col.col-xs-6
+    {{view "components/table/main" tableCollection=categories dataTitle="Categories"}}
+
+  .col.col-xs-6
+    {{view "components/table/main" tableCollection=outcomes dataTitle="Outcomes"}}
+
+.row
+  .col.col-xs-6
+    {{view "components/table/main" tableCollection=courses dataTitle="Courses"}}
+
+  .col.col-xs-6
+    {{view "components/table/main" tableCollection=scheduledCourses dataTitle="Scheduled Courses"}}
+
+.row
+  .col.col-xs-12
+    {{view "components/table/main" tableCollection=scores dataTitle="Scores"}}

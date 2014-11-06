@@ -1,0 +1,12 @@
+%h4 {{dataTitle}}
+%table.table.table-striped.table-bordered.table-hover
+  %tr
+    {{#each titles}}
+    %th {{this}}
+    {{/each}}
+  {{#each tableData}}
+  %tr
+    {{#each this}}
+    %td {{this}}
+    {{/each}}
+  {{/each}}
