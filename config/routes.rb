@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
   get 'main/index'
 
-  resources :monkey do
-    resources :cheese, only: [:create, :new]
-    resources :love, only: [:show, :index]
-  end
+  resources :courses 
+
+  resources :categories
+
+  resources :outcomes
+
+  resources :scheduled_courses
+
+  resources :scores
 
   root 'main#index'
   # The priority is based upon order of creation: first created -> highest priority.
