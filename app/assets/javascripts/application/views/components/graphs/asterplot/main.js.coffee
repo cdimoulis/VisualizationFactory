@@ -43,8 +43,6 @@ App.View.extend
 
       @.innerRadius = .3 * @.radius
 
-      console.log @.radius, @.innerRadius
-
       @.doChart()
 
 
@@ -139,7 +137,7 @@ App.View.extend
     @.arc = d3.svg.arc()
       .innerRadius @.innerRadius
       .outerRadius (d) =>
-        ( @.radius - @.innerRadius ) * ( d.data.val / 100) + @.innerRadius
+        ( @.radius - @.innerRadius ) * ( d.data.val / @.dataConfig.get('maxScore')) + @.innerRadius
 
     @.outlineArc = d3.svg.arc()
       .innerRadius @.innerRadius
@@ -173,11 +171,11 @@ App.View.extend
         .attr "stroke", "gray"
         .attr "d", @.outlineArc
 
-    total = data.reduce (a,b) ->
-      a + (b.score * b.weight)
+    total = @.dataCollection.reduce (a,b) ->
+      a + (b.val * b.weight)
     , 0
 
-    weight = data.reduce (a,b) ->
+    weight = @.dataCollection.reduce (a,b) ->
       a + b.weight
     , 0
 

@@ -20,6 +20,7 @@ App.Page.extend
       key: "name"
       size: "val"
       height: 500
+      maxScore: 50
       'margin':
         "top": 10
         "right": 10
