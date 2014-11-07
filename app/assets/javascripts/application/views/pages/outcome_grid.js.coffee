@@ -15,11 +15,11 @@ App.Page.extend
     @.scheduledCourses = App.get("App:ScheduledCourses")
     @.scores = App.get("App:Scores")
 
-    @.years = []
     @.gridConfig = new App.Model
       year: 2013
       semester: "fall"
 
+    @.years = []
     _.each _.range(10), (num) =>
       @.years.push @.gridConfig.get('year')-num
 

@@ -14,7 +14,7 @@ App.View.extend
 
   initialize: () ->
 
-    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "clearChart"
+    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "showTooltip", "hideTooltip", "clearChart"
 
     $(window).on "resize", @._onResize
 
@@ -22,7 +22,7 @@ App.View.extend
 
     @.setConfigOptions()
 
-    # @.setData()
+    @.setData()
 
     @.postInitialize()
 
@@ -34,6 +34,15 @@ App.View.extend
   _onReady: () ->
 
     _.defer () =>
+
+      if _.isUndefined @.tooltip
+        @.tooltip = d3.select "div.vis-chart-tooltip"
+
+        if _.isNull @.tooltip[0][0]
+          @.tooltip = d3.select("body").append("div")
+            .attr "class", "vis-chart-tooltip"
+            .style "opacity", 0
+
 
       @._percentWidth = 100 - ( ( @.dataConfig.get("margin").left + @.dataConfig.get("margin").right) / @.$el.width() ) * 100
 
@@ -91,14 +100,16 @@ App.View.extend
       @._parseData()
 
       # If dataCollection changes then re-parse the dataCollection
-      @.listenTo @.dataCollection, "add remove reset sort", @.updateView
-      window.col = @.dataCollection
+      @.listenTo @.dataCollection, "change", @.updateView
+      
 
     # Error if no collection
     else
       throw "#{@.name}: Collection Error: data collection is #{collection}."
 
   _parseData: () ->
+
+    @.asterData = @.dataCollection.get "data"
 
 
   _detectDataType: ( axis ) ->
@@ -125,8 +136,8 @@ App.View.extend
 
     @.pie = d3.layout.pie()
       .sort null
-      .value (d) ->
-        d.weight
+      .value (d) =>
+        d[ @.dataConfig.get 'weightKey' ]
 
     # @.tip = d3.tip()
     #   .attr "class", "d3-tip"
@@ -137,7 +148,7 @@ App.View.extend
     @.arc = d3.svg.arc()
       .innerRadius @.innerRadius
       .outerRadius (d) =>
-        ( @.radius - @.innerRadius ) * ( d.data.val / @.dataConfig.get('maxScore')) + @.innerRadius
+        ( @.radius - @.innerRadius ) * ( d.data[ @.dataConfig.get "value" ] / @.dataConfig.get('maxValue')) + @.innerRadius
 
     @.outlineArc = d3.svg.arc()
       .innerRadius @.innerRadius
@@ -153,30 +164,31 @@ App.View.extend
   doDataDisplay: () ->
 
     path = @.chart.selectAll ".solidArc"
-        .data @.pie( @.dataCollection )
+        .data @.pie( @.asterData )
       .enter().append "path"
         .attr "class", "solidArc"
         .attr "fill", (d) =>
-          @.color d.data.name
+          @.color d.data[ @.dataConfig.get "key" ]
         .attr "stroke", "gray"
         .attr "d", @.arc
-        # .on "mouseover", @.tip.show
-        # .on "mouseout", @.tip.hide
+        .on "mouseover", (d) =>
+          @.showTooltip d.data
+        .on "mouseout", @.hideTooltip
 
     outerPath = @.chart.selectAll ".outlineArc"
-        .data @.pie( @.dataCollection )
+        .data @.pie( @.asterData )
       .enter().append "path"
         .attr "class", "outlineArc"
         .attr "fill", "none"
         .attr "stroke", "gray"
         .attr "d", @.outlineArc
 
-    total = @.dataCollection.reduce (a,b) ->
-      a + (b.val * b.weight)
+    total = @.asterData.reduce (a,b) =>
+      a + ( b[ @.dataConfig.get "value" ] * b[ @.dataConfig.get 'weightKey' ] )
     , 0
 
-    weight = @.dataCollection.reduce (a,b) ->
-      a + b.weight
+    weight = @.asterData.reduce (a,b) =>
+      a + b[ @.dataConfig.get 'weightKey' ]
     , 0
 
     score = total / weight
@@ -185,9 +197,26 @@ App.View.extend
       .attr "class", "aster-score"
       .attr "dy", ".35em"
       .attr "text-anchor", "middle"
-      .text Math.round(score)
+      .text Math.round( ( score * 100) ) / 100
+
+
+  showTooltip: ( data ) ->
+    t = @.dataConfig.get('tooltip') @.dataCollection, data
+
+    if !_.isEmpty( t )
+      @.tooltip.html t
+        .transition().duration 200
+          .style "opacity", 1
+          .style 'left', "#{d3.event.pageX}px"
+          .style 'top', "#{d3.event.pageY}px"
+    
+
+  hideTooltip: () ->
+    @.tooltip.transition()
+      .duration 200
+      .style "opacity", 0
 
 
   clearChart: () ->
-    elem = @.$el.find(".vis-chart")[0]
+    elem = @.$el.find(".vis-asterplot")[0]
     $(elem).children().remove()

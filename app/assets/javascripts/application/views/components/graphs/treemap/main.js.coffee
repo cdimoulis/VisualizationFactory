@@ -153,5 +153,5 @@ App.View.extend
       "#{Math.max(0,d.dy-1)}px"
 
   clearChart: () ->
-    elem = @.$el.find(".vis-chart")[0]
+    elem = @.$el.find(".vis-treemap")[0]
     $(elem).children().remove()

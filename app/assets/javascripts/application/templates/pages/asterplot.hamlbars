@@ -1,4 +1,31 @@
 %h3 Aster Plot
 
 %article.col-xs-12
-  {{view "components/graphs/asterplot/main" dataCollection=data dataConfig=dataConfig}}
+  .row
+    .col.col-xs-5.text-right
+      Year:
+      %select.year
+        {{#each years}}
+        %option{value: "{{this}}"}
+          {{this}}
+        {{/each}}
+
+    .col.col-xs-2.text-center
+      Semester:
+      %select.semester
+        %option{value: "fall"}
+          Fall
+        %option{value: "spring"}
+          Spring
+
+    .col.col-xs-5.text-left
+      Outcome:
+      %select.outcome
+        {{#each outcomes.models}}
+        %option{value: "{{this.attributes.id}}"}
+          {{this.attributes.text}}
+        {{/each}}
+
+  .row
+    .col.col-xs-12
+      {{view "components/graphs/asterplot/main" dataCollection=scoreData dataConfig=dataConfig}}
