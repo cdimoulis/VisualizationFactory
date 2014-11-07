@@ -1,0 +1,31 @@
+.row
+  .col.col-xs-2.grid-header.text-center
+    %strong
+      Course
+  {{#each outcomes.models}}
+  .col.col-xs-1.grid-header.text-center
+    %strong
+      {{this.attributes.text}}
+  {{/each}}
+{{#each gridData}}
+.row
+  .col.col-xs-2.grid-header.text-center
+    %strong
+      {{this.course}}
+  {{#each this.outcome}}
+  .col.col-xs-1.grid-data.text-center
+    {{#if this}}
+    .fa.fa-check.fa-2x
+    {{else}}
+    .blank
+    {{/if}}
+  {{/each}}
+{{/each}}
+.row
+  .col.col-xs-2.grid-header.text-center
+    %strong
+      Total
+  {{#each totalData}}
+  .col.col-xs-1.grid-data.text-center
+    {{this}}
+  {{/each}}

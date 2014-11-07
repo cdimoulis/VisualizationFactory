@@ -1,0 +1,21 @@
+%h3 Outcomes Grid
+%article.col-xs-12
+  .row
+    .col.col-xs-6.text-right
+      Year:
+      %select.year
+        {{#each years}}
+        %option{value: "{{this}}"}
+          {{this}}
+        {{/each}}
+    .col.col-xs-6.text-left
+      Semester:
+      %select.semester
+        %option{value: "fall"}
+          Fall
+        %option{value: "spring"}
+          Spring
+
+  .row
+    .col.col-xs-12
+      {{view "components/outcome_grid/main" gridConfig=gridConfig outcomes=outcomes courses=courses scheduledCourses=scheduledCourses scores=scores}}
