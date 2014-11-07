@@ -14,7 +14,7 @@ App.View.extend
 
   initialize: () ->
 
-    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "showTooltip", "hideTooltip", "clearChart"
+    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "changeWeight", "showTooltip", "hideTooltip", "clearChart"
 
     $(window).on "resize", @._onResize
 
@@ -67,6 +67,7 @@ App.View.extend
   updateView: (e) ->
     @._parseData()
     @.doChart()
+    # @.changeWeight()
 
   setConfigOptions: () ->
 
@@ -129,6 +130,8 @@ App.View.extend
 
     @.doDataDisplay()
 
+    @.changeWeight()
+
 
   createChart: () ->
     # Only get the chart element for this view
@@ -138,12 +141,6 @@ App.View.extend
       .sort null
       .value (d) =>
         d[ @.dataConfig.get 'weightKey' ]
-
-    # @.tip = d3.tip()
-    #   .attr "class", "d3-tip"
-    #   .offset 0,0
-    #   .html (d) ->
-    #     "#{d.data.label}: <span style='color:orangered'>#{d.data.score}</span>"
 
     @.arc = d3.svg.arc()
       .innerRadius @.innerRadius
@@ -155,15 +152,14 @@ App.View.extend
       .outerRadius @.radius
 
     @.chart = d3.select( elem[0] ).append("svg")
-      .attr "width", @._pixelWidth
-      .attr "height", @.dataConfig.get("height")
+        .attr "width", @._pixelWidth
+        .attr "height", @.dataConfig.get("height")
       .append "g"
-      .attr "transform", "translate(#{@._pixelWidth/2},#{@.dataConfig.get('height')/2})"
-      # .call @.tip
+        .attr "transform", "translate(#{@._pixelWidth/2},#{@.dataConfig.get('height')/2})"
 
   doDataDisplay: () ->
 
-    path = @.chart.selectAll ".solidArc"
+    @.path = @.chart.selectAll ".solidArc"
         .data @.pie( @.asterData )
       .enter().append "path"
         .attr "class", "solidArc"
@@ -174,8 +170,9 @@ App.View.extend
         .on "mouseover", (d) =>
           @.showTooltip d.data
         .on "mouseout", @.hideTooltip
+        .each (d) => @._current = d
 
-    outerPath = @.chart.selectAll ".outlineArc"
+    @.outerPath = @.chart.selectAll ".outlineArc"
         .data @.pie( @.asterData )
       .enter().append "path"
         .attr "class", "outlineArc"
@@ -183,6 +180,15 @@ App.View.extend
         .attr "stroke", "gray"
         .attr "d", @.outlineArc
 
+    score = @.getScore()
+
+    @.text = @.chart.append "svg:text"
+      .attr "class", "aster-score"
+      .attr "dy", ".35em"
+      .attr "text-anchor", "middle"
+      .text Math.round( ( score * 100) ) / 100
+
+  getScore: () ->
     total = @.asterData.reduce (a,b) =>
       a + ( b[ @.dataConfig.get "value" ] * b[ @.dataConfig.get 'weightKey' ] )
     , 0
@@ -191,14 +197,34 @@ App.View.extend
       a + b[ @.dataConfig.get 'weightKey' ]
     , 0
 
-    score = total / weight
+    if _.isEqual weight, 0
+      score = 0
+    else
+      score = total / weight
 
-    @.chart.append "svg:text"
-      .attr "class", "aster-score"
-      .attr "dy", ".35em"
-      .attr "text-anchor", "middle"
-      .text Math.round( ( score * 100) ) / 100
+    score
 
+  changeWeight: () ->
+    @.path = @.path.data @.pie( @.asterData )
+    @.outerPath = @.outerPath.data @.pie( @.asterData )
+
+    @.path.transition()
+      .duration 750
+      .attrTween "d", (d) =>
+        i = d3.interpolate @._current, d
+        @._current = i(0)
+        (t) => @.arc(i(t))
+
+    @.outerPath.transition()
+      .duration 750
+      .attrTween "d", (d) =>
+        i = d3.interpolate @._current, d
+        @._current = i(0)
+        (t) => @.outlineArc(i(t))
+
+    score = @.getScore()
+
+    @.text.text Math.round( (score * 100 ) ) / 100
 
   showTooltip: ( data ) ->
     t = @.dataConfig.get('tooltip') @.dataCollection, data

@@ -5,10 +5,11 @@ App.Page.extend
     'change select.year': 'setYear'
     'change select.semester': "setSemester"
     'change select.outcome': 'setOutcome'
+    'change input.weighted': 'setWeighted'
 
   initialize: () ->
 
-    _.bindAll @, "parseData", "setYear", "setSemester", "setOutcome"
+    _.bindAll @, "parseData", "setYear", "setSemester", "setOutcome", "setWeighted"
 
     ### TEST DATA ###
 
@@ -51,10 +52,10 @@ App.Page.extend
       color: (collection, model, index) ->
         d3.scale.category10().range()[index]
       tooltip: (collection, data) =>
-        "<header>#{data.num}</header>
+        "<header>Course: #{data.num}</header>
          <div>
-          <div>Score:#{data.score}</div>
-          <div>Size:#{data.classSize}</div>
+          <div>Score: #{data.score}</div>
+          <div>Class Size: #{data.classSize}</div>
          </div>
         "
 
@@ -83,8 +84,9 @@ App.Page.extend
           "num": course.get "number" 
           "outcome": @.outcome.get("text")
           "score": score.get("score")
-          "classSize": 1   # schedCourse.get 'num_students'
+          "classSize": if @.weighted then parseInt(30 * Math.random()) else 1   # schedCourse.get 'num_students'
 
+        # console.log data.classSize
         selectedData.push data
 
     @.scoreData.set "data", selectedData
@@ -112,5 +114,10 @@ App.Page.extend
       @.outcome = App.get("App:Outcomes").get 1
     else
       @.outcome = App.get("App:Outcomes").get parseInt e.target.value
+
+    @.parseData()
+
+  setWeighted: (e) ->
+    @.weighted = e.target.checked
 
     @.parseData()
