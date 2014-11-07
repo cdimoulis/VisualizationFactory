@@ -6,8 +6,6 @@ App.View.extend
 
     _.bindAll @, "onViewDidLoad", "updateView", "parseData"
 
-    @.listenTo @.tableCollection, "sync", @.updateView
-
     @.parseData()
 
     @

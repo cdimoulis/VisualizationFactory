@@ -9,17 +9,11 @@ App.Page.extend
 
     _.bindAll @, "onViewDidLoad", "setYear", "setSemester"
 
-    @.categories = new App.Collections.Categories()
-    @.courses = new App.Collections.Courses()
-    @.outcomes = new App.Collections.Outcomes()
-    @.scheduledCourses = new App.Collections.ScheduledCourses()
-    @.scores = new App.Collections.Scores()
-
-    @.categories.fetch()
-    @.courses.fetch()
-    @.outcomes.fetch()
-    @.scheduledCourses.fetch()
-    @.scores.fetch()
+    @.categories = App.get("App:Categories")
+    @.courses = App.get("App:Courses")
+    @.outcomes = App.get("App:Outcomes")
+    @.scheduledCourses = App.get("App:ScheduledCourses")
+    @.scores = App.get("App:Scores")
 
     @.years = []
     @.gridConfig = new App.Model

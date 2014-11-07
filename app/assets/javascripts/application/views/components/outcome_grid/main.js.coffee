@@ -6,11 +6,8 @@ App.View.extend
     _.bindAll @, "onViewDidLoad", "updateView", "parseData"
 
     @.listenTo @.gridConfig, "change", @.updateView
-    @.listenTo @.outcomes, "sync", @.updateView
-    @.listenTo @.courses, "sync", @.updateView
-    @.listenTo @.scheduledCourses, "sync", @.updateView
-    @.listenTo @.scores, "sync", @.updateView
 
+    @.parseData()
     
     @
 
