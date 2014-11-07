@@ -1,1 +1,4 @@
-{{view "components/graphs/treemap/main" dataCollection=data dataConfig=dataConfig}}
+%h3 Treemap
+
+%article.col-xs-12
+  {{view "components/graphs/treemap/main" dataCollection=data dataConfig=dataConfig}}

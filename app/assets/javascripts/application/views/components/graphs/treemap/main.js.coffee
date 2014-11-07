@@ -1,7 +1,7 @@
 App.View.extend
   name: "components/graphs/treemap/main"
   showing: true
-  _width: 500
+  _width: 800
   _height: 500
   _legendHeight: 0
   _percentWidth: 100
@@ -15,13 +15,15 @@ App.View.extend
 
   initialize: () ->
 
-    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "clearChart"
+    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "position", "clearChart"
 
     $(window).on "resize", @._onResize
 
+    @.color = d3.scale.category10()
+
     @.setConfigOptions()
 
-    @.setData()
+    # @.setData()
 
     @.postInitialize()
 
@@ -165,21 +167,20 @@ App.View.extend
 
     @.clearChart()
 
-    @.chart = @.createChart()
+    @.div = @.createChart()
 
     @.doDataDisplay()
 
-  doDataDisplay: () ->
 
   createChart: () ->
     # Only get the chart element for this view
     elem = @.$el.find(".vis-treemap")
 
-    treemap = d3.layout.treemap()
+    @.treemap = d3.layout.treemap()
       .size [@._width, @._height]
       .sticky true
       .value (d) -> 
-        d.size
+        d.val
 
     div = d3.select(elem[0]).append("div")
       .style "position", "relative"
@@ -187,22 +188,32 @@ App.View.extend
       .style "heigth", "#{@._height + @.dataConfig.get('margin').top + @.dataConfig.get('margin').bottom}px"
       .style "left", "#{@.dataConfig.get('margin').left}px"
       .style "top", "#{@.dataConfig.get('margin').top}px"
-      .datum 
 
-    window.treemap = treemap
 
-    # Apply width. If legend is true, draw it
-    # Height includes chart height, top margin, and legend height
-    # Then apply a chart wrapper for transforming the chart (not including the legend)
-    # chart = d3.select elem[0]
-    #   .attr "width", "100%"
-    #   .call if @.dataConfig.get("legend") then @.drawLegend else () -> null
-    #   .attr "height", @.dataConfig.get("height") + @.dataConfig.get("margin").top + @.dataConfig.get("margin").bottom + @._legendHeight
-    # .append "g"
-    #   .attr "class", "chart_wrapper"
-    #   .attr "transform", "translate(#{@.dataConfig.get('margin').left}, #{@.dataConfig.get('margin').top + @._legendHeight})"
-    # chart
+    div
 
+  doDataDisplay: () ->
+    node = @.div.datum(@.dataCollection).selectAll ".node"
+        .data @.treemap.nodes
+      .enter().append "div"
+        .attr "class", "node"
+        .call @.position
+        .style "background", (d) =>
+          if d.children then @.color(d.name) else null
+        .text (d) ->
+          if d.children then null else d.name
+
+
+  position: (div) ->
+
+    div.style "left", (d) ->
+      "#{d.x}px"
+    .style "top", (d) ->
+      "#{d.y}px"
+    .style "width", (d) ->
+      "#{Math.max(0,d.dx-1)}px"
+    .style "height", (d) ->
+      "#{Math.max(0,d.dy-1)}px"
 
   clearChart: () ->
     elem = @.$el.find(".vis-chart")[0]
