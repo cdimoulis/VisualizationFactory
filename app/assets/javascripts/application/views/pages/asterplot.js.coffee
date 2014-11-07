@@ -1,6 +1,6 @@
 App.Page.extend
-  name: "pages/treemap"
-  title: "Treemap"
+  name: "pages/asterplot"
+  title: "Aster Plot"
 
   initialize: () ->
 
@@ -75,7 +75,6 @@ App.Page.extend
     @.dataConfig = new App.Model
       key: "name"
       size: "val"
-      height: 500
       'margin':
         "top": 10
         "right": 10
