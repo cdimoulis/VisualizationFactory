@@ -27,7 +27,8 @@ options: Model with data for view
 App.Views["abstract/graph"].extend 
   name: 'components/graphs/bar/main'
   required_attrs: ['xKey','yKey']
-  _padding: .15
+  _innerPadding: .15
+  _edgePadding: .15
   _chartXDataCategory: "discrete"
 
   postInitialize: () ->

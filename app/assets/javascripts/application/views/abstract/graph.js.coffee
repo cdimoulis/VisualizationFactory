@@ -276,10 +276,10 @@ App.View.extend
 
     if _.isEqual( @.xAxisType, "string" ) or _.isEqual( @._chartXDataCategory, "discrete" )
       @.x = d3.scale.ordinal()
-        .rangeBands range, @._padding, @._padding
+        .rangeBands range, @._innerPadding, @._edgePadding
 
       @.xPix = d3.scale.ordinal()
-        .rangeBands rangePix, @._padding, @._padding
+        .rangeBands rangePix, @._innerPadding, @._edgePadding
 
     else
       valueRange = [ _.min( @.xAxisData ), _.max( @.xAxisData ) ]
@@ -561,9 +561,9 @@ App.View.extend
       .text (d,i) ->
         String(d).capitalize()
 
-    @._positionLegend()
+    @._positionLegend(g)
 
-  _positionLegend: () ->
+  _positionLegend: (g) ->
 
     xGap = 30
     yGap = 10
@@ -603,6 +603,7 @@ App.View.extend
 
     @._legendHeight = 14 * currentRow + yGap * currentRow + 4
 
+    @.postLegend( g, currentRow, currentWidth, rowWidth, xGap, yGap )
 
   showTooltip: ( model, data ) ->
     t = @.dataConfig.get('tooltip') @.dataCollection, model, data
