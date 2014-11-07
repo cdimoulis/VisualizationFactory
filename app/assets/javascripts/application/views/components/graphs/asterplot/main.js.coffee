@@ -117,6 +117,11 @@ App.View.extend
     # Only get the chart element for this view
     elem = @.$el.find(".vis-asterplot")
 
+    @.pie = d3.layout.pie()
+      .sort null
+      .value (d) ->
+        d.weight
+
     
 
   doDataDisplay: () ->

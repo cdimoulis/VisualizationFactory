@@ -12,7 +12,7 @@
   // display: none;
 }
 
-.vis-chart rect.bar, .vis-chart circle.legend-item, .vis-chart circle.plot {
+.vis-chart rect.bar, .vis-chart circle.legend-item, .vis-chart circle.plot, .vis-chart circle.control-item {
   stroke-width: 2;
   stroke-opacity: 1 !important;
 }
@@ -42,6 +42,75 @@
   stroke: lightgrey;
   opacity: 0.7;
 }
+
+.vis-chart line.origin-line {
+  stroke: black;
+  stroke-width: 2;
+  opacity: 1;
+  stroke-dasharray: 5,5;
+}
+
+.vis-chart circle.control-item {
+  stroke: #000;
+  fill: #000;
+}
+
+.vis-chart rect.box-plot {
+  stroke: black;
+  stroke-width: 2;
+  stroke-opacity: 1;
+  fill-opacity: 0;
+  fill: white;
+}
+
+.vis-chart line.box-plot-median {
+  stroke: DarkGray;
+  stroke-width: 2;
+  stroke-dasharray: 3,3;
+  opacity: 1;
+}
+
+.vis-chart line.error-line {
+  stroke:black;
+  stroke-width: 2;
+  stroke-dasharray: 3,3;
+}
+
+.vis-chart line.error-cap-line {
+  stroke: black;
+  stroke-width: 2;
+}
+
+div.vis-chart-tooltip {
+  z-index: 1000;
+  position: absolute;
+  text-align: center;
+  min-width: 50px;
+  min-height: 30px;
+  padding: 0;
+  font-size: 16px;
+  background: #fafafa;
+  border: 1px solid black;
+  pointer-events: none;
+}
+
+.vis-chart-tooltip header{
+  background-color: #f78c40;
+  border-bottom: 2px solid black;
+  font-size: 22px;
+  padding: 5px 10px 3px 10px;
+}
+
+.vis-chart-tooltip div {
+  padding: 5px;
+}
+
+.vis-chart-tooltip div div {
+  padding: 0;
+}
+
+
+
 
 // Treemap
 

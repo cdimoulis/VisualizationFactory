@@ -75,6 +75,16 @@ App.Views["abstract/graph"].extend
         @.dataConfig.get("color") @.dataCollection, model
       .on "click", () ->
         console.log "click bar", arguments
+      .on "mouseover", ( d, index ) =>
+        model = @._dataModels[ index ]
+        data = 
+          x: model.get @.dataConfig.get('xKey')
+          y: model.get @.dataConfig.get('yKey')
+          color: @.dataConfig.get('color') @.dataCollection, model
+          group: @.dataConfig.get('group') model
+
+        @.showTooltip model, data
+      .on "mouseout", @.hideTooltip
 
     bars
 

@@ -45,6 +45,9 @@ App.Views["abstract/graph"].extend
     lines = @.createLines()
 
     lines = @.drawLines lines
+    
+    if @.dataConfig.get('linePoints')
+      plots = @.drawPlots()
 
   setupLineCommands: () ->
 
@@ -80,3 +83,34 @@ App.Views["abstract/graph"].extend
         console.log "click plot", arguments
 
     lines
+
+  drawPlots: ( ) ->
+
+    plots = @.chart.selectAll ".plot"
+        .data @._dataModels
+      .enter().append "circle"
+        .attr "class", "plot"
+        .attr "cy", ( model, index ) =>
+          @.y @.yAxisData[index]
+        .attr "cx", ( model, index ) => 
+          @.xPix @.xAxisData[index]
+        .attr "r", ( model, index) =>
+          @.dataConfig.get('size') model
+        .style "stroke", ( model, index ) =>
+          @.dataConfig.get('color') @.dataCollection, model
+        .style "fill", ( model, index ) =>
+          @.dataConfig.get("color") @.dataCollection, model
+        .on "click", ( model ) ->
+          @.trigger "CLICK:CHART", model
+        .on "mouseover", ( model, index) =>
+          data = 
+            x: model.get @.dataConfig.get('xKey')
+            y: model.get @.dataConfig.get('yKey')
+            color: @.dataConfig.get('color') @.dataCollection, model
+            group: @.dataConfig.get('group') model
+            size: @.dataConfig.get('size') model
+
+          @.showTooltip model, data
+        .on "mouseout", @.hideTooltip
+
+    plots

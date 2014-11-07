@@ -1,6 +1,7 @@
 App.View.extend
   name: "abstract/graph"
-  _padding: 0               # Padding for scales (mostly used on bar chart)
+  _innerPadding: 0          # Padding for inter data used on scales (mostly used on bar/multi-bar chart)
+  _edgePadding: 0           # Padding for edges of inner chart used on scales (mostly used on bar/multi-bar chart)
   _legendHeight: 0          # Height, in pixels, of the legend
   _percentWidth: 100        # Width, in percent, for the chart
   _pixelWidth: 0            # Width, in pixels, for the chart
@@ -15,7 +16,7 @@ App.View.extend
 
   initialize: () ->
 
-    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "setConfigOptions", "_isConfigValid", "setData", "_parseData", "_detectDataType", "_convertData", "isDataValid", "isDataEmpty", "setXRange", "setYRange", "setXDomain", "setYDomain", "createChart", "drawXAxis", "drawYAxis", "doLegend", "_legend", "_positionLegend", "clearChart"
+    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "setConfigOptions", "_isConfigValid", "setData", "_parseData", "_detectDataType", "isDataValid", "isDataEmpty", "setXRange", "setYRange", "setXDomain", "setYDomain", "createChart", "drawXAxis", "drawYAxis", "doLegend", "drawOrigin", "_legend", "_positionLegend", "showTooltip", "hideTooltip", "clearChart"
 
     $(window).on "resize", @._onResize
 
@@ -31,7 +32,17 @@ App.View.extend
 
 
   _onReady: () ->
+
     _.defer () =>
+      if _.isUndefined @.tooltip
+        @.tooltip = d3.select "div.vis-chart-tooltip"
+
+        if _.isNull @.tooltip[0][0]
+          @.tooltip = d3.select("body").append("div")
+            .attr "class", "vis-chart-tooltip"
+            .style "opacity", 0
+
+
       @._percentWidth = 100 - ( ( @.dataConfig.get("margin").left + @.dataConfig.get("margin").right) / @.$el.width() ) * 100
 
       @._pixelWidth = @.$el.width() * ( @._percentWidth / 100 )
@@ -171,17 +182,6 @@ App.View.extend
       @._isHomogeneous = false
       throw "#{@.name}: Data Type Error: #{axis} axis is not a homogeneous data type."
 
-  _convertData: ( axis, type ) ->
-    data = @[axis]
-    newData = []
-
-    if _.isEqual( type, "Date:Moment" ) or _.isEqual( type, "Date:Date" )
-
-      _.each data, ( d, index ) ->
-        newData.push d.valueOf()
-
-      @[axis] = newData
-
   isDataValid: () ->
     if @._isHomogeneous and !_.isUndefined( @.xAxisData  ) and !_.isUndefined( @.yAxisData )
 
@@ -204,7 +204,11 @@ App.View.extend
 
     if @.isDataValid()  and !@.isDataEmpty()
 
+      @.preChart()
+
       @.chart = @.createChart()
+
+      @.postChart()
 
       @.setXRange()
       @.setYRange()
@@ -215,7 +219,11 @@ App.View.extend
       @.drawXAxis()
       @.drawYAxis()
 
+      @.drawOrigin()
+
       @.doDataDisplay()
+
+      @.afterDisplay()
 
     else
 
@@ -224,9 +232,40 @@ App.View.extend
       else
         throw "#{@.name}: data is not valid."
 
+  preChart: () ->
+    # In case someone wants to perform something here when extending
+
+    # This function occurs before the chart begins to be drawn
+
+  postLegend: ( g, currentRow, currentWidth, rowWidth, xGap, yGap ) ->
+    # In case someone wants to perform something here when extending 
+
+    # This function is called immediately after drawing the legend.
+    # Arguments past allow adding more features (like controls) to the legend space
+
+  postChart: () ->
+    # In case someone wants to perform something here when extending 
+
+    # This function is called after drawing chart and legend. Before setting axis scales and drawing axes
+
 
   doDataDisplay: () ->
+    # This is where you will want to begin drawing your data
 
+    # Pretty much required if you want something other than axes drawn
+
+
+  afterDisplay: () ->
+
+    # if _.isUndefined @.tooltip
+    #   @.tooltip = @.$el.select "div.grep-chart-tooltip"
+
+    #   if _.isNull @.tooltip[0][0]
+    #     @.tooltip = @.chart.append("div")
+    #       .attr "class", "grep-chart-tooltip"
+    #       .style "opacity", 0
+
+    #   console.log @.tooltip
 
 
   setXRange: () ->
@@ -277,10 +316,17 @@ App.View.extend
 
 
   setYDomain: () ->
+    # Domain is setting the values that should fit within the Y range
+
     domain = @.yAxisData
+
+    # String type (discrete) data will require a list of every possible value (in appropriate order)
     if _.isEqual( @.yAxisTyp, "string")
       @.y.domain @.yAxisData
+
     else
+
+      # If user did NOT supplied an yDomain option
       if _.isNull( @.dataConfig.get("yDomain") )
         min = _.min( domain )
         max = _.max( domain )
@@ -295,15 +341,23 @@ App.View.extend
         max = max + buffer
 
         domain = [ min, max ]
+
+      # Use user supplied yDomain option
       else
         domain = @.dataConfig.get("yDomain") @.dataCollection
 
       @.y.domain domain
 
   setXDomain: () ->
+    # Domain is setting the values that should fit within the X range
+
+    # Start will all possible values for X axis
     domain = @.xAxisData
 
+    # If chart is NOT required to be discrete AND the type is number, date then only max and min are required
     if !_.isEqual( @._chartXDataCategory, "discrete" ) and ( _.isEqual( @.xAxisType, "number" ) or _.isEqual( @.xAxisType, "Date:Date" ) or _.isEqual( @.xAxisType, "Date:Moment" ) )
+      
+      # If user did NOT supplied an xDomain option
       if _.isNull( @.dataConfig.get("xDomain") )
 
         min = _.min( domain )
@@ -319,6 +373,8 @@ App.View.extend
         max = max + buffer
 
         domain = [ min, max ]
+
+      # Use user supplied xDomain option
       else
         domain = @.dataConfig.get("xDomain") @.dataCollection
 
@@ -345,7 +401,7 @@ App.View.extend
 
   drawXAxis: () ->
     grid = 0
-    if @.dataConfig.get("grid_lines")
+    if @.dataConfig.get("gridLines")
       grid = -@.dataConfig.get("height")
 
     # Minimize the number of tickmarks if data type allows
@@ -405,7 +461,7 @@ App.View.extend
 
   drawYAxis: () ->
     grid = 0
-    if @.dataConfig.get("grid_lines")
+    if @.dataConfig.get("grid_Lines")
       grid = -@._pixelWidth
 
     @.yAxis = d3.svg.axis()
@@ -430,6 +486,36 @@ App.View.extend
     d3.selectAll label
       .attr "transform", () =>
         "translate(-35, #{@.dataConfig.get('height')/2 + w/2}) rotate(-90)"
+
+  drawOrigin: () ->
+
+    # If the axis is a number and, thus, could be negative, check for the need to draw zero lines
+    # Only if the min domain is < 0 and the max domain is > 0 will there be a zero line
+
+    if _.isEqual( @.xAxisType, "number" ) and !_.isEqual( @._chartXDataCategory, "discrete" )
+
+      domain = @.x.domain()
+
+      if domain[0] < 0 and domain[1] > 0
+        @.chart.append "line"
+          .attr "class", "origin-line"
+          .attr "x1", "#{@.x(0)}%"
+          .attr "x2", "#{@.x(0)}%"
+          .attr "y1", 0
+          .attr "y2", @.dataConfig.get("height")
+
+
+    if _.isEqual( @.yAxisType, "number" )
+
+      domain = @.y.domain()
+
+      if domain[0]< 0 and domain[1] > 0
+        @.chart.append "line"
+          .attr "class", "origin-line"
+          .attr "x1", "0%"
+          .attr "x2", "100%"
+          .attr "y1", "#{@.y(0)}"
+          .attr "y2", "#{@.y(0)}"
 
   doLegend: (chart) ->
 
@@ -517,6 +603,22 @@ App.View.extend
 
     @._legendHeight = 14 * currentRow + yGap * currentRow + 4
 
+
+  showTooltip: ( model, data ) ->
+    t = @.dataConfig.get('tooltip') @.dataCollection, model, data
+    
+    if !_.isEmpty( t )
+      @.tooltip.html t
+        .transition().duration 200
+          .style "opacity", 1
+          .style 'left', "#{d3.event.pageX}px"
+          .style 'top', "#{d3.event.pageY}px"
+    
+
+  hideTooltip: () ->
+    @.tooltip.transition()
+      .duration 200
+      .style "opacity", 0
 
   clearChart: () ->
     elem = @.$el.find(".vis-chart")[0]

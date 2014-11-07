@@ -1,7 +1,7 @@
 App.Model.extend
   name: 'GraphConfig'
 
-  _attributes: ['height', 'xAxisPos', 'yAxisPos', 'xLabel', 'yLabel', 'margin', 'xKey', 'yKey', 'group', 'color', 'groupColor', 'size', 'xFormat', 'yFormat', 'xDomain', 'yDomain', 'legend', 'grid_lines', 'xRotate']
+  _attributes: ['height', 'xAxisPos', 'yAxisPos', 'xLabel', 'yLabel', 'margin', 'xKey', 'yKey', 'group', 'color', 'groupColor', 'size', 'xFormat', 'yFormat', 'xDomain', 'yDomain', 'legend', 'controls', "linePoints", 'gridLines', 'xRotate', 'tooltip']
   _descriptions:
     'height': "Type: NUMBER. The height of the graph."
     'margin': "Type: OBJECT. The top, right, left, bottom margins."
@@ -20,8 +20,11 @@ App.Model.extend
     'xLabel': "Type: FUNCTION(string). Returns a string of the x axis label."
     'yLabel': "Type: FUNCTION(string). Returns a string of the y axis label."
     'legend': "Type: BOOLEAN. True to show legend, false for no legend."
-    'grid_lines': "Type: BOOLEAN. True to show grid lines, false for no grid lines."
+    'controls': "Type: BOOLEAN. True to show controls if chart has any. false for no controls."
+    'linePoints': "Type: BOOLEAN. Used for line graph. True to show circle at data points."
+    'gridLines': "Type: BOOLEAN. True to show grid lines, false for no grid lines."
     'xRotate': "Type NUMBER: Degrees from 0 - 90 for rotation of x axis labels"
+    'tooltip': "Type FUNCTION(string): Returns the html for the tooltip."
 
   _defaults:
     'height': 400
@@ -37,7 +40,7 @@ App.Model.extend
     'color': (collection, model) ->
       'steelblue' # This is replaced to point to group color on initialize
     'size': ( model ) ->
-      null
+      7
     'xFormat': (x) -> x
     'yFormat': (y) -> y
     'xDomain': null
@@ -47,8 +50,12 @@ App.Model.extend
     'xLabel': (xKey) -> xKey.capitalize()
     'yLabel': (yKey) -> yKey.capitalize()
     'legend': true
-    'grid_lines': true
+    'controls': true
+    'linePoints': true
+    'gridLines': true
     'xRotate': 0
+    'tooltip': (collection, model, data) ->
+        ""
 
   initialize: () ->
     @._defaults[ 'color' ] = (collection, model, index) =>
