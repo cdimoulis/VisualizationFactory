@@ -1,5 +1,5 @@
 App.View.extend
-  name: "components/graphs/asterpot/main"
+  name: "components/graphs/asterplot/main"
   showing: true
   _height: 500
   _legendHeight: 0
@@ -32,12 +32,20 @@ App.View.extend
 
 
   _onReady: () ->
+
     _.defer () =>
+
       @._percentWidth = 100 - ( ( @.dataConfig.get("margin").left + @.dataConfig.get("margin").right) / @.$el.width() ) * 100
 
       @._pixelWidth = @.$el.width() * ( @._percentWidth / 100 )
+
+      @.radius = Math.min(@.dataConfig.get('height'),@._pixelWidth) / 2
+
+      @.innerRadius = .3 * @.radius
+
+      console.log @.radius, @.innerRadius
+
       @.doChart()
-      # @.drawXAxis()
 
 
   _onResize: () ->
@@ -108,7 +116,7 @@ App.View.extend
 
     @.clearChart()
 
-    @.div = @.createChart()
+    @.createChart()
 
     @.doDataDisplay()
 
@@ -122,10 +130,64 @@ App.View.extend
       .value (d) ->
         d.weight
 
-    
+    # @.tip = d3.tip()
+    #   .attr "class", "d3-tip"
+    #   .offset 0,0
+    #   .html (d) ->
+    #     "#{d.data.label}: <span style='color:orangered'>#{d.data.score}</span>"
+
+    @.arc = d3.svg.arc()
+      .innerRadius @.innerRadius
+      .outerRadius (d) =>
+        ( @.radius - @.innerRadius ) * ( d.data.val / 100) + @.innerRadius
+
+    @.outlineArc = d3.svg.arc()
+      .innerRadius @.innerRadius
+      .outerRadius @.radius
+
+    @.chart = d3.select( elem[0] ).append("svg")
+      .attr "width", @._pixelWidth
+      .attr "height", @.dataConfig.get("height")
+      .append "g"
+      .attr "transform", "translate(#{@._pixelWidth/2},#{@.dataConfig.get('height')/2})"
+      # .call @.tip
 
   doDataDisplay: () ->
 
+    path = @.chart.selectAll ".solidArc"
+        .data @.pie( @.dataCollection )
+      .enter().append "path"
+        .attr "class", "solidArc"
+        .attr "fill", (d) =>
+          @.color d.data.name
+        .attr "stroke", "gray"
+        .attr "d", @.arc
+        # .on "mouseover", @.tip.show
+        # .on "mouseout", @.tip.hide
+
+    outerPath = @.chart.selectAll ".outlineArc"
+        .data @.pie( @.dataCollection )
+      .enter().append "path"
+        .attr "class", "outlineArc"
+        .attr "fill", "none"
+        .attr "stroke", "gray"
+        .attr "d", @.outlineArc
+
+    total = data.reduce (a,b) ->
+      a + (b.score * b.weight)
+    , 0
+
+    weight = data.reduce (a,b) ->
+      a + b.weight
+    , 0
+
+    score = total / weight
+
+    @.chart.append "svg:text"
+      .attr "class", "aster-score"
+      .attr "dy", ".35em"
+      .attr "text-anchor", "middle"
+      .text Math.round(score)
 
 
   clearChart: () ->

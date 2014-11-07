@@ -1,0 +1,4 @@
+%h3 Aster Plot
+
+%article.col-xs-12
+  {{view "components/graphs/asterplot/main" dataCollection=data dataConfig=dataConfig}}
