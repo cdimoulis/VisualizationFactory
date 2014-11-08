@@ -4,6 +4,8 @@ App.Page.extend
   events:
     'change select.year': 'setYear'
     'change input.weighted': 'setWeighted'
+  attributes:
+    "style": "height: 200%"
 
   initialize: () ->
 
@@ -32,7 +34,7 @@ App.Page.extend
         [0,4]
       group: (model) ->
         model.get "outcome"
-      controls: true
+      controls: false
       'tooltip': (collection, model, data) ->
         "<header>#{model.get('outcome')}</header>
           <div>
@@ -97,9 +99,6 @@ App.Page.extend
           "score": Math.floor( ( total / weight ) * 100 ) / 100
 
         @.graphData.add m
-
-
-    console.log @.graphData
 
 
   setYear: (e) ->

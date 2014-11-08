@@ -255,20 +255,9 @@ App.View.extend
 
   afterDisplay: () ->
 
-    # if _.isUndefined @.tooltip
-    #   @.tooltip = @.$el.select "div.grep-chart-tooltip"
-
-    #   if _.isNull @.tooltip[0][0]
-    #     @.tooltip = @.chart.append("div")
-    #       .attr "class", "grep-chart-tooltip"
-    #       .style "opacity", 0
-
-    #   console.log @.tooltip
-
 
   setXRange: () ->
     # Both a percent and pixel function for x position
-    console.log @.xAxisType
     range = [0, @._percentWidth]
     rangePix = [0, @._pixelWidth]
 

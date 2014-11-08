@@ -56,6 +56,8 @@ App.Views["abstract/graph"].extend
     _.each @._dataModels, (model, index) =>
       group = @.dataConfig.get("group") model
       x = @.xPix @.xAxisData[index]
+      if _.isEqual( @.xAxisType, "string" )
+        x += @.xPix.rangeBand() / 2
       y = @.y @.yAxisData[index]
 
       if _.isUndefined @.lineCommands[group]
@@ -93,7 +95,10 @@ App.Views["abstract/graph"].extend
         .attr "cy", ( model, index ) =>
           @.y @.yAxisData[index]
         .attr "cx", ( model, index ) => 
-          @.xPix @.xAxisData[index]
+          x = @.xPix @.xAxisData[index]
+          if _.isEqual( @.xAxisType, "string" )
+            x += @.xPix.rangeBand() / 2
+          x
         .attr "r", ( model, index) =>
           @.dataConfig.get('size') model
         .style "stroke", ( model, index ) =>
