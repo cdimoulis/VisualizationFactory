@@ -45,6 +45,30 @@ App.Page.extend
         index = parseInt group.split("-")[1]
         d3.scale.category10().range()[index-1]
 
+
+    @.graphConfig2 = new App.Models.GraphConfig
+      xKey: "level"
+      yKey: "score"
+      height: 500
+      yDomain: () ->
+        [0,4]
+      group: (model) ->
+        model.get "outcome"
+      legend: false
+      'tooltip': (collection, model, data) ->
+        "<div>
+          <div>Max: #{data.max}</div>
+          <div>Upper Quart.: #{data.upperQuartile}</div>
+          <div>Median: #{data.median}</div>
+          <div>Lower Quart.: #{data.lowerQuartile}</div>
+          <div>Min: #{data.min}</div>
+        </div>
+        "
+      groupColor: (group) ->
+        index = parseInt group.split("-")[1]
+        d3.scale.category10().range()[index-1]
+
+
     @.parseData()
 
 

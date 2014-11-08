@@ -21,3 +21,6 @@
   .row
     .col.col-xs-12
       {{view "components/graphs/line/main" dataCollection=graphData dataConfig=graphConfig}}
+  .row
+    .col.col-xs-12
+      {{view "components/graphs/box-plot/main" dataCollection=graphData dataConfig=graphConfig2}}
