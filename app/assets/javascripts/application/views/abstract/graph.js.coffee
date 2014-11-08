@@ -161,8 +161,6 @@ App.View.extend
     if _.isEqual( types.length, 1 )
       type =  types[0]
 
-      # @._convertData axis, type
-
       # Check that an acceptable data type is found
       if _.contains( @.acceptedTypes, type )
         if _.isEqual( axis, "xAxisData" )
@@ -270,7 +268,7 @@ App.View.extend
 
   setXRange: () ->
     # Both a percent and pixel function for x position
-
+    console.log @.xAxisType
     range = [0, @._percentWidth]
     rangePix = [0, @._pixelWidth]
 

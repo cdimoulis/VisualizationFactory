@@ -11,17 +11,6 @@ App.Page.extend
 
     _.bindAll @, "parseData", "setYear", "setSemester", "setOutcome", "setWeighted"
 
-    ### TEST DATA ###
-
-    @.data = [
-      {name: "joe", val: 8.3, weight:1}
-      {name: "dan", val: 15.7, weight:.75}
-      {name: "tony", val: 4, weight:.5}
-      {name: "kasie", val: 42.5, weight:1}
-      {name: "chris", val: 23.12, weight:.6}
-      {name: "kirk", val: 16, weight:.25}
-    ]
-
     @.scores = App.get 'App:Scores'
     @.outcomes = App.get 'App:Outcomes'
     @.outcome = @.outcomes.get 1
@@ -84,9 +73,8 @@ App.Page.extend
           "num": course.get "number" 
           "outcome": @.outcome.get("text")
           "score": score.get("score")
-          "classSize": if @.weighted then parseInt(30 * Math.random()) else 1   # schedCourse.get 'num_students'
+          "classSize": if @.weighted then schedCourse.get( 'num_students' ) else 1
 
-        # console.log data.classSize
         selectedData.push data
 
     @.scoreData.set "data", selectedData

@@ -2,7 +2,7 @@ App.View.extend
   name: "layouts/sidebar/main"
   attributes:
     "class": "sidebar navbar-inverse"
-  first_pages: ["pages/home","pages/tables","pages/outcome_grid", "pages/graphs"]
+  first_pages: ["pages/home","pages/tables","pages/outcome_grid", "pages/yeargraphs"]
   last_pages: ["pages/test"]
 
   initialize: () ->
