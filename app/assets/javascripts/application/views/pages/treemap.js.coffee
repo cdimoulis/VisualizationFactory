@@ -88,7 +88,10 @@ App.Page.extend
         ['one','two','three'][index]
       label: (model) ->
         model.get(@.key).capitalize()
-      color: (collection, model, index) ->
+      color: (index1, index2) ->
+        if !_.isEqual( index1, "treedata" )
+          index2 = index1
+        index = ['People','Food','Clothes'].indexOf(index2)
         d3.scale.category10().range()[index]
 
 

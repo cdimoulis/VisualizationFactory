@@ -13,11 +13,11 @@ App.View.extend
 
   initialize: () ->
 
-    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "position", "clearChart"
+    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "position", "doLegend", "clearChart"
 
     $(window).on "resize", @._onResize
 
-    @.color = d3.scale.category10()
+    # @.color = d3.scale.category10()
 
     @.setConfigOptions()
 
@@ -120,7 +120,10 @@ App.View.extend
       .value (d) => 
         d[@.dataConfig.get("size")]
 
-    div = d3.select(elem[0]).append("div")
+    div = d3.select(elem[0]).append "div"
+      .call @.doLegend
+
+    div = div.append "div"
       .style "position", "relative"
       .style "width", "#{@._width + @.dataConfig.get('margin').left + @.dataConfig.get('margin').right}px"
       .style "heigth", "#{@.dataConfig.get('height') + @.dataConfig.get('margin').top + @.dataConfig.get('margin').bottom}px"
@@ -136,10 +139,13 @@ App.View.extend
       .enter().append "div"
         .attr "class", "node"
         .call @.position
-        .style "background", (d) =>
-          if d.children then @.color(d[@.dataConfig.get('key')]) else null
+        .style "background", (d, i) =>
+          if !d.children and !_.isUndefined( d.parent.parent ) then @.dataConfig.get('color')( d.parent.parent.name, d.parent.name ) else null
         .text (d) =>
           if d.children then null else d[@.dataConfig.get('key')]
+        .on "click", (d,i) =>
+          @.dataCollection.set {"name1": d.name, "name2": d.parent.name, "name3": d.parent.parent.name}
+
 
 
   position: (div) ->
@@ -152,6 +158,23 @@ App.View.extend
       "#{Math.max(0,d.dx-1)}px"
     .style "height", (d) ->
       "#{Math.max(0,d.dy-1)}px"
+
+  doLegend: (div) ->
+    legend = div.append "div"
+        .attr "class", "legend"
+        .attr "style", "padding: 10px;"
+      .selectAll ".legend-item"
+        .data @.data.children
+
+    legend.enter().append "div"
+        .attr "class","legend-item"
+        .style "background", (d) =>
+          @.dataConfig.get('color')( d.name, 5 )
+      .append "span"
+        .attr "class", "legend-text"
+        .text (d) =>
+          d[@.dataConfig.get('key')]
+
 
   clearChart: () ->
     elem = @.$el.find(".vis-treemap")[0]

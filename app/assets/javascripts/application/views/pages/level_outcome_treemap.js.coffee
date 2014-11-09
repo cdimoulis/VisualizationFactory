@@ -6,7 +6,7 @@ App.Page.extend
 
   initialize: () ->
 
-    _.bindAll @, "parseData", "setYear"
+    _.bindAll @, "parseData", "setYear", "pareseAsterPlot"
 
     @.categories = App.get "App:Categories"
     @.courses = App.get "App:Courses"
@@ -19,9 +19,14 @@ App.Page.extend
 
     @.years = ["2012/2013","2011/2012","2010/2011","2009/2010"]
 
+    @.asterData = new App.Model()
+    @.asterData.set "data", []
+
     @.treeData = new App.Model()
 
-    @.dataConfig = new App.Model
+    @.listenTo @.treeData, "change", @.pareseAsterPlot
+
+    @.treeConfig = new App.Model
       key: "name"
       size: "count"
       height: 500
@@ -30,12 +35,34 @@ App.Page.extend
         "right": 10
         "bottom": 10
         "left": 10
-      category: (index) ->
-        ['one','two','three'][index]
       label: (model) ->
         model.get(@.key).capitalize()
+      color: (index1,index2) ->
+        if !_.isEqual( index1, "level_outcome_treemap")
+          index2 = index1
+        index = ["200","300","400"].indexOf(index2)
+        d3.scale.category10().range()[index]
+
+    @.asterConfig = new App.Model
+      key: "num"
+      value: "score"
+      weightKey: "classSize"
+      height: 500
+      maxValue: 4
+      'margin':
+        "top": 25
+        "right": 10
+        "bottom": 10
+        "left": 10
       color: (collection, model, index) ->
         d3.scale.category10().range()[index]
+      tooltip: (collection, data) =>
+        "<header>Course: #{data.num}</header>
+         <div>
+          <div>Score: #{data.score}</div>
+          <div>Class Size: #{data.classSize}</div>
+         </div>
+        "
 
     @.parseData()
 
@@ -93,3 +120,38 @@ App.Page.extend
       @.year = e.target.value
 
     @.parseData()
+
+  pareseAsterPlot: () ->
+
+    outcome = @.outcomes.findWhere {"text": @.treeData.get "name1"}
+    level = @.treeData.get "name2"
+
+    if !_.isUndefined( outcome ) and !_.isUndefined( level )
+
+      selectedData = []
+
+      courses = @.scheduledCourses.getSchoolYear @.year
+
+      courses = _.filter courses, (course) =>
+        num = @.courses.get( course.get "course_id" ).get "number"
+        num = String( Math.floor( (num / 100) ) * 100 )
+        _.isEqual level, num
+
+
+      _.each courses, (schedCourse) =>
+
+        course = @.courses.get schedCourse.get("course_id")
+
+        score = @.scores.findWhere {"sched_course_id": schedCourse.get( "id" ), "outcome_id": outcome.get "id"}
+
+        unless _.isUndefined score
+          data = 
+            'num': course.get "number"
+            'outcome': outcome.get "text"
+            'score': score.get 'score'
+            'classSize': schedCourse.get 'num_students'
+
+          selectedData.push data
+
+
+      @.asterData.set 'data', selectedData
