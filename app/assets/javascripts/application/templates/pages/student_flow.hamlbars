@@ -1,0 +1,19 @@
+%h3 Student Flow
+
+%article.col-x2-12
+  .row
+    .col.col-xs-3.text-left.btn-group{"data-toggle"=>"buttons"}
+      %label.btn.btn-success
+        %input.weighted{:type => "checkbox", :autocomplete => "off"}
+          Use Weighted
+    .col.col-xs-2.text-right
+      Outcome:
+      %select.outcome
+        {{#each outcomes.models}}
+        %option{value: "{{this.attributes.id}}"}
+          {{this.attributes.text}}
+        {{/each}}
+
+  .row
+    .col.col-xs-12
+      {{view "components/graphs/line/main" dataCollection=graphData dataConfig=graphConfig}}

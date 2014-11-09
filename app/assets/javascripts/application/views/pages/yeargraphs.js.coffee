@@ -17,8 +17,6 @@ App.Page.extend
     @.scheduledCourses = App.get "App:ScheduledCourses"
     @.scores = App.get "App:Scores"
 
-
-    @.outcome = @.outcomes.get 1
     @.year = "2012/2013"
     @.semester = "fall"
 
