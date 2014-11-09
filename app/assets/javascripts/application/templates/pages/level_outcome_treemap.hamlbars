@@ -10,10 +10,11 @@
           {{this}}
         {{/each}}
 
-
   .row
-    .col.col-xs-12
-      {{view "components/graphs/asterplot/main" dataCollection=asterData dataConfig=asterConfig}}
-  .row
-    .col.col-xs-12
+    .col.col-xs-6{:style => "height: 600px;"}
+      %h4 Outcomes by Year Treemap
       {{view "components/graphs/treemap/main" dataCollection=treeData dataConfig=treeConfig}}
+
+    .col.col-xs-6
+      %h4 Outcomes and Courses Aster Plot
+      {{view "components/graphs/asterplot/main" dataCollection=asterData dataConfig=asterConfig}}

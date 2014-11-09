@@ -57,7 +57,10 @@ App.Page.extend
       color: (collection, model, index) ->
         d3.scale.category10().range()[index]
       tooltip: (collection, data) =>
-        "<header>Course: #{data.num}</header>
+        "<header>
+          <div>Course: #{data.num}</div>
+          <div>Semester: #{data.semester}</div>
+        </header>
          <div>
           <div>Score: #{data.score}</div>
           <div>Class Size: #{data.classSize}</div>
@@ -150,6 +153,7 @@ App.Page.extend
             'outcome': outcome.get "text"
             'score': score.get 'score'
             'classSize': schedCourse.get 'num_students'
+            'semester': schedCourse.get "semester"
 
           selectedData.push data
 
