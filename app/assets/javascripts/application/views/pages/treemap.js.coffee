@@ -71,6 +71,9 @@ App.Page.extend
         ]}
       ]
 
+    @.treeData = new App.Model()
+    @.treeData.set "data", @.data
+
 
     @.dataConfig = new App.Model
       key: "name"

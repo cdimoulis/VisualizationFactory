@@ -21,7 +21,7 @@ App.View.extend
 
     @.setConfigOptions()
 
-    # @.setData()
+    @.setData()
 
     @.postInitialize()
 
@@ -83,14 +83,15 @@ App.View.extend
       @._parseData()
 
       # If dataCollection changes then re-parse the dataCollection
-      @.listenTo @.dataCollection, "add remove reset sort", @.updateView
-      window.col = @.dataCollection
+      @.listenTo @.dataCollection, "change", @.updateView
 
     # Error if no collection
     else
       throw "#{@.name}: Collection Error: data collection is #{collection}."
 
   _parseData: () ->
+
+    @.data = @.dataCollection.get "data"
 
 
   _detectDataType: ( axis ) ->
@@ -116,8 +117,8 @@ App.View.extend
     @.treemap = d3.layout.treemap()
       .size [@._pixelWidth, @.dataConfig.get('height')]
       .sticky true
-      .value (d) -> 
-        d.val
+      .value (d) => 
+        d[@.dataConfig.get("size")]
 
     div = d3.select(elem[0]).append("div")
       .style "position", "relative"
@@ -130,15 +131,15 @@ App.View.extend
     div
 
   doDataDisplay: () ->
-    node = @.div.datum(@.dataCollection).selectAll ".node"
+    node = @.div.datum(@.data).selectAll ".node"
         .data @.treemap.nodes
       .enter().append "div"
         .attr "class", "node"
         .call @.position
         .style "background", (d) =>
-          if d.children then @.color(d.name) else null
-        .text (d) ->
-          if d.children then null else d.name
+          if d.children then @.color(d[@.dataConfig.get('key')]) else null
+        .text (d) =>
+          if d.children then null else d[@.dataConfig.get('key')]
 
 
   position: (div) ->

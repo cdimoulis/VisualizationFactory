@@ -1,0 +1,15 @@
+%h3 Course Level and Evaluated Outcomes
+
+%article.col-xs-12
+  .row
+    .col.col-offset-3.col-xs-2
+      School Year:
+      %select.year
+        {{#each years}}
+        %option{value: "{{this}}"}
+          {{this}}
+        {{/each}}
+
+  .row
+    .col.col-xs-12
+      {{view "components/graphs/treemap/main" dataCollection=treeData dataConfig=dataConfig}}

@@ -4,8 +4,6 @@ App.Page.extend
   events:
     'change select.year': 'setYear'
     'change input.weighted': 'setWeighted'
-  attributes:
-    "style": "height: 200%"
 
   initialize: () ->
 
