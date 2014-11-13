@@ -5,6 +5,7 @@ App.View.extend
   _legendHeight: 0
   _percentWidth: 100
   _pixelWidth: 0
+  # _current: []
   template: () -> "<div class='vis-asterplot'></div>"
 
   acceptedTypes: [ "number", "string", "Date:Moment", "Date:Date" ]
@@ -14,7 +15,7 @@ App.View.extend
 
   initialize: () ->
 
-    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "changeWeight", "showTooltip", "hideTooltip", "clearChart"
+    _.bindAll @, "postInitialize", "_onReady", "_onResize", "onResize", "updateView", "doChart", "doDataDisplay", "createChart", "loadGraphic", "changeWeight", "showTooltip", "hideTooltip", "clearChart"
 
     $(window).on "resize", @._onResize
 
@@ -67,7 +68,6 @@ App.View.extend
   updateView: (e) ->
     @._parseData()
     @.doChart()
-    # @.changeWeight()
 
   setConfigOptions: () ->
 
@@ -101,7 +101,12 @@ App.View.extend
       @._parseData()
 
       # If dataCollection changes then re-parse the dataCollection
-      @.listenTo @.dataCollection, "change", @.updateView
+      @.listenTo @.dataCollection, "change", () =>
+        @._parseData()
+        @.changeWeight()
+
+      # If dataCollection is new
+      @.listenTo @.dataCollection, "new", @.updateView
       
 
     # Error if no collection
@@ -128,9 +133,9 @@ App.View.extend
 
     @.createChart()
 
-    @.doDataDisplay()
-
-    @.changeWeight()
+    _.defer () =>
+      @.doDataDisplay()
+      @.loadGraphic()
 
 
   createChart: () ->
@@ -170,7 +175,9 @@ App.View.extend
         .on "mouseover", (d) =>
           @.showTooltip d.data
         .on "mouseout", @.hideTooltip
-        .each (d) => @._current = d
+        # .each (d) => @._current = d
+        .each (d) -> @._current = d
+        # .each (d,i) => @._current[i] = d
 
     @.outerPath = @.chart.selectAll ".outlineArc"
         .data @.pie( @.asterData )
@@ -179,6 +186,7 @@ App.View.extend
         .attr "fill", "none"
         .attr "stroke", "gray"
         .attr "d", @.outlineArc
+        .each (d) -> @._current = d
 
     score = @.getScore()
 
@@ -204,23 +212,50 @@ App.View.extend
 
     score
 
-  changeWeight: () ->
-    @.path = @.path.data @.pie( @.asterData )
-    @.outerPath = @.outerPath.data @.pie( @.asterData )
+  loadGraphic: () ->
+    # @.path = @.path.data @.pie( @.asterData )
+    # @.outerPath = @.outerPath.data @.pie( @.asterData )
+    arc = @.arc
+    outlineArc = @.outlineArc
+    current = @.asterData[0]
 
     @.path.transition()
       .duration 750
-      .attrTween "d", (d) =>
-        i = d3.interpolate @._current, d
-        @._current = i(0)
-        (t) => @.arc(i(t))
+      .attrTween "d", (d) ->
+        i = d3.interpolate current, d
+        current = i(0)
+        (t) -> 
+          arc i(t)
 
     @.outerPath.transition()
       .duration 750
-      .attrTween "d", (d) =>
+      .attrTween "d", (d) ->
+        i = d3.interpolate current, d
+        current = i(0)
+        (t) -> 
+          outlineArc i(t)
+
+  changeWeight: () ->
+    @.path = @.path.data @.pie( @.asterData )
+    @.outerPath = @.outerPath.data @.pie( @.asterData )
+    arc = @.arc
+    outlineArc = @.outlineArc
+
+    @.path.transition()
+      .duration 750
+      .attrTween "d", (d) ->
         i = d3.interpolate @._current, d
         @._current = i(0)
-        (t) => @.outlineArc(i(t))
+        (t) -> 
+          arc i(t)
+
+    @.outerPath.transition()
+      .duration 750
+      .attrTween "d", (d) ->
+        i = d3.interpolate @._current, d
+        @._current = i(0)
+        (t) -> 
+          outlineArc i(t)
 
     score = @.getScore()
 

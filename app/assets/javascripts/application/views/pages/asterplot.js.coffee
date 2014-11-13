@@ -53,7 +53,7 @@ App.Page.extend
 
     @
 
-  parseData: () ->
+  parseData: (triggerEvent=false) ->
 
     selectedData = []
     curCourses = App.get('App:ScheduledCourses').where {"year": @.year, "semester": @.semester}
@@ -77,7 +77,10 @@ App.Page.extend
 
         selectedData.push data
 
-    @.scoreData.set "data", selectedData
+    @.scoreData.set "data", selectedData, {silent: triggerEvent}
+
+    if triggerEvent
+      @.scoreData.trigger "new"
 
   setYear: (e) ->
     if _.isUndefined e
@@ -85,7 +88,7 @@ App.Page.extend
     else
       @.year = parseInt e.target.value
 
-    @.parseData()
+    @.parseData true
 
 
   setSemester: (e) ->
@@ -94,7 +97,7 @@ App.Page.extend
     else
       @.semester = e.target.value
 
-    @.parseData()
+    @.parseData true
 
 
   setOutcome: (e) ->
@@ -103,7 +106,7 @@ App.Page.extend
     else
       @.outcome = App.get("App:Outcomes").get parseInt e.target.value
 
-    @.parseData()
+    @.parseData true
 
   setWeighted: (e) ->
     @.weighted = e.target.checked
