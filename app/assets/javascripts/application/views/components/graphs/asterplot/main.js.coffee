@@ -102,6 +102,7 @@ App.View.extend
 
       # If dataCollection changes then re-parse the dataCollection
       @.listenTo @.dataCollection, "change", () =>
+        console.log "here"
         @._parseData()
         @.changeWeight()
 
@@ -116,6 +117,7 @@ App.View.extend
   _parseData: () ->
 
     @.asterData = @.dataCollection.get "data"
+    console.log @.asterData
 
 
   _detectDataType: ( axis ) ->
@@ -213,8 +215,8 @@ App.View.extend
     score
 
   loadGraphic: () ->
-    # @.path = @.path.data @.pie( @.asterData )
-    # @.outerPath = @.outerPath.data @.pie( @.asterData )
+    @.path = @.path.data @.pie( @.asterData )
+    @.outerPath = @.outerPath.data @.pie( @.asterData )
     arc = @.arc
     outlineArc = @.outlineArc
     current = @.asterData[0]

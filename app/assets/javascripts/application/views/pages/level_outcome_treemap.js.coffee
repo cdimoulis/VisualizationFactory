@@ -158,4 +158,5 @@ App.Page.extend
           selectedData.push data
 
 
-      @.asterData.set 'data', selectedData
+      @.asterData.set 'data', selectedData, {silent:true}
+      @.asterData.trigger "new"
