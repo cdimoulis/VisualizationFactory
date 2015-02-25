@@ -13,4 +13,5 @@
 #
 
 class ScheduledCourse < ActiveRecord::Base
+  has_many :scores
 end
