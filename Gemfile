@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
-
+ruby '2.2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
 # Use sqlite3 as the database for Active Record
-gem 'pg'
+gem 'pg', '~> 0.17.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -41,6 +41,7 @@ gem 'spring',                                 group: :development
 
 
 # USER ADDED
+gem 'rails-observers',            '~> 0.1.2'
 
 # jquery libraries
 gem 'jquery-rails',               '~> 3.1'
@@ -52,8 +53,8 @@ gem 'haml-rails',                 '~> 0.5'
 gem 'handlebars_assets',          '~> 0.17'
 
 # Style
-gem 'bootstrap-sass',             '~> 3.2'
-gem 'font-awesome-rails',         '~> 4.1'
+gem 'bootstrap-sass',             '~> 3.3'
+gem 'font-awesome-rails',         '~> 4.2'
 
 gem 'd3-rails',                   '~> 3.4'
 
