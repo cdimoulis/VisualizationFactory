@@ -86,7 +86,7 @@ c498 = Course.find_by_number(498)
 c499 = Course.find_by_number(499)
 
 
-Outcomes.create [
+Outcome.create [
   {text: "O-1", description: "Ability to effectively apply knowledge of computing and mathematics to computer science problems."},
   {text: "O-2", description: "Ability to apply mathematical foundations, algorithmic principles, and computer science theory in the modeling and design of computer-based systems in a way that demonstrates comprehension of the trade-offs involved in design choices."},
   {text: "O-3", description: "Ability to design, implement and evaluate computer-based components, systems, processes or programs to meet desired needs and specifications."},
@@ -99,17 +99,42 @@ Outcomes.create [
   {text: "O-10", description: "Recognition of the need for and the ability to engage in life-long learning. The ability to successfully pursue professional development."}
 ]
 
-o1 = Outcomes.find_by_text("O-1")
-o2 = Outcomes.find_by_text("O-2")
-o3 = Outcomes.find_by_text("O-3")
-o4 = Outcomes.find_by_text("O-4")
-o5 = Outcomes.find_by_text("O-5")
-o6 = Outcomes.find_by_text("O-6")
-o7 = Outcomes.find_by_text("O-7")
-o8 = Outcomes.find_by_text("O-8")
-o9 = Outcomes.find_by_text("O-9")
-o10 = Outcomes.find_by_text("O-10")
+o1 = Outcome.find_by_text("O-1")
+o2 = Outcome.find_by_text("O-2")
+o3 = Outcome.find_by_text("O-3")
+o4 = Outcome.find_by_text("O-4")
+o5 = Outcome.find_by_text("O-5")
+o6 = Outcome.find_by_text("O-6")
+o7 = Outcome.find_by_text("O-7")
+o8 = Outcome.find_by_text("O-8")
+o9 = Outcome.find_by_text("O-9")
+o10 = Outcome.find_by_text("O-10")
 
+EducationalObjective.create [
+  {text: "PEO 1", description: "To provide students with a solid foundation in computer science, mathematics, and basic sciences, which will allow them to successfully pursue graduate studies in computer science, or other related degrees."},
+  {text: "PEO 2", description: "To provide students with a solid foundation in computer science, mathematics, and basic sciences, which will allow them to successfully compete for quality jobs in all functions of computer science employment, ranging from software developer to customer support."},
+  {text: "PEO 3", description: "To equip students with life-long learning skills, which will allow them to successfully adapt to the evolving technologies throughout their professional careers."},
+  {text: "PEO 4", description: "To equip students with communication skills, which will allow them to collaborate effectively with other members of a team for the development of large computer and software systems."},
+  {text: "PEO 5", description: "To provide students with the broad education necessary to understand the impact of computer technology in a global and societal context."}
+]
+
+peo1 = EducationalObjective.find_byd_text "PEO1"
+peo2 = EducationalObjective.find_byd_text "PEO2"
+peo3 = EducationalObjective.find_byd_text "PEO3"
+peo4 = EducationalObjective.find_byd_text "PEO4"
+peo5 = EducationalObjective.find_byd_text "PEO5"
+
+# Map program educational objectives to outcomes
+o1.educational_objectives << [peo1,peo2,peo3]
+o2.educaitonal_objectives << [peo1,peo2,peo3]
+o3.educational_objectives << [peo2,peo3,peo4]
+o4.educational_objectives << [peo1,peo2,peo4]
+o5.educational_objectives << [peo2,peo3]
+o6.educational_objectives << [peo2,peo3,peo4,peo5]
+o7.educational_objectives << [peo2,peo4,peo5]
+o8.educational_objectives << [peo1,peo2,peo3,peo4]
+o9.educational_objectives << [peo2,peo5]
+o10.educational_objectives << [peo1,peo2,peo3]]
 
 ### CURRENT REAL DATA ###
 # ScheduledCourse.create [
