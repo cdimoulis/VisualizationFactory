@@ -9,7 +9,7 @@
 #  updated_at  :datetime
 #
 
-class Outcomes < ActiveRecord::Base
+class Outcome < ActiveRecord::Base
 
   has_and_belongs_to_many :educational_objectives
   
