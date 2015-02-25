@@ -24,36 +24,36 @@ cat5 = Category.find_by_text("Algorithms & Intelligence").id
 cat6 = Category.find_by_text("Profession").id
 
 Course.create [
-  {number: 202, title: "Intro to Computer Science", category_id: cat1},
-  {number: 215, title: "Discrete Mathematics", category_id: cat1},
-  {number: 220, title: "Programming with Data Structures", category_id: cat1},
-  {number: 305, title: "Software Development Practices"},
-  {number: 306, title: "Linux/UNIX Programming", category_id: cat2},
-  {number: 311, title: "The Theory and Implementation of Programming Languages", category_id: cat2},
-  {number: 320, title: "Computer Organization and Architecture", category_id: cat2},
-  {number: 330, title: "Intro to Design and Analysis of Algorithms", category_id: cat2},
-  {number: 335, title: "Operating Systems", category_id: cat2},
-  {number: 350, title: "Web Application Development", category_id: cat3},
-  {number: 399, title: "Social, Ethical and Professional Issues in Computer Science", category_id: cat1},
-  {number: 401, title: "Comptuer Architecture"},
-  {number: 404, title: "Autonomous Mobile Robots", category_id: cat5},
-  {number: 408, title: "Applied Cryptography", category_id: cat4},
-  {number: 410, title: "Computer Security", category_id: cat4},
-  {number: 412, title: "Programming Distributed Applications"},
-  {number: 420, title: "Distributed Systems"},
-  {number: 430, title: "Database Systems", category_id: cat4},
+  {number: 202, text: "Intro to Computer Science", category_id: cat1},
+  {number: 215, text: "Discrete Mathematics", category_id: cat1},
+  {number: 220, text: "Programming with Data Structures", category_id: cat1},
+  {number: 305, text: "Software Development Practices"},
+  {number: 306, text: "Linux/UNIX Programming", category_id: cat2},
+  {number: 311, text: "The Theory and Implementation of Programming Languages", category_id: cat2},
+  {number: 320, text: "Computer Organization and Architecture", category_id: cat2},
+  {number: 330, text: "Intro to Design and Analysis of Algorithms", category_id: cat2},
+  {number: 335, text: "Operating Systems", category_id: cat2},
+  {number: 350, text: "Web Application Development", category_id: cat3},
+  {number: 399, text: "Social, Ethical and Professional Issues in Computer Science", category_id: cat1},
+  {number: 401, text: "Comptuer Architecture"},
+  {number: 404, text: "Autonomous Mobile Robots", category_id: cat5},
+  {number: 408, text: "Applied Cryptography", category_id: cat4},
+  {number: 410, text: "Computer Security", category_id: cat4},
+  {number: 412, text: "Programming Distributed Applications"},
+  {number: 420, text: "Distributed Systems"},
+  {number: 430, text: "Database Systems", category_id: cat4},
   ### This Category was an educated guess
-  {number: 435, title: "Software Engineering", category_id: cat3},
+  {number: 435, text: "Software Engineering", category_id: cat3},
   ###
-  {number: 438, title: "Bioinformatics Algorithms"},
-  {number: 440, title: "Computer Networks", category_id: cat4},
-  {number: 441, title: "Mobile and Wireless Computing", category_id: cat4},
-  {number: 455, title: "Advanced Algorithm Design and Analysis", category_id: cat5},
-  {number: 484, title: "User Interface Design and Development", category_id: cat3},
-  {number: 485, title: "Computer Graphics", category_id: cat3},
-  {number: 487, title: "Software Aspects of Game Development", category_id: cat3},
-  {number: 498, title: "Senior Project in Computer Science 1", category_id: cat6},
-  {number: 499, title: "Senior Project in Computer Science 2", category_id: cat6}
+  {number: 438, text: "Bioinformatics Algorithms"},
+  {number: 440, text: "Computer Networks", category_id: cat4},
+  {number: 441, text: "Mobile and Wireless Computing", category_id: cat4},
+  {number: 455, text: "Advanced Algorithm Design and Analysis", category_id: cat5},
+  {number: 484, text: "User Interface Design and Development", category_id: cat3},
+  {number: 485, text: "Computer Graphics", category_id: cat3},
+  {number: 487, text: "Software Aspects of Game Development", category_id: cat3},
+  {number: 498, text: "Senior Project in Computer Science 1", category_id: cat6},
+  {number: 499, text: "Senior Project in Computer Science 2", category_id: cat6}
 ]
 
 c202 = Course.find_by_number(202)
@@ -87,16 +87,16 @@ c499 = Course.find_by_number(499)
 
 
 Outcomes.create [
-  {text: "O-1"},
-  {text: "O-2"},
-  {text: "O-3"},
-  {text: "O-4"},
-  {text: "O-5"},
-  {text: "O-6"},
-  {text: "O-7"},
-  {text: "O-8"},
-  {text: "O-9"},
-  {text: "O-10"}
+  {text: "O-1", description: "Ability to effectively apply knowledge of computing and mathematics to computer science problems."},
+  {text: "O-2", description: "Ability to apply mathematical foundations, algorithmic principles, and computer science theory in the modeling and design of computer-based systems in a way that demonstrates comprehension of the trade-offs involved in design choices."},
+  {text: "O-3", description: "Ability to design, implement and evaluate computer-based components, systems, processes or programs to meet desired needs and specifications."},
+  {text: "O-4", description: "Ability to apply, design and develop principles in the construction of software systems of varying complexity."},
+  {text: "O-5", description: "PO 5. Ability and skills to effectively use state-of-the-art techniques and computing tools for analysis, design, and implementation of computing systems."},
+  {text: "O-6", description: "Ability to function effectively as a member of a team assembled to undertake a common goal."},
+  {text: "O-7", description: "An understanding of professional, ethical, legal, security, and social issues and responsibilities."},
+  {text: "O-8", description: "Ability to communicate effectively to both technical and non-technical audiences."},
+  {text: "O-9", description: "Ability to analyze the local and the global impact of computing on individuals, organizations and society."},
+  {text: "O-10", description: "Recognition of the need for and the ability to engage in life-long learning. The ability to successfully pursue professional development."}
 ]
 
 o1 = Outcomes.find_by_text("O-1")
