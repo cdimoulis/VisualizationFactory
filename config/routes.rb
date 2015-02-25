@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   resources :outcomes
 
+  resources :educational_objectives
+
   resources :scheduled_courses
 
   resources :scores
