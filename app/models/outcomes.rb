@@ -10,4 +10,7 @@
 #
 
 class Outcomes < ActiveRecord::Base
+
+  has_and_belongs_to_many :educational_objectives
+  
 end

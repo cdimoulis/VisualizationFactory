@@ -5,9 +5,17 @@ Rails.application.routes.draw do
 
   resources :categories
 
-  resources :outcomes
+  resources :outcomes do
+    member do
+      put :educational_objectives
+    end
+  end
 
-  resources :educational_objectives
+  resources :educational_objectives do
+    member do
+      put :outcomes
+    end
+  end
 
   resources :scheduled_courses
 
