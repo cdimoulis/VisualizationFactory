@@ -14,4 +14,6 @@
 
 class ScheduledCourse < ActiveRecord::Base
   has_many :scores
+  belongs_to :course
+  belongs_to :instructor
 end

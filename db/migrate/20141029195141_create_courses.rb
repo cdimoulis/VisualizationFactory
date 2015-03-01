@@ -4,7 +4,7 @@ class CreateCourses < ActiveRecord::Migration
       t.integer :number, null: false
       t.string :text, null: false
       t.text :description
-      t.integer :category_id
+      t.references :category
 
       t.timestamps
     end

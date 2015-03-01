@@ -146,6 +146,34 @@ PreAssessment.create [
   {text: "CS Foundations / Core Requirement"}
 ]
 
+Instructor.create [
+  {first_name: "Kemal", last_name: "Akkaya"},
+  {first_name: "Bill", last_name: "Cheng"},
+  {first_name: "Norman", last_name: "Carver"},
+  {first_name: "Qiang", last_name: "Cheng"},
+  {first_name: "Dunren", last_name: "Che"},
+  {first_name: "Bidyut", last_name: "Gupta"},
+  {first_name: "Henry", last_name: "Hexmoor"},
+  {first_name: "Namdar", last_name: "Mogharreban"},
+  {first_name: "Shahram", last_name: "Rahimi"},
+  {first_name: "Michael", last_name: "Wainer"},
+  {first_name: "Wen-Chi", last_name: "Hou"},
+  {first_name: "Mengxia", last_name: "Zhu"}
+]
+
+akkaya = Instructor.find_by_last_name "Akkaya"
+bilcheng = Instructor.find_by_first_name_and_last_name "Bill", "Cheng"
+carver = Instructor.find_by_last_name "Carver"
+cheng = Instructor.find_by_first_name_and_last_name "Qiang", "Cheng"
+che = Instructor.find_by_last_name "Che"
+gupta = Instructor.find_by_last_name "Gupta"
+hexmoor = Instructor.find_by_last_name "Hexmoor"
+namdar = Instructor.find_by_first_name "Namdar"
+rahimi = Instructor.find_by_last_name "Rahimi"
+wainer = Instrucotr.find_by_last_name "Wainer"
+hou = Instructor.find_by_last_name "Hou"
+zhu = Instructor.find_by_last_name "zhu"
+
 ### CURRENT REAL DATA ###
 # ScheduledCourse.create [
 #   # SPRING
