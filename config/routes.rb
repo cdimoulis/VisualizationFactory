@@ -7,13 +7,13 @@ Rails.application.routes.draw do
 
   resources :outcomes, only: [:index, :show] do
     member do
-      put :educational_objectives
+      get :educational_objectives
     end
   end
 
   resources :educational_objectives, only: [:index, :show] do
     member do
-      put :outcomes
+      get :outcomes
     end
   end
 

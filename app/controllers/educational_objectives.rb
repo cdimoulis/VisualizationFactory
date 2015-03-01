@@ -53,6 +53,7 @@ class EducationalObjectivesController < ApplicationController
       respond_with @records
     else
       four_hundred_response
+    end
   end
 
 #### END Association Ops ####
