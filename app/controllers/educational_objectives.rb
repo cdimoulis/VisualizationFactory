@@ -25,6 +25,8 @@ class EducationalObjectivesController < ApplicationController
     respond_with @records
   end
 
+
+
   # def edit
   #   set_up_generic_record( :update, params[:id], Course )
   #   two_hundred_response
@@ -39,5 +41,20 @@ class EducationalObjectivesController < ApplicationController
   #   set_up_generic_record( :destroy, params[:id], Course )
   #   ( @record.destroy ? two_hundred_response : four_hundred_response )
   # end  
+
+#### END CRUD Ops ####
+
+#### START Association Ops ####
+
+  def outcomes
+    eo = EducationalObjective.find params[:id]
+    if !eo.nil?
+      @records = eo.outcomes
+      respond_with @records
+    else
+      four_hundred_response
+  end
+
+#### END Association Ops ####
 
 end

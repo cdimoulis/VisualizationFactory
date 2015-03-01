@@ -40,4 +40,19 @@ class OutcomesController < ApplicationController
   #   ( @record.destroy ? two_hundred_response : four_hundred_response )
   # end  
 
+#### END CRUD Ops ####
+
+#### START Association Ops ####
+
+  def educational_objectives
+    o = Outcome.find params[:id]
+    if !o.nil?
+      @records = o.educational_objectives
+      respond_with @records
+    else
+      four_hundred_response
+  end
+
+#### END Association Ops ####
+
 end
