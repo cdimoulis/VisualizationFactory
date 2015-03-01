@@ -91,7 +91,7 @@ App.Page.extend
 
       _.each levelCourses, (schedCourse) =>
 
-        scores = @.scores.where {"sched_course_id": schedCourse.get "id"}
+        scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
 
         _.each scores, (score) =>
 
@@ -145,7 +145,7 @@ App.Page.extend
 
         course = @.courses.get schedCourse.get("course_id")
 
-        score = @.scores.findWhere {"sched_course_id": schedCourse.get( "id" ), "outcome_id": outcome.get "id"}
+        score = @.scores.findWhere {"scheduled_course_id": schedCourse.get( "id" ), "outcome_id": outcome.get "id"}
 
         unless _.isUndefined score
           data = 

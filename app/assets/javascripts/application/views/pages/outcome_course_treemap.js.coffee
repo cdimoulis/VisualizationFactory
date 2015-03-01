@@ -55,7 +55,7 @@ App.Page.extend
       counts = {}
 
       _.each courses, (schedCourse) =>
-        score = @.scores.findWhere {"outcome_id": outcome.get("id"), "sched_course_id": schedCourse.get "id"}
+        score = @.scores.findWhere {"outcome_id": outcome.get("id"), "scheduled_course_id": schedCourse.get "id"}
 
         if !_.isUndefined(score)
           course = @.courses.get schedCourse.get( "course_id" )

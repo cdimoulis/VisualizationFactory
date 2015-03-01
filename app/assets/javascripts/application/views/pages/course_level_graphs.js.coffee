@@ -68,7 +68,7 @@ App.Page.extend
 
       _.each levelCourses, (schedCourse) =>
 
-        scores = @.scores.where {"sched_course_id": schedCourse.get "id"}
+        scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
 
         _.each scores, (score) =>
           outcome = @.outcomes.get( score.get "outcome_id").get "text"

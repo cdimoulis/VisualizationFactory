@@ -64,7 +64,7 @@ App.Page.extend
       course = App.get("App:Courses").get schedCourse.get("course_id")
 
       scores = new App.Collections.Scores()
-      scores.set @.scores.where( {"sched_course_id": schedCourse.get "id"} )
+      scores.set @.scores.where( {"scheduled_course_id": schedCourse.get "id"} )
 
       score = scores.findWhere {"outcome_id": @.outcome.get "id"}
 

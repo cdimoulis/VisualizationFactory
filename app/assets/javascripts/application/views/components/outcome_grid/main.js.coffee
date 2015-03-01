@@ -35,7 +35,7 @@ App.View.extend
       _.each _.range(10), (num) ->
         data.outcome[num] = false
 
-      scores = @.scores.where {"sched_course_id": yrcourse.get 'id'}
+      scores = @.scores.where {"scheduled_course_id": yrcourse.get 'id'}
 
       _.each scores, (score) =>
         data.outcome[score.get('outcome_id')-1] = true

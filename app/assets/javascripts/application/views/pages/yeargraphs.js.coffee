@@ -87,7 +87,7 @@ App.Page.extend
       if _.isUndefined tempData[level]
         tempData[level] = {}
 
-      scores = @.scores.where {"sched_course_id": schedCourse.get "id"}
+      scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
 
       # Each score for a scheduled Course
       _.each scores, (score) =>

@@ -80,7 +80,7 @@ App.Page.extend
             _.isEqual level, crsLevel
 
           _.each levelCourses, (schedCourse) =>
-            scores = @.scores.where {"sched_course_id": schedCourse.get( 'id' ), "outcome_id": @.outcome.get 'id'}
+            scores = @.scores.where {"scheduled_course_id": schedCourse.get( 'id' ), "outcome_id": @.outcome.get 'id'}
 
             _.each scores, (score) =>
 
