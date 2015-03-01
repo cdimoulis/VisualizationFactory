@@ -158,7 +158,8 @@ Instructor.create [
   {first_name: "Shahram", last_name: "Rahimi"},
   {first_name: "Michael", last_name: "Wainer"},
   {first_name: "Wen-Chi", last_name: "Hou"},
-  {first_name: "Mengxia", last_name: "Zhu"}
+  {first_name: "Mengxia", last_name: "Zhu"},
+  {first_name: "Mehrdad", last_anem: "Nojoumian"}
 ]
 
 akkaya = Instructor.find_by_last_name "Akkaya"
@@ -173,65 +174,52 @@ rahimi = Instructor.find_by_last_name "Rahimi"
 wainer = Instrucotr.find_by_last_name "Wainer"
 hou = Instructor.find_by_last_name "Hou"
 zhu = Instructor.find_by_last_name "zhu"
+mehrdad = Instructor.find_by_first_name "Mehrdad"
 
-### CURRENT REAL DATA ###
-# ScheduledCourse.create [
-#   # SPRING
-#   {course_id: c202.id, semester: "spring", year: 2013},
-#   {course_id: c215.id, semester: "spring", year: 2013},
-#   {course_id: c220.id, semester: "spring", year: 2013},
-#   {course_id: c306.id, semester: "spring", year: 2013},
-#   {course_id: c330.id, semester: "spring", year: 2013},
-#   {course_id: c335.id, semester: "spring", year: 2013},
-#   {course_id: c350.id, semester: "spring", year: 2013},
-#   {course_id: c399.id, semester: "spring", year: 2013},
-#   {course_id: c401.id, semester: "spring", year: 2013},
-#   {course_id: c404.id, semester: "spring", year: 2013},
-#   {course_id: c410.id, semester: "spring", year: 2013},
-#   {course_id: c438.id, semester: "spring", year: 2013},
-#   {course_id: c440.id, semester: "spring", year: 2013},
-#   {course_id: c484.id, semester: "spring", year: 2013},
-#   {course_id: c485.id, semester: "spring", year: 2013},
-#   {course_id: c499.id, semester: "spring", year: 2013},
-#   # FALL
-#   {course_id: c202.id, semester: "fall", year: 2013},
-#   {course_id: c215.id, semester: "fall", year: 2013},
-#   {course_id: c220.id, semester: "fall", year: 2013},
-#   {course_id: c306.id, semester: "fall", year: 2013},
-#   {course_id: c311.id, semester: "fall", year: 2013},
-#   {course_id: c320.id, semester: "fall", year: 2013},
-#   {course_id: c330.id, semester: "fall", year: 2013},
-#   {course_id: c399.id, semester: "fall", year: 2013},
-#   {course_id: c408.id, semester: "fall", year: 2013},
-#   {course_id: c430.id, semester: "fall", year: 2013},
-#   {course_id: c441.id, semester: "fall", year: 2013},
-#   {course_id: c455.id, semester: "fall", year: 2013},
-#   {course_id: c487.id, semester: "fall", year: 2013},
-#   {course_id: c498.id, semester: "fall", year: 2013}
-# ]
-
-
-### TEST DATA (NOT REAL) ###
 
 ScheduledCourse.create [
+  # 2014
+  # SPRING
+  {course_id: c202.id, semester: "spring", year: 2014, initial_bs: 23, final_bs: 21, instructor_id: billcheng.id},
+  {course_id: c215.id, semester: "spring", year: 2014, initial_bs: 18, final_bs: 18, initial_ba: 6, final_ba: 6, instructor_id: mehrdad.id},
+  {course_id: c220.id, semester: "spring", year: 2014, initial_bs: 18, final_bs: 18, instructor_id: billcheng.id},
+  {course_id: c306.id, semester: "spring", year: 2014, initial_bs: 6, final_bs: 5, initial_ba: 10, final_ba: 6, instructor_id: carver.id},
+  {course_id: c320.id, semester: "spring", year: 2014, initial_bs: 13, final_bs: 13, initial_ba: 6, final_ba: 6, instructor_id: hou.id},
+  # {course_id: c330.id, semester: "spring", year: 2014, initial_bs: 13, final_bs: 13, initial_ba: 2, final_ba: 2, instructor_id: cheng.id},
+  {course_id: c335.id, semester: "spring", year: 2014, initial_bs: 9, final_bs: 9, initial_ba: 5, final_ba: 5, instructor_id: gupta.id},
+  {course_id: c350.id, semester: "spring", year: 2014, initial_ba: 6, final_ba: 6, instructor_id: che.id},
+  # {course_id: c399.id, semester: "spring", year: 2014, initial_bs: 15, final_bs: 15, instructor_id: hexmoor.id},
+  {course_id: c401.id, semester: "spring", year: 2014, initial_bs: 31, final_bs: 31, instructor_id: hou.id}, # This is suspicious as it was listed as MS degree
+  # {course_id: c404.id, semester: "spring", year: 2014, initial_bs: 9, final_bs: 9, instructor_id: hexmoor.id},
+  {course_id: c410.id, semester: "spring", year: 2014, initial_bs: 7, final_bs: 7, instructor_id: akkaya.id}, # Suspicious due to report labeling
+  {course_id: c435.id, semester: "spring", year: 2014, initial_bs: 14, final_bs: 14, instructor_id: akkaya.id},
+  # {course_id: c438.id, semester: "spring", year: 2014, initial_bs: 3, final_bs: , instructor_id: },
+  {course_id: c440.id, semester: "spring", year: 2014, initial_bs: 3, final_bs: 3, initial_ba: 2, final_ba: 2, instructor_id: gupta.id},
+  {course_id: c484.id, semester: "spring", year: 2014, initial_bs: 7, final_bs: 6, initial_ba: 6, final_ba: 6, instructor_id: wainer.id},
+  {course_id: c485.id, semester: "spring", year: 2014, initial_ba: 5, final_ba: 4, instructor_id: wainer.id},
+  {course_id: c499.id, semester: "spring", year: 2014, initial_bs: 12, final_bs: 12, instructor_id: rahimi.id},
+
+  # FALL
+
+
   # 2013
   # SPRING
-  {course_id: c202.id, semester: "spring", year: 2013, num_students: 36},
-  {course_id: c215.id, semester: "spring", year: 2013, num_students: 30},
-  {course_id: c220.id, semester: "spring", year: 2013, num_students: 27},
-  {course_id: c306.id, semester: "spring", year: 2013, num_students: 26},
-  {course_id: c330.id, semester: "spring", year: 2013, num_students: 14},
-  {course_id: c335.id, semester: "spring", year: 2013, num_students: 18},
-  {course_id: c350.id, semester: "spring", year: 2013, num_students: 14},
-  {course_id: c399.id, semester: "spring", year: 2013, num_students: 11},
-  {course_id: c401.id, semester: "spring", year: 2013, num_students: 15},
-  {course_id: c404.id, semester: "spring", year: 2013, num_students: 30},
-  {course_id: c410.id, semester: "spring", year: 2013, num_students: 7},
-  {course_id: c438.id, semester: "spring", year: 2013, num_students: 3},
-  {course_id: c440.id, semester: "spring", year: 2013, num_students: 24},
-  {course_id: c484.id, semester: "spring", year: 2013, num_students: 12},
-  {course_id: c485.id, semester: "spring", year: 2013, num_students: 13},
-  {course_id: c499.id, semester: "spring", year: 2013, num_students: 13},
+  {course_id: c202.id, semester: "spring", year: 2013, initial_bs: 14, final_bs: 14, instructor_id: namdar.id},
+  {course_id: c215.id, semester: "spring", year: 2013, initial_bs: 24, final_bs: 24, initial_ba: 6, final_ba: 6, instructor_id: akkaya.id},
+  {course_id: c220.id, semester: "spring", year: 2013, initial_bs: 18, final_bs: 18, initial_ba: 8, final_ba: 8, instructor_id: zhu.id},
+  {course_id: c306.id, semester: "spring", year: 2013, initial_bs: 11, final_bs: 11, initial_ba: 5, final_ba: 5, instructor_id: carver.id},
+  {course_id: c330.id, semester: "spring", year: 2013, initial_bs: 13, final_bs: 13, initial_ba: 2, final_ba: 2, instructor_id: cheng.id},
+  {course_id: c335.id, semester: "spring", year: 2013, initial_bs: 17, final_bs: 17, instructor_id: hou.id},
+  {course_id: c350.id, semester: "spring", year: 2013, initial_bs: 6, final_bs: 6, initial_ba: 7, final_ba: 7, instructor_id: che.id},
+  {course_id: c399.id, semester: "spring", year: 2013, initial_bs: 15, final_bs: 15, instructor_id: hexmoor.id},
+  # {course_id: c401.id, semester: "spring", year: 2013, initial_bs: 15, final_bs: , instructor_id: },
+  {course_id: c404.id, semester: "spring", year: 2013, initial_bs: 9, final_bs: 9, instructor_id: hexmoor.id},
+  {course_id: c410.id, semester: "spring", year: 2013, initial_bs: 4, final_bs: 4, instructor_id: akkaya.id},
+  # {course_id: c438.id, semester: "spring", year: 2013, initial_bs: 3, final_bs: , instructor_id: },
+  {course_id: c440.id, semester: "spring", year: 2013, initial_bs: 7, final_bs: 7, instructor_id: gupta.id},
+  {course_id: c484.id, semester: "spring", year: 2013, initial_bs: 10, final_bs: 9, instructor_id: wainer.id},
+  {course_id: c485.id, semester: "spring", year: 2013, initial_bs: 10, final_bs: 10, instructor_id: wainer.id},
+  {course_id: c499.id, semester: "spring", year: 2013, initial_bs: 13, final_bs: 13, instructor_id: rahimi.id},
   # FALL
   {course_id: c202.id, semester: "fall", year: 2013, num_students: 48},
   {course_id: c215.id, semester: "fall", year: 2013, num_students: 43},
