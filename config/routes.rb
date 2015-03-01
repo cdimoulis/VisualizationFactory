@@ -1,25 +1,25 @@
 Rails.application.routes.draw do
   get 'main/index'
 
-  resources :courses 
+  resources :courses, only: [:index, :show]
 
-  resources :categories
+  resources :categories, only: [:index, :show]
 
-  resources :outcomes do
+  resources :outcomes, only: [:index, :show] do
     member do
       put :educational_objectives
     end
   end
 
-  resources :educational_objectives do
+  resources :educational_objectives, only: [:index, :show] do
     member do
       put :outcomes
     end
   end
 
-  resources :scheduled_courses
+  resources :scheduled_courses, only: [:index, :show]
 
-  resources :scores
+  resources :scores, only: [:index, :show]
 
   root 'main#index'
   # The priority is based upon order of creation: first created -> highest priority.
