@@ -27,6 +27,7 @@ Course.create [
   {number: 202, text: "Intro to Computer Science", category_id: cat1},
   {number: 215, text: "Discrete Mathematics", category_id: cat1},
   {number: 220, text: "Programming with Data Structures", category_id: cat1},
+  {number: 221, text: "Internet & Mobile Computing"},
   {number: 305, text: "Software Development Practices"},
   {number: 306, text: "Linux/UNIX Programming", category_id: cat2},
   {number: 311, text: "The Theory and Implementation of Programming Languages", category_id: cat2},
@@ -59,6 +60,7 @@ Course.create [
 c202 = Course.find_by_number(202)
 c215 = Course.find_by_number(215)
 c220 = Course.find_by_number(220)
+c221 = Course.find_by_number(221)
 c305 = Course.find_by_number(305)
 c306 = Course.find_by_number(306)
 c311 = Course.find_by_number(311)
@@ -159,7 +161,11 @@ Instructor.create [
   {first_name: "Michael", last_name: "Wainer"},
   {first_name: "Wen-Chi", last_name: "Hou"},
   {first_name: "Mengxia", last_name: "Zhu"},
-  {first_name: "Mehrdad", last_anem: "Nojoumian"}
+  {first_name: "Mehrdad", last_name: "Nojoumian"},
+  {first_name: "Justin", last_name: "Selgrad"},
+  {first_name: "Nick", last_name: "Rahimi"},
+  {first_name: "Adil", last_name: "Ibrahim"},
+  {first_name: "Mingxuam", last_name: "Sun"}
 ]
 
 akkaya = Instructor.find_by_last_name "Akkaya"
@@ -170,12 +176,15 @@ che = Instructor.find_by_last_name "Che"
 gupta = Instructor.find_by_last_name "Gupta"
 hexmoor = Instructor.find_by_last_name "Hexmoor"
 namdar = Instructor.find_by_first_name "Namdar"
-rahimi = Instructor.find_by_last_name "Rahimi"
+rahimi = Instructor.find_by_first_name "Shahram"
 wainer = Instrucotr.find_by_last_name "Wainer"
 hou = Instructor.find_by_last_name "Hou"
 zhu = Instructor.find_by_last_name "zhu"
 mehrdad = Instructor.find_by_first_name "Mehrdad"
-
+selgrad = Instructor.find_by_last_name "Selgrad"
+nickrahimi = Instructor.find_by_first_name_and_last_name "Nick", "Rahimi"
+ibrahim = Instructor.find_by_last_name "Ibrahim"
+sun = Instructor.find_by_last_name "Sun"
 
 ScheduledCourse.create [
   # 2014
@@ -185,22 +194,34 @@ ScheduledCourse.create [
   {course_id: c220.id, semester: "spring", year: 2014, initial_bs: 18, final_bs: 18, instructor_id: billcheng.id},
   {course_id: c306.id, semester: "spring", year: 2014, initial_bs: 6, final_bs: 5, initial_ba: 10, final_ba: 6, instructor_id: carver.id},
   {course_id: c320.id, semester: "spring", year: 2014, initial_bs: 13, final_bs: 13, initial_ba: 6, final_ba: 6, instructor_id: hou.id},
-  # {course_id: c330.id, semester: "spring", year: 2014, initial_bs: 13, final_bs: 13, initial_ba: 2, final_ba: 2, instructor_id: cheng.id},
   {course_id: c335.id, semester: "spring", year: 2014, initial_bs: 9, final_bs: 9, initial_ba: 5, final_ba: 5, instructor_id: gupta.id},
   {course_id: c350.id, semester: "spring", year: 2014, initial_ba: 6, final_ba: 6, instructor_id: che.id},
-  # {course_id: c399.id, semester: "spring", year: 2014, initial_bs: 15, final_bs: 15, instructor_id: hexmoor.id},
   {course_id: c401.id, semester: "spring", year: 2014, initial_bs: 31, final_bs: 31, instructor_id: hou.id}, # This is suspicious as it was listed as MS degree
-  # {course_id: c404.id, semester: "spring", year: 2014, initial_bs: 9, final_bs: 9, instructor_id: hexmoor.id},
   {course_id: c410.id, semester: "spring", year: 2014, initial_bs: 7, final_bs: 7, instructor_id: akkaya.id}, # Suspicious due to report labeling
   {course_id: c435.id, semester: "spring", year: 2014, initial_bs: 14, final_bs: 14, instructor_id: akkaya.id},
-  # {course_id: c438.id, semester: "spring", year: 2014, initial_bs: 3, final_bs: , instructor_id: },
   {course_id: c440.id, semester: "spring", year: 2014, initial_bs: 3, final_bs: 3, initial_ba: 2, final_ba: 2, instructor_id: gupta.id},
   {course_id: c484.id, semester: "spring", year: 2014, initial_bs: 7, final_bs: 6, initial_ba: 6, final_ba: 6, instructor_id: wainer.id},
   {course_id: c485.id, semester: "spring", year: 2014, initial_ba: 5, final_ba: 4, instructor_id: wainer.id},
   {course_id: c499.id, semester: "spring", year: 2014, initial_bs: 12, final_bs: 12, instructor_id: rahimi.id},
 
   # FALL
-
+  {course_id: c202.id, semester: "fall", year: 2014, initial_bs: 27, final_bs: 26, instructor_id: billcheng.id},
+  {course_id: c215.id, semester: "fall", year: 2014, initial_bs: 25, final_bs: 25, initial_ba: 1, final_ba: 1, instructor_id: mehrdad.id},
+  {course_id: c220.id, semester: "fall", year: 2014, initial_bs: 11, final_bs: 11, initial_ba: 6, final_ba: 6, instructor_id: selgrad.id},
+  {course_id: c221.id, semester: "fall", year: 2014, initial_bs: 31, final_bs: 31, initial_ba: 11, final_ba: 11, instructor_id: nickrahimi.id},
+  {course_id: c305.id, semester: "fall", year: 2014, initial_bs: 7, final_bs: 6, initial_ba: 8, final_ba: 8, instructor_id: wainer.id},
+  {course_id: c306.id, semester: "fall", year: 2014, initial_bs: 8, final_bs: 4, initial_ba: 4, final_ba: 4, instructor_id: carver.id},
+  {course_id: c311.id, semester: "fall", year: 2014, initial_bs: 11, final_bs: 11, instructor_id: ibrahim.id},
+  {course_id: c330.id, semester: "fall", year: 2014, initial_bs: 15, final_bs: 13, initial_ba: 11, final_ba: 11, instructor_id: hou.id},
+  {course_id: c335.id, semester: "fall", year: 2014, initial_bs: 15, final_bs: 16, instructor_id: ibrahim.id},
+  # {course_id: c350.id, semester: "fall", year: 2014, initial_ba: 6, final_ba: 6, instructor_id: che.id}, # ONLINE HAS SOME DATA, BUT NO STUDENT ENROLLMENT NUMBERS
+  {course_id: c401.id, semester: "fall", year: 2014, initial_bs: 31, final_bs: 31, instructor_id: hou.id}, 
+  {course_id: c408.id, semester: "fall", year: 2014, initial_bs: 4, final_bs: 3, instructor_id: gupta.id},
+  {course_id: c412.id, semester: "fall", year: 2014, initial_ba: 3, final_ba: 3, instructor_id: nickrahimi.id}, 
+  {course_id: c430.id, semester: "fall", year: 2014, initial_bs: 5, final_bs: 5, initial_ba: 7, final_ba: 7, instructor_id: che.id},
+  {course_id: c437.id, semester: "fall", year: 2014, initial_bs: 0, final_bs: 0, initial_ba: 0, final_ba: 0, instructor_id: sun.id}, # NO ENROLLMENT DATA GIVEN
+  {course_id: c487.id, semester: "fall", year: 2014, initial_bs: 5, final_bs: 5, initial_ba: 3, final_ba: 3, instructor_id: wainer.id},
+  {course_id: c498.id, semester: "fall", year: 2014, initial_bs: 14, final_bs: 14, instructor_id: selgrad.id},
 
   # 2013
   # SPRING
