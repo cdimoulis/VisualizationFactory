@@ -337,21 +337,21 @@ ScheduledCourse.create [
   {course_id: c484.id, semester: "spring", year: 2010, initial_bs: 8, final_bs: 8, initial_ba: 0, final_ba: 0, instructor_id: wainer.id},
   {course_id: c485.id, semester: "spring", year: 2010, initial_bs: 8, final_bs: 7, initial_ba: 0, final_ba: 0, instructor_id: wainer.id},
   # FALL
-  {course_id: c215.id, semester: "fall", year: 2010, initial_bs: 28, final_bs: 26, initial_ba: 0, final_ba: 0, instructor_id: akkaya.id},
-  {course_id: c220.id, semester: "fall", year: 2010, initial_bs: 10, final_bs: 10, initial_ba: 0, final_ba: 0, instructor_id: zhu.id},
-  {course_id: c311.id, semester: "fall", year: 2010, initial_bs: 23, final_bs: 23, initial_ba: 0, final_ba: 0, instructor_id: rahimi.id},
-  {course_id: c320.id, semester: "fall", year: 2010, initial_bs: 21, final_bs: 19, initial_ba: 0, final_ba: 0, instructor_id: zargham.id},
-  {course_id: c330.id, semester: "fall", year: 2010, initial_bs: 19, final_bs: 14, initial_ba: 0, final_ba: 0, instructor_id: cheng.id},
-  {course_id: c335.id, semester: "fall", year: 2010, initial_bs: 5, final_bs: 5, initial_ba: 0, final_ba: 0, instructor_id: hou.id},
-  {course_id: c399.id, semester: "fall", year: 2010, initial_bs: 12, final_bs: 12, initial_ba: 0, final_ba: 0, instructor_id: namdar.id},
-  {course_id: c408.id, semester: "fall", year: 2010, initial_bs: 8, final_bs: 8, initial_ba: 0, final_ba: 0, instructor_id: gupta.id},
+  {course_id: c202.id, semester: "fall", year: 2010, initial_bs: 37, final_bs: 30, initial_ba: 0, final_ba: 0, instructor_id: namdar.id},
+  {course_id: c215.id, semester: "fall", year: 2010, initial_bs: 15, final_bs: 13, initial_ba: 0, final_ba: 0, instructor_id: akkaya.id},
+  {course_id: c220.id, semester: "fall", year: 2010, initial_bs: 12, final_bs: 11, initial_ba: 0, final_ba: 0, instructor_id: carver.id},
+  {course_id: c306.id, semester: "fall", year: 2010, initial_bs: 19, final_bs: 17, initial_ba: 0, final_ba: 0, instructor_id: carver.id},
+  {course_id: c311.id, semester: "fall", year: 2010, initial_bs: 15, final_bs: 15, initial_ba: 0, final_ba: 0, instructor_id: rahimi.id},
+  {course_id: c330.id, semester: "fall", year: 2010, initial_bs: 23, final_bs: 19, initial_ba: 0, final_ba: 0, instructor_id: cheng.id},
+  {course_id: c335.id, semester: "fall", year: 2010, initial_bs: 13, final_bs: 12, initial_ba: 0, final_ba: 0, instructor_id: hou.id},
   {course_id: c420.id, semester: "fall", year: 2010, initial_bs: 5, final_bs: 5, initial_ba: 0, final_ba: 0, instructor_id: zhu.id},
-  {course_id: c430.id, semester: "fall", year: 2010, initial_bs: 13, final_bs: 13, initial_ba: 0, final_ba: 0, instructor_id: che.id},
-  {course_id: c437.id, semester: "fall", year: 2010, initial_bs: 5, final_bs: 5, initial_ba: 0, final_ba: 0, instructor_id: rahimi.id},
-  {course_id: c441.id, semester: "fall", year: 2010, initial_bs: 4, final_bs: 4, initial_ba: 0, final_ba: 0, instructor_id: akkaya.id},
-  {course_id: c455.id, semester: "fall", year: 2010, initial_bs: 8, final_bs: 6, initial_ba: 0, final_ba: 0, instructor_id: cheng.id},
-  {course_id: c487.id, semester: "fall", year: 2010, initial_bs: 11, final_bs: 9, initial_ba: 0, final_ba: 0, instructor_id: wainer.id},
-  {course_id: c498.id, semester: "fall", year: 2010, initial_bs: 17, final_bs: 17, initial_ba: 0, final_ba: 0, instructor_id: namdar.id}
+  {course_id: c430.id, semester: "fall", year: 2010, initial_bs: 3, final_bs: 2, initial_ba: 0, final_ba: 0, instructor_id: che.id},
+  {course_id: c435.id, semester: "fall", year: 2010, initial_bs: 3, final_bs: 3, initial_ba: 0, final_ba: 0, instructor_id: wainer.id},
+  {course_id: c437.id, semester: "fall", year: 2010, initial_bs: 6, final_bs: 6, initial_ba: 0, final_ba: 0, instructor_id: rahimi.id},
+  {course_id: c441.id, semester: "fall", year: 2010, initial_bs: 6, final_bs: 6, initial_ba: 0, final_ba: 0, instructor_id: akkaya.id},
+  {course_id: c455.id, semester: "fall", year: 2010, initial_bs: 4, final_bs: 4, initial_ba: 0, final_ba: 0, instructor_id: cheng.id},
+  {course_id: c487.id, semester: "fall", year: 2010, initial_bs: 6, final_bs: 6, initial_ba: 0, final_ba: 0, instructor_id: wainer.id},
+  {course_id: c498.id, semester: "fall", year: 2010, initial_bs: 9, final_bs: 9, initial_ba: 0, final_ba: 0, instructor_id: zhu.id}
 ]
 
 
