@@ -212,15 +212,14 @@ ScheduledCourse.create [
   {course_id: c221.id, semester: "fall", year: 2014, initial_bs: 31, final_bs: 31, initial_ba: 11, final_ba: 11, instructor_id: nickrahimi.id},
   {course_id: c305.id, semester: "fall", year: 2014, initial_bs: 7, final_bs: 6, initial_ba: 8, final_ba: 8, instructor_id: wainer.id},
   {course_id: c306.id, semester: "fall", year: 2014, initial_bs: 8, final_bs: 4, initial_ba: 4, final_ba: 4, instructor_id: carver.id},
-  {course_id: c311.id, semester: "fall", year: 2014, initial_bs: 11, final_bs: 11, instructor_id: ibrahim.id},
+  {course_id: c311.id, semester: "fall", year: 2014, initial_bs: 11, final_bs: 11, initial_ba: 3, final_ba: 3, instructor_id: ibrahim.id},
   {course_id: c330.id, semester: "fall", year: 2014, initial_bs: 15, final_bs: 13, initial_ba: 11, final_ba: 11, instructor_id: hou.id},
-  {course_id: c335.id, semester: "fall", year: 2014, initial_bs: 15, final_bs: 16, instructor_id: ibrahim.id},
+  {course_id: c335.id, semester: "fall", year: 2014, initial_bs: 15, final_bs: 16, initial_ba: 4, final_ba: 4, instructor_id: ibrahim.id},
   # {course_id: c350.id, semester: "fall", year: 2014, initial_ba: 6, final_ba: 6, instructor_id: che.id}, # ONLINE HAS SOME DATA, BUT NO STUDENT ENROLLMENT NUMBERS
-  {course_id: c401.id, semester: "fall", year: 2014, initial_bs: 31, final_bs: 31, instructor_id: hou.id}, 
   {course_id: c408.id, semester: "fall", year: 2014, initial_bs: 4, final_bs: 3, instructor_id: gupta.id},
   {course_id: c412.id, semester: "fall", year: 2014, initial_ba: 3, final_ba: 3, instructor_id: nickrahimi.id}, 
   {course_id: c430.id, semester: "fall", year: 2014, initial_bs: 5, final_bs: 5, initial_ba: 7, final_ba: 7, instructor_id: che.id},
-  {course_id: c437.id, semester: "fall", year: 2014, initial_bs: 0, final_bs: 0, initial_ba: 0, final_ba: 0, instructor_id: sun.id}, # NO ENROLLMENT DATA GIVEN
+  {course_id: c437.id, semester: "fall", year: 2014, initial_bs: 8, final_bs: 8, initial_ba: 3, final_ba: 3, instructor_id: sun.id},
   {course_id: c487.id, semester: "fall", year: 2014, initial_bs: 5, final_bs: 5, initial_ba: 3, final_ba: 3, instructor_id: wainer.id},
   {course_id: c498.id, semester: "fall", year: 2014, initial_bs: 14, final_bs: 14, instructor_id: selgrad.id},
 
@@ -360,6 +359,210 @@ ScheduledCourse.create [
 
 Score.create [
   ### REAL DATA ###
+  # => FALL 2014
+  # => CS 202
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c202.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 3.11},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c202.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 3.11},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c202.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.13},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c202.id, "fall", 2014).id, outcome_id: o4.id, type: "BS", score: 3.15},
+  # => CS 215
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 2.72},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 2.72},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 2.85},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "fall", 2014).id, outcome_id: o1.id, type: "BA", score: 2.91},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 2.91},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 3.31},
+  # => CS 220
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 3.09},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 3.18},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.03},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "fall", 2014).id, outcome_id: o1.id, type: "BA", score: 3.63},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 3.32},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 3.13},
+  # 300
+  # => CS 305
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 3.05},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.22},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o4.id, type: "BS", score: 3.41},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o5.id, type: "BS", score: 3.65},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o6.id, type: "BS", score: 3.47},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o8.id, type: "BS", score: 3.41},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 3.25},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 3.01},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o4.id, type: "BA", score: 3.31},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o5.id, type: "BA", score: 3.62},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o6.id, type: "BA", score: 3.4},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c305.id, "fall", 2014).id, outcome_id: o8.id, type: "BA", score: 3.38},
+  # => CS 306
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 3.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 3.13},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.25},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "fall", 2014).id, outcome_id: o5.id, type: "BS", score: 3.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "fall", 2014).id, outcome_id: o1.id, type: "BA", score: 2.75},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 3.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 2.84},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "fall", 2014).id, outcome_id: o5.id, type: "BA", score: 3.0},
+  # => CS 311
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 3.3},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 3.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.4},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o4.id, type: "BS", score: 3.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o5.id, type: "BS", score: 3.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o1.id, type: "BA", score: 3.7},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 3.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 3.6},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o4.id, type: "BA", score: 3.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c311.id, "fall", 2014).id, outcome_id: o5.id, type: "BA", score: 3.0},
+  # => CS 330
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 2.8},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 2.8},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 2.9},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "fall", 2014).id, outcome_id: o1.id, type: "BA", score: 2.7},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 2.7},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 2.6},
+  # => CS 335
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 3.2},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 3.3},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o4.id, type: "BS", score: 3.1},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o5.id, type: "BS", score: 3.1},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o1.id, type: "BA", score: 4.0},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 3.4},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 3.8},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o4.id, type: "BA", score: 3.4},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "fall", 2014).id, outcome_id: o5.id, type: "BA", score: 3.5},
+  # 400
+  # => CS 408
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c408.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 3.01},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c408.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 2.73},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c408.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.33},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c408.id, "fall", 2014).id, outcome_id: o4.id, type: "BS", score: 3.49},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c408.id, "fall", 2014).id, outcome_id: o5.id, type: "BS", score: 3.1},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c408.id, "fall", 2014).id, outcome_id: o6.id, type: "BS", score: 3.49},
+  # => CS 412
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c412.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 3.24},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c412.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 3.21},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c412.id, "fall", 2014).id, outcome_id: o4.id, type: "BA", score: 3.1},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c412.id, "fall", 2014).id, outcome_id: o5.id, type: "BA", score: 3.37},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c412.id, "fall", 2014).id, outcome_id: o6.id, type: "BA", score: 3.42},
+
+  # => CS 430
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c430.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 3.07},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c430.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.06},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c430.id, "fall", 2014).id, outcome_id: o5.id, type: "BS", score: 2.98},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c430.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 2.53},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c430.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 2.73},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c430.id, "fall", 2014).id, outcome_id: o5.id, type: "BA", score: 2.67},
+  # => CS 437
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 3.1},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 3.1},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 2.97},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o4.id, type: "BS", score: 3.36},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o5.id, type: "BS", score: 3.23},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o6.id, type: "BS", score: 3.47},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o1.id, type: "BA", score: 3.44},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 3.44},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 3.7},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o4.id, type: "BA", score: 3.97},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o5.id, type: "BA", score: 3.8},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c437.id, "fall", 2014).id, outcome_id: o6.id, type: "BA", score: 3.41},
+  # => CS 487
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o1.id, type: "BS", score: 3.42},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o2.id, type: "BS", score: 3.68},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.74},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o4.id, type: "BS", score: 3.67},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o5.id, type: "BS", score: 3.56},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o7.id, type: "BS", score: 3.56},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o8.id, type: "BS", score: 3.6},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o1.id, type: "BA", score: 2.33},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o2.id, type: "BA", score: 2.69},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o3.id, type: "BA", score: 3.8},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o4.id, type: "BA", score: 3.67},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o5.id, type: "BA", score: 3.84},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o7.id, type: "BA", score: 3.47},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c487.id, "fall", 2014).id, outcome_id: o8.id, type: "BA", score: 3.57},
+  # => CS 498
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c498.id, "fall", 2014).id, outcome_id: o3.id, type: "BS", score: 3.1},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c498.id, "fall", 2014).id, outcome_id: o4.id, type: "BS", score: 3.3},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c498.id, "fall", 2014).id, outcome_id: o5.id, type: "BS", score: 3.3},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c498.id, "fall", 2014).id, outcome_id: o6.id, type: "BS", score: 3.8},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c498.id, "fall", 2014).id, outcome_id: o7.id, type: "BS", score: 3.9},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c498.id, "fall", 2014).id, outcome_id: o8.id, type: "BS", score: 3.7},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c498.id, "fall", 2014).id, outcome_id: o9.id, type: "BS", score: 3.6},
+
+  # => Spring 2014
+  # => CS 215
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "spring", 2014).id, outcome_id: o1.id, score: 3.05},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "spring", 2014).id, outcome_id: o2.id, score: 2.96},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "spring", 2014).id, outcome_id: o3.id, score: 2.65},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "spring", 2014).id, outcome_id: o6.id, score: 4},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c215.id, "spring", 2014).id, outcome_id: o8.id, score: 4},
+  # => CS 220
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "spring", 2014).id, outcome_id: o1.id, score: 3.5},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "spring", 2014).id, outcome_id: o2.id, score: 3.5},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "spring", 2014).id, outcome_id: o3.id, score: 3.5},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c220.id, "spring", 2014).id, outcome_id: o4.id, score: 3.7},
+  # 300
+  # => CS 306
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "spring", 2014).id, outcome_id: o1.id, score: 3.27},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "spring", 2014).id, outcome_id: o2.id, score: 3},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "spring", 2014).id, outcome_id: o3.id, score: 3.5},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c306.id, "spring", 2014).id, outcome_id: o5.id, score: 3.45},
+  # => CS 330
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "spring", 2014).id, outcome_id: o1.id, score: 3.14},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "spring", 2014).id, outcome_id: o2.id, score: 3},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "spring", 2014).id, outcome_id: o3.id, score: 2.83},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c330.id, "spring", 2014).id, outcome_id: o4.id, score: 3.11},
+  # => CS 335
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "spring", 2014).id, outcome_id: o1.id, score: 3.18},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "spring", 2014).id, outcome_id: o2.id, score: 3.19},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c335.id, "spring", 2014).id, outcome_id: o3.id, score: 3.19},
+  # => CS 350
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c350.id, "spring", 2014).id, outcome_id: o2.id, score: 3.33},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c350.id, "spring", 2014).id, outcome_id: o3.id, score: 3.42},
+  # 400
+  # => CS 404
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c404.id, "spring", 2014).id, outcome_id: o1.id, score: 4},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c404.id, "spring", 2014).id, outcome_id: o2.id, score: 3.4},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c404.id, "spring", 2014).id, outcome_id: o3.id, score: 4},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c404.id, "spring", 2014).id, outcome_id: o7.id, score: 3.6},
+  # => CS 410
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c410.id, "spring", 2014).id, outcome_id: o1.id, score: 3},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c410.id, "spring", 2014).id, outcome_id: o2.id, score: 3},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c410.id, "spring", 2014).id, outcome_id: o3.id, score: 3.12},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c410.id, "spring", 2014).id, outcome_id: o5.id, score: 3.12},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c410.id, "spring", 2014).id, outcome_id: o7.id, score: 3.12},
+  # => CS 440
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c440.id, "spring", 2014).id, outcome_id: o1.id, score: 3.8},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c440.id, "spring", 2014).id, outcome_id: o2.id, score: 3.8},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c440.id, "spring", 2014).id, outcome_id: o3.id, score: 3.7},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c440.id, "spring", 2014).id, outcome_id: o4.id, score: 3.44},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c440.id, "spring", 2014).id, outcome_id: o5.id, score: 3.71},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c440.id, "spring", 2014).id, outcome_id: o6.id, score: 3.2},
+  # => CS 484
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c484.id, "spring", 2014).id, outcome_id: o1.id, score: 3.31},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c484.id, "spring", 2014).id, outcome_id: o2.id, score: 3.26},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c484.id, "spring", 2014).id, outcome_id: o3.id, score: 3.71},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c484.id, "spring", 2014).id, outcome_id: o4.id, score: 3.57},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c484.id, "spring", 2014).id, outcome_id: o5.id, score: 3.44},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c484.id, "spring", 2014).id, outcome_id: o6.id, score: 3.11},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c484.id, "spring", 2014).id, outcome_id: o8.id, score: 3.51},
+  # => CS 485
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c485.id, "spring", 2014).id, outcome_id: o1.id, score: 3.43},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c485.id, "spring", 2014).id, outcome_id: o2.id, score: 3.34},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c485.id, "spring", 2014).id, outcome_id: o3.id, score: 3.66},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c485.id, "spring", 2014).id, outcome_id: o4.id, score: 3.68},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c485.id, "spring", 2014).id, outcome_id: o5.id, score: 3.72},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c485.id, "spring", 2014).id, outcome_id: o6.id, score: 3.6},
+  # => CS 499
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c499.id, "spring", 2014).id, outcome_id: o3.id, score: 3.62},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c499.id, "spring", 2014).id, outcome_id: o4.id, score: 3.62},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c499.id, "spring", 2014).id, outcome_id: o5.id, score: 3.22},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c499.id, "spring", 2014).id, outcome_id: o6.id, score: 3.33},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c499.id, "spring", 2014).id, outcome_id: o7.id, score: 3.62},
+  {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c499.id, "spring", 2014).id, outcome_id: o8.id, score: 3.62},
+
+
   # => FALL 2013
   # => CS 202
   {scheduled_course_id: ScheduledCourse.find_by_course_id_and_semester_and_year!(c202.id, "fall", 2013).id, outcome_id: o1.id, score: 3.34},
