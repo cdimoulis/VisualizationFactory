@@ -5,7 +5,6 @@
 
   initialize: () ->
 
-    @.createViewport "header"
     @.createViewport "left-panel"
     @.createViewport "page"
     @.createViewport "footer"
@@ -19,7 +18,6 @@
       root: "/"
       silent: true
 
-    @.bindViewportToElement "header", "#header"
     @.bindViewportToElement "left-panel", "#left-panel"
     @.bindViewportToElement "page", "#page"
 
@@ -29,5 +27,4 @@
 
     App.set "App:CurrentPage", currentPage
 
-    @.getViewport("header").setView(new App.Views["layouts/header/main"]())
     @.getViewport("left-panel").setView(new App.Views["layouts/sidebar/main"]())

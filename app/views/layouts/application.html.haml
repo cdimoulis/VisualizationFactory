@@ -9,6 +9,18 @@
 
 %body
 
+  #header
+    %div{ style: "height: inherit;"}
+      %nav.navbar.navbar-inverse.navbar-fixed-top{ role: "navigation"}
+        .container-fluid
+          .navbar-header
+            .navbar-brand
+              Visualization Factory
+          %ul.nav.navbar-nav
+            %li
+              %a{href: "#"}
+                Data Set 1
+
   %script
     App.set("App:Courses", new App.Collections.Courses(
     = raw Course.all.to_json
