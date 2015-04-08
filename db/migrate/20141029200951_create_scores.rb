@@ -3,7 +3,7 @@ class CreateScores < ActiveRecord::Migration
     create_table :scores do |t|
       t.references :scheduled_course, null: false
       t.references :outcome, null: false
-      t.string :type
+      t.string :degree_type
       t.decimal :score, null: false
 
       t.timestamps

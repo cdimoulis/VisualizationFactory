@@ -4,6 +4,7 @@
 #
 #  id                  :integer          not null, primary key
 #  scheduled_course_id :integer
+#  degree_type         :string(255)
 #  a                   :integer
 #  b                   :integer
 #  c                   :integer
