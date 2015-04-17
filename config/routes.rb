@@ -1,27 +1,31 @@
 Rails.application.routes.draw do
-  get 'main/index'
+  # get 'main/index'
 
-  resources :courses, only: [:index, :show]
+  # resources :courses, only: [:index, :show]
 
-  resources :categories, only: [:index, :show]
+  # resources :categories, only: [:index, :show]
 
-  resources :outcomes, only: [:index, :show] do
-    member do
-      get :educational_objectives
-    end
-  end
+  # resources :outcomes, only: [:index, :show] do
+  #   member do
+  #     get :educational_objectives
+  #   end
+  # end
 
-  resources :educational_objectives, only: [:index, :show] do
-    member do
-      get :outcomes
-    end
-  end
+  # resources :educational_objectives, only: [:index, :show] do
+  #   member do
+  #     get :outcomes
+  #   end
+  # end
 
-  resources :scheduled_courses, only: [:index, :show]
+  # resources :scheduled_courses, only: [:index, :show]
 
-  resources :scores, only: [:index, :show]
+  # resources :scores, only: [:index, :show]
 
-  root 'main#index'
+  root 'curriculum#siucs'
+
+  get "siucs" => "curriculum#siucs"
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
