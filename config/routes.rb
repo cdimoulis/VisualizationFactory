@@ -21,9 +21,10 @@ Rails.application.routes.draw do
 
   # resources :scores, only: [:index, :show]
 
-  root 'curriculum#siucs'
+  root 'main#index'
 
   get "siucs" => "curriculum#siucs"
+  get "test" => "curriculum#test"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

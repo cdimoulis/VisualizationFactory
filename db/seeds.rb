@@ -9,6 +9,9 @@
 siuCS = Curriculum.new(text: "Southern Illinois University Computer Science")
 siuCS.save
 
+testCurr = Curriculum.new(text: "Test Curriculum")
+testCurr.save
+
 PreAssessment.create [
   {text: "Mathematics", curriculum_id: siuCS.id},
   {text: "General Education", curriculum_id: siuCS.id},
@@ -49,6 +52,13 @@ Outcome.create [
   {text: "O-10", description: "Recognition of the need for and the ability to engage in life-long learning. The ability to successfully pursue professional development.", curriculum_id: siuCS.id}
 ]
 
+Outcome.create [
+  {text: "TO-1", description: "Test Outcome 1", curriculum_id: testCurr.id},
+  {text: "TO-2", description: "Test Outcome 2", curriculum_id: testCurr.id},
+  {text: "TO-3", description: "Test Outcome 3", curriculum_id: testCurr.id}
+]
+
+
 o1 = Outcome.find_by_text("O-1")
 o2 = Outcome.find_by_text("O-2")
 o3 = Outcome.find_by_text("O-3")
@@ -59,6 +69,11 @@ o7 = Outcome.find_by_text("O-7")
 o8 = Outcome.find_by_text("O-8")
 o9 = Outcome.find_by_text("O-9")
 o10 = Outcome.find_by_text("O-10")
+
+to1 = Outcome.find_by_text("TO-1")
+to2 = Outcome.find_by_text("TO-2")
+to3 = Outcome.find_by_text("TO-3")
+
 
 EducationalObjective.create [
   {text: "PEO 1", description: "To provide students with a solid foundation in computer science, mathematics, and basic sciences, which will allow them to successfully pursue graduate studies in computer science, or other related degrees.", curriculum_id: siuCS.id},
@@ -123,6 +138,12 @@ o10.educational_objectives << [peo1,peo2,peo3]
 
 
 #Courses:
+Course.create [
+  {number: 100, text: 'Test Course 100', curriculum_id: testCurr.id},
+  {number: 101, text: 'Test Course 101', curriculum_id: testCurr.id},
+  {number: 102, text: 'Test course 102', curriculum_id: testCurr.id}
+]
+
 Course.create [
   {number: 202,text: 'Introduction to Computer Science',curriculum_id: siuCS.id, category_id: cat1},
   {number: 215,text: 'Discrete Mathematics',curriculum_id: siuCS.id, category_id: cat1},

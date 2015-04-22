@@ -20,6 +20,10 @@
             %li
               %a{href: "/siucs"}
                 SIU CS Data
+          %ul.nav.navbar-nav
+            %li
+              %a{href: "/test"}
+                Test Curriculum
 
   %script
     App.set("App:Curriculum", new App.Models.Curriculum(#{raw @curriculum_data["Curriculum"].to_json}));
