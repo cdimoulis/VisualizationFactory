@@ -15,6 +15,15 @@
           300
         %option{value: "400"}
           400
+    .col.col-xs-2.text-right
+      Degree:
+      %select.degree
+        %option{value: "All"}
+          All
+        %option{value: "BS"}
+          BS
+        %option{value: "BA"}
+          BA
 
 
   .row
