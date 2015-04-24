@@ -4,10 +4,11 @@ App.Page.extend
   events:
     'change select.year': 'setYear'
     'change input.weighted': 'setWeighted'
+    'change select.degree': 'setDegree'
 
   initialize: () ->
 
-    _.bindAll @, "parseData", "setYear", "setWeighted"
+    _.bindAll @, "parseData", "setYear", "setWeighted", 'setDegree'
 
     @.categories = App.get "App:Categories"
     @.courses = App.get "App:Courses"
@@ -15,10 +16,11 @@ App.Page.extend
     @.scheduledCourses = App.get "App:ScheduledCourses"
     @.scores = App.get "App:Scores"
 
-    @.year = "2012/2013"
-    @.semester = "fall"
+    @.year = "2013/2014"
+    @.degree = "All"
+    # @.semester = "fall"
 
-    @.years = ["2012/2013","2011/2012","2010/2011","2009/2010"]
+    @.years = ["2013/2014","2012/2013","2011/2012","2010/2011","2009/2010"]
 
     @.graphData = new App.Collection()
 
@@ -87,7 +89,10 @@ App.Page.extend
       if _.isUndefined tempData[level]
         tempData[level] = {}
 
-      scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
+      if _.isEqual(@.degree, "All")
+        scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
+      else
+        scores = @.scores.where {"scheduled_course_id": schedCourse.get('id'),'degree_type': @.degree}
 
       # Each score for a scheduled Course
       _.each scores, (score) =>
@@ -96,9 +101,15 @@ App.Page.extend
         if _.isUndefined tempData[level][outcome]
           tempData[level][outcome] = []
 
-        tempData[level][outcome].push
-          score: score.get "score"
-          weight: if @.weighted then schedCourse.get("num_students") else 1
+        if _.isEqual(@.degree, "All")
+          tempData[level][outcome].push
+            score: score.get "score"
+            weight: if @.weighted then schedCourse.get("final_bs")+schedCourse.get('final_ba') else 1
+        else
+          tempData[level][outcome].push
+              score: score.get "score"
+              weight: if @.weighted then schedCourse.get("final_#{@.degree.toLowerCase()}") else 1
+
 
 
     _.each tempData, (data, level) =>
@@ -134,3 +145,11 @@ App.Page.extend
     @.weighted = e.target.checked
 
     @.parseData() 
+
+  setDegree: (e) ->
+    if _.isUndefined e
+      @.degree = "All"
+    else
+      @.degree = e.target.value
+
+    @.parseData()
