@@ -102,7 +102,6 @@ App.View.extend
 
       # If dataCollection changes then re-parse the dataCollection
       @.listenTo @.dataCollection, "change", () =>
-        console.log "here"
         @._parseData()
         @.changeWeight()
 
@@ -117,7 +116,6 @@ App.View.extend
   _parseData: () ->
 
     @.asterData = @.dataCollection.get "data"
-    console.log @.asterData
 
 
   _detectDataType: ( axis ) ->

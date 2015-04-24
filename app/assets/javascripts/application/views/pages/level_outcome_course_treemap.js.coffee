@@ -7,7 +7,7 @@ App.Page.extend
 
   initialize: () ->
 
-    _.bindAll @, "parseData", "setYear"
+    _.bindAll @, "parseData", "setYear", "setDegree"
 
     @.categories = App.get "App:Categories"
     @.courses = App.get "App:Courses"

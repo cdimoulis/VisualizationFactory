@@ -3,10 +3,11 @@ App.Page.extend
   title: "Course Level and Outcome Treemap"
   events:
     'change select.year': 'setYear'
+    'change select.degree': 'setDegree'
 
   initialize: () ->
 
-    _.bindAll @, "parseData", "setYear", "pareseAsterPlot"
+    _.bindAll @, "parseData", "setYear", "pareseAsterPlot", "setDegree"
 
     @.categories = App.get "App:Categories"
     @.courses = App.get "App:Courses"
@@ -14,10 +15,10 @@ App.Page.extend
     @.scheduledCourses = App.get "App:ScheduledCourses"
     @.scores = App.get "App:Scores"
 
-    @.year = "2012/2013"
+    @.year = "2013/2014"
     @.levels = [200,300,400]
-
-    @.years = ["2012/2013","2011/2012","2010/2011","2009/2010"]
+    @.degree = "All"
+    @.years = ["2013/2014","2012/2013","2011/2012","2010/2011","2009/2010"]
 
     @.asterData = new App.Model()
     @.asterData.set "data", []
@@ -91,7 +92,10 @@ App.Page.extend
 
       _.each levelCourses, (schedCourse) =>
 
-        scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
+        if _.isEqual(@.degree,"All")
+          scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
+        else
+          scores = @.scores.where {"scheduled_course_id": schedCourse.get("id"), 'degree_type':@.degree}
 
         _.each scores, (score) =>
 
@@ -124,6 +128,14 @@ App.Page.extend
 
     @.parseData()
 
+  setDegree: (e) ->
+    if _.isUndefined e
+      @.degree = "All"
+    else
+      @.degree = e.target.value
+
+    @.parseData()
+
   pareseAsterPlot: () ->
 
     outcome = @.outcomes.findWhere {"text": @.treeData.get "name1"}
@@ -145,14 +157,26 @@ App.Page.extend
 
         course = @.courses.get schedCourse.get("course_id")
 
-        score = @.scores.findWhere {"scheduled_course_id": schedCourse.get( "id" ), "outcome_id": outcome.get "id"}
+        if _.isEqual(@.degree,"All")
+          scores = @.scores.where {"scheduled_course_id": schedCourse.get( "id" ), "outcome_id": outcome.get "id"}
+          classSize = schedCourse.get('final_bs') + schedCourse.get('final_ba')
+        else
+          scores = @.scores.where {"scheduled_course_id": schedCourse.get( "id" ), "outcome_id": outcome.get("id"), 'degree_type': @.degree}
+          classSize = schedCourse.get("final_#{@.degree.toLowerCase()}")
+
+        unless _.isUndefined(scores) or _.isEmpty(scores)
+          sum = _.reduce scores, (memo, score) =>
+            memo + parseFloat(score.get('score'))
+          ,0
+          
+          score = if sum != 0 then sum/scores.length else 0
 
         unless _.isUndefined score
           data = 
             'num': course.get "number"
             'outcome': outcome.get "text"
-            'score': score.get 'score'
-            'classSize': schedCourse.get 'num_students'
+            'score': score
+            'classSize': classSize
             'semester': schedCourse.get "semester"
 
           selectedData.push data
