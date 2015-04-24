@@ -9,6 +9,15 @@
         %option{value: "{{this}}"}
           {{this}}
         {{/each}}
+    .col.col-xs-2.text-right
+      Degree:
+      %select.degree
+        %option{value: "All"}
+          All
+        %option{value: "BS"}
+          BS
+        %option{value: "BA"}
+          BA
 
   .row
     .col.col-xs-12

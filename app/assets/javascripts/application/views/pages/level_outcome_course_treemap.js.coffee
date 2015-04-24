@@ -3,6 +3,7 @@ App.Page.extend
   title: "Level, Outcome, and Course Treemap"
   events:
     'change select.year': 'setYear'
+    'change select.degree': 'setDegree'
 
   initialize: () ->
 
@@ -14,10 +15,11 @@ App.Page.extend
     @.scheduledCourses = App.get "App:ScheduledCourses"
     @.scores = App.get "App:Scores"
 
-    @.year = "2012/2013"
+    @.year = "2013/2014"
+    @.degree = "All"
     @.levels = [200,300,400]
 
-    @.years = ["2012/2013","2011/2012","2010/2011","2009/2010"]
+    @.years = ["2013/2014","2012/2013","2011/2012","2010/2011","2009/2010"]
 
     @.treeData = new App.Model()
 
@@ -72,7 +74,10 @@ App.Page.extend
       _.each levelCourses, (schedCourse) =>
 
         course = @.courses.get schedCourse.get( "course_id" )
-        scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
+        if _.isEqual(@.degree,"All")
+          scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
+        else
+          scores = @.scores.where {"scheduled_course_id": schedCourse.get("id"), 'degree_type': @.degree}
 
         _.each scores, (score) =>
 
@@ -82,7 +87,10 @@ App.Page.extend
           if _.isUndefined weights[outcome]
             weights[outcome] = {}
 
-          weights[outcome][String( course.get "number" )] = schedCourse.get "num_students"
+          if _.isEqual(@.degree,"All")
+            weights[outcome][String( course.get "number" )] = schedCourse.get("final_bs") + schedCourse.get("final_ba")
+          else
+            weights[outcome][String( course.get "number" )] = schedCourse.get("final_#{@.degree.toLowerCase()}")
 
 
       classLevel = 
@@ -114,5 +122,13 @@ App.Page.extend
       @.year = @.years[0]
     else
       @.year = e.target.value
+
+    @.parseData()
+
+  setDegree: (e) ->
+    if _.isUndefined e
+      @.degree = "All"
+    else
+      @.degree = e.target.value
 
     @.parseData()
