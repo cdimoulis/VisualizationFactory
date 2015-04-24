@@ -38,5 +38,9 @@
 
     App.set("App:Scores", new App.Collections.Scores(#{raw @curriculum_data["Scores"].to_json}));
 
+    App.set("App:EducationalObjectives", new App.Collections.EducationalObjectives(#{raw @curriculum_data["EducationalObjectives"].to_json}));
+
+    App.set("App:GradeCounts", new App.Collections.GradeCounts(#{raw @curriculum_data["GradeCounts"].to_json}));
+
   = yield
 
