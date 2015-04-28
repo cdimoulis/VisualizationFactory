@@ -56,15 +56,18 @@ App.Page.extend
       counts = {}
 
       _.each courses, (schedCourse) =>
-        scores = @.scores.where {"outcome_id": outcome.get("id"), "scheduled_course_id": schedCourse.get "id"}
+        scores = @.scores.where {"outcome_id": outcome.get("id"), "scheduled_course_id": schedCourse.get "id", 'degree_type':@.degree}
 
         if !_.isEmpty(scores)
           course = @.courses.get schedCourse.get( "course_id" )
 
+          if _.isUndefined(counts[String( course.get 'number' )])
+            counts[String( course.get 'number' )] = 0
+
           if _.isEqual(@.degree,"All")
-            counts[String( course.get "number" )] = schedCourse.get("final_bs") + schedCourse.get('final_ba')
+            counts[String( course.get "number" )] += schedCourse.get("final_bs") + schedCourse.get('final_ba')
           else
-            counts[String( course.get "number" )] = schedCourse.get("final_#{@.degree.toLowerCase()}")
+            counts[String( course.get "number" )] += schedCourse.get("final_#{@.degree.toLowerCase()}")
       
 
 
