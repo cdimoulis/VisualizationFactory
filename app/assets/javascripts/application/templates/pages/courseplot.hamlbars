@@ -1,0 +1,60 @@
+%h3 Courses
+
+%article.col-xs-12
+  .row
+    .col.col-xs-2.text-right
+      Year:
+      %select.year.input-lg
+        %option{value: "All"}
+          All
+        {{#each years}}
+        %option{value: "{{this}}"}
+          {{this}}
+        {{/each}}
+
+    .col.col-xs-3.text-center
+      Semester:
+      %select.semester.input-lg
+        %option{value: "All"}
+          All
+        %option{value: "fall"}
+          Fall
+        %option{value: "spring"}
+          Spring
+
+    .col.col-xs-2.text-center
+      Degree:
+      %select.degree.input-lg
+        %option{value: "All"}
+          All
+        %option{value: "BS"}
+          BS
+        %option{value: "BA"}
+          BA
+
+    .col.col-xs-2.text-left
+      Outcome:
+      %select.outcome.input-lg
+        {{#each outcomes.models}}
+        %option{value: "{{this.attributes.id}}"}
+          {{this.attributes.text}}
+        {{/each}}
+  .row
+    .col.col-xs-2.text-right
+      Level:
+      %select.level.input-lg
+        %option{value: "200"}
+          200
+        %option{value: "300"}
+          300
+        %option{value: "400"}
+          400
+
+    .col.col-xs-3.text-center
+      Course:
+      %select.course.input-lg
+
+
+  .row
+    .col.col-xs-12
+      {{view "components/graphs/scatterplot/main" dataCollection=courseData dataConfig=dataConfig}}

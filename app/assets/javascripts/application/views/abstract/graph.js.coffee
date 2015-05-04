@@ -42,7 +42,6 @@ App.View.extend
             .attr "class", "vis-chart-tooltip"
             .style "opacity", 0
 
-
       @._percentWidth = 100 - ( ( @.dataConfig.get("margin").left + @.dataConfig.get("margin").right) / @.$el.width() ) * 100
 
       @._pixelWidth = @.$el.width() * ( @._percentWidth / 100 )
@@ -314,7 +313,7 @@ App.View.extend
     else
 
       # If user did NOT supplied an yDomain option
-      if _.isNull( @.dataConfig.get("yDomain") )
+      if _.isUndefined(@.dataConfig.get('yDomain')) or _.isNull( @.dataConfig.get("yDomain") )
         min = _.min( domain )
         max = _.max( domain )
         diff = max - min
@@ -345,7 +344,7 @@ App.View.extend
     if !_.isEqual( @._chartXDataCategory, "discrete" ) and ( _.isEqual( @.xAxisType, "number" ) or _.isEqual( @.xAxisType, "Date:Date" ) or _.isEqual( @.xAxisType, "Date:Moment" ) )
       
       # If user did NOT supplied an xDomain option
-      if _.isNull( @.dataConfig.get("xDomain") )
+      if _.isUndefined(@.dataConfig.get('xDomain')) or _.isNull( @.dataConfig.get("xDomain") )
 
         min = _.min( domain )
         max = _.max( domain )
@@ -419,7 +418,10 @@ App.View.extend
         .append "text"
           .attr "class", "x axis-label"
           .text () =>
-            @.dataConfig.get("xLabel")(@.dataConfig.get 'xKey')
+            if !_.isUndefined(@.dataConfig.get('xLabel'))
+              @.dataConfig.get("xLabel")(@.dataConfig.get 'xKey')
+            else
+              ""
 
       # Rotate x axis labels
       angle = @.dataConfig.get 'xRotate'
@@ -465,7 +467,10 @@ App.View.extend
       .append "text"
         .attr "class", "y axis-label"
         .text () =>
-          @.dataConfig.get("yLabel") @.dataConfig.get 'yKey'
+          if !_.isUndefined(@.dataConfig.get('yLabel'))
+            @.dataConfig.get("yLabel") @.dataConfig.get 'yKey'
+          else
+            ""
 
     # place the y axis label
     label = @.$el.find ".y .axis-label"
