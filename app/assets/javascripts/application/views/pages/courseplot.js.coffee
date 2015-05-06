@@ -34,30 +34,27 @@ App.Page.extend
 
     @.courseData = new App.Collection()
 
-    @.dataConfig = new App.Model
+    @.dataConfig = new App.Models.GraphConfig
       xKey: "classSize"
       yKey: "score"
-      'size': (model) =>
-        5
       height: 500
       group: (model) =>
-        console.log model
         level = Math.floor( model.get('num')/100)*100
-        console.log 'level',level
         level
-      maxValue: 4
-      'margin':
-        "top": 25
-        "right": 10
-        "bottom": 10
-        "left": 10
-      color: (collection, model, index) ->
-        d3.scale.category10().range()[index]
+      yDomain: () ->
+        [0,4]
+      groupColor: (group) ->
+        if _.isEqual group,200
+          "#1f77b4"
+        else if _.isEqual group,300
+          "#2ca02c"
+        else
+          "#d62728"
       tooltip: (collection, data) =>
         "<header>Course: #{data.get('num')}</header>
          <div>
           <div>Score: #{data.get('score')}</div>
-          <div>Class Size: #{data.get('classSize')}</div>
+          <div>Num Students: #{data.get('classSize')}</div>
           <hr>
           <div>Semester: #{data.get('semester')}</div>
           <div>Year: #{data.get('year')}</div>
@@ -80,14 +77,14 @@ App.Page.extend
         level = Math.floor( course.get('number')/100) * 100
         _.isEqual(@.level,level)
 
-    $opt = $("option")
+    $opt = $("<option>")
     $opt.attr "value", "All"
     $opt.text "All"
 
     $course.append $opt
 
     _.each courses, (course) =>
-      $opt = $("option")
+      $opt = $("<option>")
       $opt.attr "value", course.get('id')
       $opt.text course.get('number')
 
@@ -95,16 +92,17 @@ App.Page.extend
 
   parseData: (triggerEvent=false) ->
 
+    @.courseData.reset()
+
     courseFilter = {}
     if !_.isEqual(@.year,'All')
       courseFilter['year'] = @.year
     if !_.isEqual(@.semester,'All')
       courseFilter['semester'] = @.semester
     if !_.isEqual(@.course, "All")
-      courseFilter['course_id'] = @.courses.findWhere({text:@.course}).get('id')
+      courseFilter['course_id'] = parseInt @.course
 
     curCourses = @.scheduledCourses.where courseFilter
-
 
     _.each curCourses, (schedCourse) =>
 
@@ -117,10 +115,10 @@ App.Page.extend
 
         if _.isEqual(@.degree,"All")
           scores.set @.scores.where( {"scheduled_course_id": schedCourse.get("id"), "outcome_id": @.outcome.get('id')} )
-          classSize = schedCourse.get('final_bs') + schedCourse.get('final_ba')
+          classSize = (schedCourse.get('final_bs') + schedCourse.get('final_ba')) || 0
         else
-          scores.set @.scores.where( {"scheduled_course_id": schedCourse.get("id"), "outcome_id": @.outcome.get('id'), 'degree_type': @.degree} )
-          classSize = schedCourse.get('final_#{@.degree.toLowerCase()}')
+          scores.set @.scores.where( {"scheduled_course_id": schedCourse.get("id"), "outcome_id": @.outcome.get('id'), "degree_type": @.degree} )
+          classSize = schedCourse.get("final_#{@.degree.toLowerCase()}") || 0
 
         score = scores.reduce (memo,s) =>
           memo + parseFloat(s.get('score'))
@@ -138,20 +136,17 @@ App.Page.extend
             "semester": schedCourse.get 'semester'
             "year": schedCourse.get 'year'
 
-          # selectedData.push data
           @.courseData.add data
 
-
-    # @.courseData.set "data", selectedData, {silent: triggerEvent}
-
-    if triggerEvent
-      @.courseData.trigger "new"
 
   setYear: (e) ->
     if _.isUndefined e
       @.year = "All"
     else
-      @.year = parseInt e.target.value
+      if _.isEqual(e.target.value,"All")
+        @.year = "All"
+      else
+        @.year = parseInt e.target.value
 
     @.parseData true
 
@@ -185,12 +180,17 @@ App.Page.extend
     if _.isUndefined e
       @.level = "All"
     else
-      @.level = e.target.value
+      if _.isEqual(e.target.value,"All")
+        @.level = "All"
+      else
+        @.level = parseInt e.target.value
 
     @.parseData true
 
   setCourse: (e) ->
-    if _.isUndfined e
+    if _.isUndefined e
       @.course = "All"
     else
       @.course = e.target.value
+
+    @.parseData true

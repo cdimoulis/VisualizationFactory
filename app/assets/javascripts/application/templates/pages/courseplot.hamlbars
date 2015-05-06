@@ -43,6 +43,8 @@
     .col.col-xs-2.text-right
       Level:
       %select.level.input-lg
+        %option{value: "All"}
+          All
         %option{value: "200"}
           200
         %option{value: "300"}

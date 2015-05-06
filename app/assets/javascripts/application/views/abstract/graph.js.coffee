@@ -313,11 +313,15 @@ App.View.extend
     else
 
       # If user did NOT supplied an yDomain option
-      if _.isUndefined(@.dataConfig.get('yDomain')) or _.isNull( @.dataConfig.get("yDomain") )
+      if _.isNull( @.dataConfig.get("yDomain") )
         min = _.min( domain )
         max = _.max( domain )
-        diff = max - min
-        buffer = Math.ceil diff*.05
+        #if Max and Min are equal
+        if _.isEqual(max,min)
+          buffer = Math.ceil max * .05
+        else
+          diff = max - min
+          buffer = Math.ceil diff*.05
 
         if min < 0
           min = min - buffer
@@ -344,12 +348,16 @@ App.View.extend
     if !_.isEqual( @._chartXDataCategory, "discrete" ) and ( _.isEqual( @.xAxisType, "number" ) or _.isEqual( @.xAxisType, "Date:Date" ) or _.isEqual( @.xAxisType, "Date:Moment" ) )
       
       # If user did NOT supplied an xDomain option
-      if _.isUndefined(@.dataConfig.get('xDomain')) or _.isNull( @.dataConfig.get("xDomain") )
+      if _.isNull( @.dataConfig.get("xDomain") )
 
         min = _.min( domain )
         max = _.max( domain )
-        diff = max - min
-        buffer = Math.ceil diff*.05
+        #if Max and Min are equal
+        if _.isEqual(max,min)
+          buffer = Math.ceil max * .05
+        else
+          diff = max - min
+          buffer = Math.ceil diff*.05
 
         if min < 0
           min = min - buffer
@@ -418,10 +426,7 @@ App.View.extend
         .append "text"
           .attr "class", "x axis-label"
           .text () =>
-            if !_.isUndefined(@.dataConfig.get('xLabel'))
-              @.dataConfig.get("xLabel")(@.dataConfig.get 'xKey')
-            else
-              ""
+            @.dataConfig.get("xLabel")(@.dataConfig.get 'xKey')
 
       # Rotate x axis labels
       angle = @.dataConfig.get 'xRotate'
@@ -467,10 +472,7 @@ App.View.extend
       .append "text"
         .attr "class", "y axis-label"
         .text () =>
-          if !_.isUndefined(@.dataConfig.get('yLabel'))
-            @.dataConfig.get("yLabel") @.dataConfig.get 'yKey'
-          else
-            ""
+            @.dataConfig.get("yLabel") @.dataConfig.get('yKey')
 
     # place the y axis label
     label = @.$el.find ".y .axis-label"
