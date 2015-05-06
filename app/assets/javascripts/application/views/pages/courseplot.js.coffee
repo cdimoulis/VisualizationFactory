@@ -113,12 +113,17 @@ App.Page.extend
 
         scores = new App.Collections.Scores()
 
-        if _.isEqual(@.degree,"All")
-          scores.set @.scores.where( {"scheduled_course_id": schedCourse.get("id"), "outcome_id": @.outcome.get('id')} )
-          classSize = (schedCourse.get('final_bs') + schedCourse.get('final_ba')) || 0
-        else
-          scores.set @.scores.where( {"scheduled_course_id": schedCourse.get("id"), "outcome_id": @.outcome.get('id'), "degree_type": @.degree} )
+        scoreFilter =
+          'scheduled_course_id': schedCourse.get 'id'
+          'outcome_id': @.outcome.get 'id'
+          
+        if !_.isEqual(@.degree,'All')
+          scoreFilter['degree_type'] = @.degree
           classSize = schedCourse.get("final_#{@.degree.toLowerCase()}") || 0
+        else
+          classSize = (schedCourse.get('final_bs') + schedCourse.get('final_ba')) || 0
+
+        scores.set @.scores.where scoreFilter
 
         score = scores.reduce (memo,s) =>
           memo + parseFloat(s.get('score'))
@@ -162,9 +167,12 @@ App.Page.extend
 
   setOutcome: (e) ->
     if _.isUndefined e
-      @.outcome = App.get("App:Outcomes").get 1
+      @.outcome = "All"
     else
-      @.outcome = App.get("App:Outcomes").get parseInt e.target.value
+      if _.isEqual(e.target.value,"All")
+        @.outcome = "All"
+      else
+        @.outcome = App.get("App:Outcomes").get parseInt e.target.value
 
     @.parseData true
 
