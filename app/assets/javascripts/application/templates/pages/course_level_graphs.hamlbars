@@ -2,19 +2,28 @@
 
 %article.col-xs-12
   .row
-    .col.col-xs-3.text-left.btn-group{"data-toggle"=>"buttons"}
+    .col.col-xs-2.text-left.btn-group{"data-toggle"=>"buttons"}
       %label.btn.btn-success
         %input.weighted{:type => "checkbox", :autocomplete => "off"}
           Use Weighted
-    .col.col-xs-2.text-right
+    .col.col-xs-3.text-right
       Course Level:
-      %select.level
+      %select.level.input-lg
         %option{value: "200"}
           200
         %option{value: "300"}
           300
         %option{value: "400"}
           400
+    .col.col-xs-3.text-right
+      Degree:
+      %select.degree.input-lg
+        %option{value: "All"}
+          All
+        %option{value: "BS"}
+          BS
+        %option{value: "BA"}
+          BA
 
 
   .row

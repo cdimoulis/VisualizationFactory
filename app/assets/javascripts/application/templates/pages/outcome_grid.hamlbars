@@ -1,16 +1,25 @@
 %h3 Outcomes Grid
 %article.col-xs-12
   .row
-    .col.col-xs-6.text-right
+    .col.col-xs-4.text-right
+      Degree:
+      %select.degree.input-lg
+        %option{value: "All"}
+          All
+        %option{value: "BS"}
+          BS
+        %option{value: "BA"}
+          BA
+    .col.col-xs-4.text-center
       Year:
-      %select.year
+      %select.year.input-lg
         {{#each years}}
         %option{value: "{{this}}"}
           {{this}}
         {{/each}}
-    .col.col-xs-6.text-left
+    .col.col-xs-4.text-left
       Semester:
-      %select.semester
+      %select.semester.input-lg
         %option{value: "fall"}
           Fall
         %option{value: "spring"}

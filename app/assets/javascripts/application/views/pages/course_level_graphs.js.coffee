@@ -4,6 +4,7 @@ App.Page.extend
   events:
     'change select.level': 'setLevel'
     'change input.weighted': 'setWeighted'
+    'change select.degree': 'setDegree'
   attributes:
     "style": "height: 200%"
 
@@ -18,8 +19,8 @@ App.Page.extend
     @.scores = App.get "App:Scores"
 
     @.courseLevel = 200
-
-    @.years = ["2009/2010", "2010/2011", "2011/2012", "2012/2013"]
+    @.degree = "All"
+    @.years = ["2009/2010", "2010/2011", "2011/2012", "2012/2013", "2013/2014"]
 
     @.graphData = new App.Collection()
 
@@ -68,7 +69,10 @@ App.Page.extend
 
       _.each levelCourses, (schedCourse) =>
 
-        scores = @.scores.where {"sched_course_id": schedCourse.get "id"}
+        if _.isEqual(@.degree, "All")
+          scores = @.scores.where {"scheduled_course_id": schedCourse.get "id"}
+        else
+          scores = @.scores.where {"scheduled_course_id": schedCourse.get("id"), 'degree_type': @.degree}
 
         _.each scores, (score) =>
           outcome = @.outcomes.get( score.get "outcome_id").get "text"
@@ -76,9 +80,14 @@ App.Page.extend
           if _.isUndefined tempData[year][outcome]
             tempData[year][outcome] = []
 
-          tempData[year][outcome].push
-            score: score.get "score"
-            weight: if @.weighted then schedCourse.get("num_students") else 1
+          if _.isEqual(@.degree, "All")
+            tempData[year][outcome].push
+              score: score.get "score"
+              weight: if @.weighted then schedCourse.get("final_bs")+schedCourse.get('final_ba') else 1
+          else
+            tempData[year][outcome].push
+                score: score.get "score"
+                weight: if @.weighted then schedCourse.get("final_#{@.degree.toLowerCase()}") else 1
 
 
     _.each tempData, (data,year) =>
@@ -113,4 +122,12 @@ App.Page.extend
   setWeighted: (e) ->
     @.weighted = e.target.checked
 
-    @.parseData() 
+    @.parseData()
+
+  setDegree: (e) ->
+    if _.isUndefined e
+      @.degree = "All"
+    else
+      @.degree = e.target.value
+
+    @.parseData()

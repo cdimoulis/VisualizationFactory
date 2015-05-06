@@ -47,9 +47,13 @@ class ApplicationController < ActionController::Base
 
     # Method sends the record with a 200 level status code
         # This method is most often called from controllers that are used as embedded resources
-      def two_hundred_response
-        respond_with @record
-      end
+    def two_hundred_response
+      respond_with @record, status: 200
+    end
+
+    def four_hundred_response
+      respond_with @record, status: 404
+    end
 
   private
 

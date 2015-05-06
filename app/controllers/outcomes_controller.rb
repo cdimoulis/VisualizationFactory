@@ -5,15 +5,15 @@ class OutcomesController < ApplicationController
 
 #### CRUD Ops ####
 
-  def create
-    @record = Outcomes.new user_params
-    ( @record.valid? && record.save ? two_hundred_response : four_hundred_response )
-  end
+  # def create
+  #   @record = Outcomes.new user_params
+  #   ( @record.valid? && record.save ? two_hundred_response : four_hundred_response )
+  # end
 
-  def new
-    @record = Outcomes.new()
-    two_hundred_response
-  end
+  # def new
+  #   @record = Outcomes.new()
+  #   two_hundred_response
+  # end
 
   def show
     set_up_generic_record( true, params[:id], Outcomes, ( @foreign ? :outcomes : nil ), ( @foreign ? :outcomes : nil ) )
@@ -25,19 +25,35 @@ class OutcomesController < ApplicationController
     respond_with @records
   end
 
-  def edit
-    set_up_generic_record( :update, params[:id], Outcomes )
-    two_hundred_response
+  # def edit
+  #   set_up_generic_record( :update, params[:id], Outcomes )
+  #   two_hundred_response
+  # end
+
+  # def update
+  #   set_up_generic_record( :update, params[:id], Outcomes )    
+  #   ( @record.update( outcomes_params ) ? two_hundred_response : four_hundred_response )
+  # end
+
+  # def destroy
+  #   set_up_generic_record( :destroy, params[:id], Outcomes )
+  #   ( @record.destroy ? two_hundred_response : four_hundred_response )
+  # end  
+
+#### END CRUD Ops ####
+
+#### START Association Ops ####
+
+  def educational_objectives
+    o = Outcome.find params[:id]
+    if !o.nil?
+      @records = o.educational_objectives
+      respond_with @records
+    else
+      four_hundred_response
+    end
   end
 
-  def update
-    set_up_generic_record( :update, params[:id], Outcomes )    
-    ( @record.update( outcomes_params ) ? two_hundred_response : four_hundred_response )
-  end
-
-  def destroy
-    set_up_generic_record( :destroy, params[:id], Outcomes )
-    ( @record.destroy ? two_hundred_response : four_hundred_response )
-  end  
+#### END Association Ops ####
 
 end

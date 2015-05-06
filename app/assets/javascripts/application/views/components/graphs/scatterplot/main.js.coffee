@@ -51,7 +51,7 @@ App.Views["abstract/graph"].extend
     plots
 
   drawPlots: ( plots ) ->
-
+    
     plots.enter().append "circle"
       .attr "class", "plot"
       .attr "cy", ( d ) =>
@@ -67,7 +67,7 @@ App.Views["abstract/graph"].extend
       .style "fill", ( d, index ) =>
         model = @._dataModels[ index ]
         @.dataConfig.get("color") @.dataCollection, model
-      .on "click", () ->
+      .on "click", () =>
         console.log "click plot", arguments
       .on "mouseover", ( d, index) =>
         model = @._dataModels[ index ]

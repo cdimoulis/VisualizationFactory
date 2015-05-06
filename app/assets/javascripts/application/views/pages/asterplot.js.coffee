@@ -6,6 +6,7 @@ App.Page.extend
     'change select.semester': "setSemester"
     'change select.outcome': 'setOutcome'
     'change input.weighted': 'setWeighted'
+    'change select.degree': 'setDegree'
 
   initialize: () ->
 
@@ -15,8 +16,8 @@ App.Page.extend
     @.outcomes = App.get 'App:Outcomes'
     @.outcome = @.outcomes.get 1
 
-
-    @.year = 2013
+    @.degree = "All"
+    @.year = 2014
     @.semester = "fall"
 
     @.years = []
@@ -64,16 +65,27 @@ App.Page.extend
       course = App.get("App:Courses").get schedCourse.get("course_id")
 
       scores = new App.Collections.Scores()
-      scores.set @.scores.where( {"sched_course_id": schedCourse.get "id"} )
 
-      score = scores.findWhere {"outcome_id": @.outcome.get "id"}
+      if _.isEqual(@.degree,"All")
+        scores.set @.scores.where( {"scheduled_course_id": schedCourse.get("id"), "outcome_id": @.outcome.get('id')} )
+        classSize = schedCourse.get('final_bs') + schedCourse.get('final_ba')
+      else
+        scores.set @.scores.where( {"scheduled_course_id": schedCourse.get("id"), "outcome_id": @.outcome.get('id'), 'degree_type': @.degree} )
+        classSize = schedCourse.get('final_#{@.degree.toLowerCase()}')
 
-      unless _.isUndefined( score )
+      score = scores.reduce (memo,s) =>
+        memo + parseFloat(s.get('score'))
+      ,0
+
+      if !_.isEqual(scores.length,0)
+        score /= scores.length
+
+      unless _.isUndefined( score ) or _.isEqual(score, 0)
         data =
           "num": course.get "number" 
           "outcome": @.outcome.get("text")
-          "score": score.get("score")
-          "classSize": if @.weighted then schedCourse.get( 'num_students' ) else 1
+          "score": score
+          "classSize": if @.weighted then classSize else 1
 
         selectedData.push data
 
@@ -112,3 +124,11 @@ App.Page.extend
     @.weighted = e.target.checked
 
     @.parseData()
+
+  setDegree: (e) ->
+    if _.isUndefined e
+      @.degree = "All"
+    else
+      @.degree = e.target.value
+
+    @.parseData(true)

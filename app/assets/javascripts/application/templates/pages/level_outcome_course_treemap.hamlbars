@@ -2,13 +2,22 @@
 
 %article.col-xs-12
   .row
-    .col.col-offset-3.col-xs-2
+    .col.col-offset-3.col-xs-3
       School Year:
-      %select.year
+      %select.year.input-lg
         {{#each years}}
         %option{value: "{{this}}"}
           {{this}}
         {{/each}}
+    .col.col-xs-3.text-right
+      Degree:
+      %select.degree.input-lg
+        %option{value: "All"}
+          All
+        %option{value: "BS"}
+          BS
+        %option{value: "BA"}
+          BA
 
   .row
     .col.col-xs-12

@@ -2,12 +2,13 @@ App.Page.extend
   name: "pages/outcome_grid"
   title: "Outcome Grid"
   events:
+    'change select.degree': 'setDegree'
     'change select.year': 'setYear'
     'change select.semester': "setSemester"
 
   initialize: () ->
 
-    _.bindAll @, "onViewDidLoad", "setYear", "setSemester"
+    _.bindAll @, "onViewDidLoad", 'setDegree', "setYear", "setSemester"
 
     @.categories = App.get("App:Categories")
     @.courses = App.get("App:Courses")
@@ -16,7 +17,8 @@ App.Page.extend
     @.scores = App.get("App:Scores")
 
     @.gridConfig = new App.Model
-      year: 2013
+      degree: "All"
+      year: 2014
       semester: "fall"
 
     @.years = []
@@ -27,6 +29,12 @@ App.Page.extend
     @
 
   onViewDidLoad: () ->
+
+  setDegree: (e) ->
+    if _.isUndefined e
+      @.gridConfig.set 'degree', "All"
+    else
+      @.gridConfig.set 'degree', e.target.value
 
   setYear: (e) ->
     if _.isUndefined e

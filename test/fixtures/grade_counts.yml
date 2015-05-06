@@ -1,0 +1,33 @@
+# == Schema Information
+#
+# Table name: grade_counts
+#
+#  id                  :integer          not null, primary key
+#  scheduled_course_id :integer
+#  degree_type         :string(255)
+#  a                   :integer
+#  b                   :integer
+#  c                   :integer
+#  d                   :integer
+#  f                   :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  scheduled_course: 
+  a: 1
+  b: 1
+  c: 1
+  d: 1
+  f: 1
+
+two:
+  scheduled_course: 
+  a: 1
+  b: 1
+  c: 1
+  d: 1
+  f: 1

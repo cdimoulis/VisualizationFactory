@@ -1,11 +1,14 @@
 class CreateScheduledCourses < ActiveRecord::Migration
   def change
     create_table :scheduled_courses do |t|
-      t.integer :course_id, null:false
+      t.references :course, null:false
       t.string :semester, null:false
       t.integer :year, null:false
-      t.string :teacher
-      t.integer :num_students
+      t.references :instructor
+      t.integer :initial_bs, default: 0
+      t.integer :final_bs, default: 0
+      t.integer :initial_ba, default: 0
+      t.integer :final_ba, default: 0
 
       t.timestamps
     end

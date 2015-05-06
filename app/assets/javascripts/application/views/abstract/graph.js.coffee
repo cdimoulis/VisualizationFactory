@@ -42,7 +42,6 @@ App.View.extend
             .attr "class", "vis-chart-tooltip"
             .style "opacity", 0
 
-
       @._percentWidth = 100 - ( ( @.dataConfig.get("margin").left + @.dataConfig.get("margin").right) / @.$el.width() ) * 100
 
       @._pixelWidth = @.$el.width() * ( @._percentWidth / 100 )
@@ -317,8 +316,12 @@ App.View.extend
       if _.isNull( @.dataConfig.get("yDomain") )
         min = _.min( domain )
         max = _.max( domain )
-        diff = max - min
-        buffer = Math.ceil diff*.05
+        #if Max and Min are equal
+        if _.isEqual(max,min)
+          buffer = Math.ceil max * .05
+        else
+          diff = max - min
+          buffer = Math.ceil diff*.05
 
         if min < 0
           min = min - buffer
@@ -349,8 +352,12 @@ App.View.extend
 
         min = _.min( domain )
         max = _.max( domain )
-        diff = max - min
-        buffer = Math.ceil diff*.05
+        #if Max and Min are equal
+        if _.isEqual(max,min)
+          buffer = Math.ceil max * .05
+        else
+          diff = max - min
+          buffer = Math.ceil diff*.05
 
         if min < 0
           min = min - buffer
@@ -465,7 +472,7 @@ App.View.extend
       .append "text"
         .attr "class", "y axis-label"
         .text () =>
-          @.dataConfig.get("yLabel") @.dataConfig.get 'yKey'
+            @.dataConfig.get("yLabel") @.dataConfig.get('yKey')
 
     # place the y axis label
     label = @.$el.find ".y .axis-label"

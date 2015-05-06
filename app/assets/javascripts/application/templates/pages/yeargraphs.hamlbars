@@ -3,17 +3,26 @@
 %article.col-x2-12
   %h4 School Year picture
   .row
-    .col.col-xs-3.text-left.btn-group{"data-toggle"=>"buttons"}
+    .col.col-xs-2.text-left.btn-group{"data-toggle"=>"buttons"}
       %label.btn.btn-success
         %input.weighted{:type => "checkbox", :autocomplete => "off"}
           Use Weighted
-    .col.col-xs-2.text-right
+    .col.col-xs-3.text-right
       School Year:
-      %select.year
+      %select.year.input-lg
         {{#each years}}
         %option{value: "{{this}}"}
           {{this}}
         {{/each}}
+    .col.col-xs-2.text-right
+      Degree:
+      %select.degree.input-lg
+        %option{value: "All"}
+          All
+        %option{value: "BS"}
+          BS
+        %option{value: "BA"}
+          BA
 
   .row
     .col.col-xs-12

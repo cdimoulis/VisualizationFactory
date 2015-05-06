@@ -2,17 +2,26 @@
 
 %article.col-x2-12
   .row
-    .col.col-xs-3.text-left.btn-group{"data-toggle"=>"buttons"}
+    .col.col-xs-2.text-left.btn-group{"data-toggle"=>"buttons"}
       %label.btn.btn-success
         %input.weighted{:type => "checkbox", :autocomplete => "off"}
           Use Weighted
-    .col.col-xs-2.text-right
+    .col.col-xs-3.text-right
       Outcome:
-      %select.outcome
+      %select.outcome.input-lg
         {{#each outcomes.models}}
         %option{value: "{{this.attributes.id}}"}
           {{this.attributes.text}}
         {{/each}}
+    .col.col-xs-3.text-right
+      Degree:
+      %select.degree.input-lg
+        %option{value: "All"}
+          All
+        %option{value: "BS"}
+          BS
+        %option{value: "BA"}
+          BA
 
   .row
     .col.col-xs-12

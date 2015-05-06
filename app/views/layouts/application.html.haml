@@ -9,22 +9,38 @@
 
 %body
 
+  #header
+    %div{ style: "height: inherit;"}
+      %nav.navbar.navbar-inverse.navbar-fixed-top{ role: "navigation"}
+        .container-fluid
+          .navbar-header
+            .navbar-brand
+              Visualization Factory
+          %ul.nav.navbar-nav
+            %li
+              %a{href: "/siucs"}
+                SIU CS Data
+          %ul.nav.navbar-nav
+            %li
+              %a{href: "/test"}
+                Test Curriculum
+
   %script
-    App.set("App:Courses", new App.Collections.Courses(
-    = raw Course.all.to_json
-    ));
-    App.set("App:Categories", new App.Collections.Categories(
-    = raw Category.all.to_json
-    ));
-    App.set("App:Outcomes", new App.Collections.Outcomes(
-    = raw Outcomes.all.to_json
-    ));
-    App.set("App:ScheduledCourses", new App.Collections.ScheduledCourses(
-    = raw ScheduledCourse.all.to_json
-    ));
-    App.set("App:Scores", new App.Collections.Scores(
-    = raw Score.all.to_json
-    ));
+    App.set("App:Curriculum", new App.Models.Curriculum(#{raw @curriculum_data["Curriculum"].to_json}));
+
+    App.set("App:Courses", new App.Collections.Courses(#{raw @curriculum_data["Courses"].to_json}));
+
+    App.set("App:Categories", new App.Collections.Categories(#{raw @curriculum_data["Categories"].to_json}));
+
+    App.set("App:Outcomes", new App.Collections.Outcomes(#{raw @curriculum_data["Outcomes"].to_json}));
+
+    App.set("App:ScheduledCourses", new App.Collections.ScheduledCourses(#{raw @curriculum_data["ScheduledCourses"].to_json}));
+
+    App.set("App:Scores", new App.Collections.Scores(#{raw @curriculum_data["Scores"].to_json}));
+
+    App.set("App:EducationalObjectives", new App.Collections.EducationalObjectives(#{raw @curriculum_data["EducationalObjectives"].to_json}));
+
+    App.set("App:GradeCounts", new App.Collections.GradeCounts(#{raw @curriculum_data["GradeCounts"].to_json}));
 
   = yield
 

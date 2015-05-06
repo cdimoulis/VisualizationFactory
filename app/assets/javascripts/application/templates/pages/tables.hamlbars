@@ -15,4 +15,8 @@
 
 .row
   .col.col-xs-12
+    {{view "components/table/main" tableCollection=gradeCounts dataTitle="Grade Distribution"}}
+
+.row
+  .col.col-xs-12
     {{view "components/table/main" tableCollection=scores dataTitle="Scores"}}
