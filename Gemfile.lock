@@ -67,11 +67,11 @@ GEM
       activesupport (>= 4.0.1)
       haml (>= 3.1, < 5.0)
       railties (>= 4.0.1)
-    handlebars_assets (0.17.2)
-      execjs (>= 1.2.9)
-      multi_json
-      sprockets (>= 2.0.3)
-      tilt
+    handlebars_assets (0.21.0)
+      execjs (~> 2.0)
+      multi_json (~> 1.0)
+      sprockets (>= 2.0.0, < 4.0)
+      tilt (~> 1.2)
     hike (1.2.3)
     i18n (0.6.11)
     jquery-rails (3.1.2)
@@ -161,7 +161,7 @@ DEPENDENCIES
   font-awesome-rails (~> 4.2)
   haml (~> 4.0)
   haml-rails (~> 0.5)
-  handlebars_assets (~> 0.17)
+  handlebars_assets (~> 0.18)
   jquery-rails (~> 3.1)
   jquery-ui-rails (~> 5.0)
   meta_request
@@ -172,3 +172,6 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   spring
   uglifier (>= 2.5.3)
+
+BUNDLED WITH
+   1.10.6

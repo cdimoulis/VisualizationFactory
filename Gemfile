@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.0'
+ruby '2.2.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
@@ -50,7 +50,7 @@ gem 'jquery-ui-rails',            '~> 5.0'
 # Handlbars, haml templates
 gem 'haml',                       '~> 4.0'
 gem 'haml-rails',                 '~> 0.5'
-gem 'handlebars_assets',          '~> 0.17'
+gem 'handlebars_assets',          '~> 0.18'
 
 # Style
 gem 'bootstrap-sass',             '~> 3.3'
