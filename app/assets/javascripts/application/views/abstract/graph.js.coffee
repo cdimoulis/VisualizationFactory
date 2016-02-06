@@ -618,3 +618,4 @@ App.View.extend
   clearChart: () ->
     elem = @.$el.find(".vis-chart")[0]
     $(elem).children().remove()
+    
